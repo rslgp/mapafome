@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/mapa-da-fome/static/css/main.691407bf.chunk.css",
+    "main.js": "/mapa-da-fome/static/js/main.5746a143.chunk.js",
+    "main.js.map": "/mapa-da-fome/static/js/main.5746a143.chunk.js.map",
+    "runtime-main.js": "/mapa-da-fome/static/js/runtime-main.06c4e0b9.js",
+    "runtime-main.js.map": "/mapa-da-fome/static/js/runtime-main.06c4e0b9.js.map",
+    "static/css/2.b3ad4daa.chunk.css": "/mapa-da-fome/static/css/2.b3ad4daa.chunk.css",
+    "static/js/2.52fe01e6.chunk.js": "/mapa-da-fome/static/js/2.52fe01e6.chunk.js",
+    "static/js/2.52fe01e6.chunk.js.map": "/mapa-da-fome/static/js/2.52fe01e6.chunk.js.map",
+    "index.html": "/mapa-da-fome/index.html",
+    "static/css/2.b3ad4daa.chunk.css.map": "/mapa-da-fome/static/css/2.b3ad4daa.chunk.css.map",
+    "static/css/main.691407bf.chunk.css.map": "/mapa-da-fome/static/css/main.691407bf.chunk.css.map",
+    "static/js/2.52fe01e6.chunk.js.LICENSE.txt": "/mapa-da-fome/static/js/2.52fe01e6.chunk.js.LICENSE.txt",
+    "static/media/bean.f4ec17ff.svg": "/mapa-da-fome/static/media/bean.f4ec17ff.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.06c4e0b9.js",
+    "static/css/2.b3ad4daa.chunk.css",
+    "static/js/2.52fe01e6.chunk.js",
+    "static/css/main.691407bf.chunk.css",
+    "static/js/main.5746a143.chunk.js"
+  ]
+}
