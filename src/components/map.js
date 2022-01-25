@@ -70,7 +70,7 @@ class CoffeeMap extends Component {
                                         direction="auto"
                                         offset={[15, 0]}
                                         opacity={1}>
-                                        <span><a href={URL}>{Roaster}</a></span>
+                                        <span><a href={URL}>Precisando de<br></br>{Roaster}</a></span>
                                         {/* <span>{City}, BR</span> */}
                                     </Tooltip>
                                 </Marker>);
