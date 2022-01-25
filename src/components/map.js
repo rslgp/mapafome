@@ -59,7 +59,7 @@ class CoffeeMap extends Component {
                             return (
                                 <Marker
                                     eventHandlers={{
-                                        click: (e) => { console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) }
+                                        click: (e) => { alert(`Precisando de ${Roaster}`); console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) }
                                     }}
                                     icon={myIcon}
                                     key={k}
