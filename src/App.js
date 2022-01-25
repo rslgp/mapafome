@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import './App.css';
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
 import Header from './components/header';
-import NameForm from './components/form';
-import MyLocationButton from './components/mylocation';
+import NameForm from './components/googlesheets/form';
+import MyLocationButton from './components/googlesheets/mylocation';
 import CoffeeMap from './components/map.js';
-import CoffeeTable from './components/table';
+// import CoffeeTable from './components/table';
 import ReactGA from 'react-ga';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -41,10 +41,20 @@ class App extends Component {
     this.state = {
       isLoading: true,
       dataMaps: [],
-      dataHeader: [{ label: "Roaster" }, { label: "City" }],
+      dataHeader: [{ label: "Índice" }, { label: "Lugar" }],
       rowCount: '',
-      center:[37.69, -122.5]
+      center:[-8.0671132,-34.8766719],
+      alimento:'Alimento não perecível'
     }
+
+    this.setTipoAlimento = this.setTipoAlimento.bind(this);
+  }
+
+  setTipoAlimento(event){
+    this.setState({
+      alimento: event.target.value
+    });
+
   }
 
   componentDidMount() {
@@ -56,7 +66,6 @@ class App extends Component {
 
     //current location    
     navigator.geolocation.getCurrentPosition(function(position) {
-      alert("TENTEI LOCALIZACAO");
       self.setState({center: [position.coords.latitude, position.coords.longitude]}) 
     });
 
@@ -110,8 +119,8 @@ class App extends Component {
     return (
       <div className="App">
         <Header rowCountProp={this.state.rowCount} />
-        <NameForm/>
-        <MyLocationButton/>
+        {/* <NameForm/>
+        <MyLocationButton location={this.state.center}/> */}
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8}>
             <Paper id="CoffeeMap" className="fadeIn">
@@ -125,7 +134,43 @@ class App extends Component {
             <Paper id="CoffeeTable">
               {this.state.isLoading
                 ? <div className="flexLoading"><div className="loading"><CircularProgress /></div></div>
-                : <CoffeeTable dataMapsProp={this.state.dataMaps} dataHeaderProp={this.state.dataHeader} />
+                // : <CoffeeTable dataMapsProp={this.state.dataMaps} dataHeaderProp={this.state.dataHeader} />
+              : <div>
+        <ul>
+          <li>
+            <label>
+              <input
+                type="radio"
+                value="Alimento não perecível"
+                checked={this.state.alimento === "Alimento não perecível"}
+                onChange={this.setTipoAlimento}
+              />
+              Alimento não perecível
+            </label>
+          </li>
+          
+          <li>
+            <label>
+              <input
+                type="radio"
+                value="Alimento preparado"
+                checked={this.state.alimento === "Alimento preparado"}
+                onChange={this.setTipoAlimento}
+              />
+              Alimento preparado
+            </label>
+          </li>
+        </ul>
+
+                  <NameForm alimento={this.state.alimento}/> 
+                  <MyLocationButton location={this.state.center}  alimento={this.state.alimento}/>  
+                  <br></br>
+                  <a class="wpbtn" title="share to whatsapp" href="whatsapp://send?text=Para marcar no mapa quem tem fome, achei esse site: https://rslgp.github.io/mapafome"> <img class="wp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""/>
+                  Compartilhar no Whatsapp</a>
+
+              </div>
+               
+              
               }
             </Paper>
           </Grid>
