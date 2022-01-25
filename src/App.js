@@ -136,7 +136,7 @@ class App extends Component {
                 ? <div className="flexLoading"><div className="loading"><CircularProgress /></div></div>
                 // : <CoffeeTable dataMapsProp={this.state.dataMaps} dataHeaderProp={this.state.dataHeader} />
               : <div>
-                Mapeados: {this.state.rowCount}<br></br>Insira o endereço que está sem dinheiro e com fome e o selecione tipo de alimento:
+                Mapeados: {this.state.rowCount}<br></br>Insira o endereço de quem está sem dinheiro e com fome e o selecione tipo de alimento:
         <ul>
           <li>
             <label>
@@ -166,7 +166,7 @@ class App extends Component {
                   <NameForm alimento={this.state.alimento}/> 
                   <MyLocationButton location={this.state.center}  alimento={this.state.alimento}/>  
                   <br></br>
-                  <a class="wpbtn" title="share to whatsapp" href="whatsapp://send?text=Para marcar no mapa quem tem fome, achei esse site: https://rslgp.github.io/mapafome"> <img class="wp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""/>
+                  <a class="wpbtn" title="share to whatsapp" href="whatsapp://send?text=Para marcar no mapa e alimentar quem tem fome, achei esse site: https://rslgp.github.io/mapafome"> <img class="wp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""/>
                   Compartilhar no Whatsapp</a>
 
               </div>
