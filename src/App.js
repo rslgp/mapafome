@@ -136,7 +136,7 @@ class App extends Component {
                 ? <div className="flexLoading"><div className="loading"><CircularProgress /></div></div>
                 // : <CoffeeTable dataMapsProp={this.state.dataMaps} dataHeaderProp={this.state.dataHeader} />
               : <div>
-                Mapeados: {this.state.rowCount}<br></br>Insira o endereço que está sem dinheiro e com fome e o tipo de alimento que precisa:
+                Mapeados: {this.state.rowCount}<br></br>Insira o endereço que está sem dinheiro e com fome e o selecione tipo de alimento:
         <ul>
           <li>
             <label>
