@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/mapa-da-fome/static/css/main.691407bf.chunk.css",
-    "main.js": "/mapa-da-fome/static/js/main.f0d0d7d0.chunk.js",
-    "main.js.map": "/mapa-da-fome/static/js/main.f0d0d7d0.chunk.js.map",
-    "runtime-main.js": "/mapa-da-fome/static/js/runtime-main.365c541b.js",
-    "runtime-main.js.map": "/mapa-da-fome/static/js/runtime-main.365c541b.js.map",
-    "static/css/2.b3ad4daa.chunk.css": "/mapa-da-fome/static/css/2.b3ad4daa.chunk.css",
-    "static/js/2.e9010b8d.chunk.js": "/mapa-da-fome/static/js/2.e9010b8d.chunk.js",
-    "static/js/2.e9010b8d.chunk.js.map": "/mapa-da-fome/static/js/2.e9010b8d.chunk.js.map",
-    "index.html": "/mapa-da-fome/index.html",
-    "static/css/2.b3ad4daa.chunk.css.map": "/mapa-da-fome/static/css/2.b3ad4daa.chunk.css.map",
-    "static/css/main.691407bf.chunk.css.map": "/mapa-da-fome/static/css/main.691407bf.chunk.css.map",
-    "static/js/2.e9010b8d.chunk.js.LICENSE.txt": "/mapa-da-fome/static/js/2.e9010b8d.chunk.js.LICENSE.txt",
-    "static/media/bean.f4ec17ff.svg": "/mapa-da-fome/static/media/bean.f4ec17ff.svg"
+    "main.css": "/mapafome/static/css/main.691407bf.chunk.css",
+    "main.js": "/mapafome/static/js/main.87540f63.chunk.js",
+    "main.js.map": "/mapafome/static/js/main.87540f63.chunk.js.map",
+    "runtime-main.js": "/mapafome/static/js/runtime-main.3b486bf8.js",
+    "runtime-main.js.map": "/mapafome/static/js/runtime-main.3b486bf8.js.map",
+    "static/css/2.b3ad4daa.chunk.css": "/mapafome/static/css/2.b3ad4daa.chunk.css",
+    "static/js/2.b0137ad3.chunk.js": "/mapafome/static/js/2.b0137ad3.chunk.js",
+    "static/js/2.b0137ad3.chunk.js.map": "/mapafome/static/js/2.b0137ad3.chunk.js.map",
+    "index.html": "/mapafome/index.html",
+    "static/css/2.b3ad4daa.chunk.css.map": "/mapafome/static/css/2.b3ad4daa.chunk.css.map",
+    "static/css/main.691407bf.chunk.css.map": "/mapafome/static/css/main.691407bf.chunk.css.map",
+    "static/js/2.b0137ad3.chunk.js.LICENSE.txt": "/mapafome/static/js/2.b0137ad3.chunk.js.LICENSE.txt",
+    "static/media/bean.f4ec17ff.svg": "/mapafome/static/media/bean.f4ec17ff.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.365c541b.js",
+    "static/js/runtime-main.3b486bf8.js",
     "static/css/2.b3ad4daa.chunk.css",
-    "static/js/2.e9010b8d.chunk.js",
+    "static/js/2.b0137ad3.chunk.js",
     "static/css/main.691407bf.chunk.css",
-    "static/js/main.f0d0d7d0.chunk.js"
+    "static/js/main.87540f63.chunk.js"
   ]
 }
