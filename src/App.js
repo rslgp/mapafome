@@ -136,6 +136,7 @@ class App extends Component {
                 ? <div className="flexLoading"><div className="loading"><CircularProgress /></div></div>
                 // : <CoffeeTable dataMapsProp={this.state.dataMaps} dataHeaderProp={this.state.dataHeader} />
               : <div>
+                Mapeados: {this.state.rowCount}<br></br>Insira o endereço que está sem dinheiro e com fome e o tipo de alimento que precisa:
         <ul>
           <li>
             <label>
@@ -153,11 +154,11 @@ class App extends Component {
             <label>
               <input
                 type="radio"
-                value="Alimento preparado"
-                checked={this.state.alimento === "Alimento preparado"}
+                value="Alimento pronto"
+                checked={this.state.alimento === "Alimento pronto"}
                 onChange={this.setTipoAlimento}
               />
-              Alimento preparado
+              Alimento pronto
             </label>
           </li>
         </ul>

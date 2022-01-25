@@ -10,7 +10,7 @@ import coffeeBean from '../images/bean.svg'
 const myIcon = new L.Icon({
     // Coffee bean attribution -- Thanks! https://commons.wikimedia.org/wiki/File:Coffee_bean_symbol.svg
     iconUrl: coffeeBean,
-    iconSize: new L.Point(25, 25),
+    iconSize: new L.Point(20, 20),
     className: 'leaflet-bean-icon',
 });
 
