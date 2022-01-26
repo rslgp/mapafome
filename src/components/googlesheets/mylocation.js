@@ -17,10 +17,12 @@ class NameForm extends Component {
       this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
-      if (nextProps.alimento !== this.state.alimento) {
-        this.setState({ alimento: nextProps.alimento });
+    //ATUALIZAR PROPS VINDAS DO PAI
+    static getDerivedStateFromProps(nextProps, state) {
+      if (state && nextProps.alimento !== state.alimento){ 
+        state.alimento=nextProps.alimento;
       }
+      return state;
     }
   
     handleChange(event) {
