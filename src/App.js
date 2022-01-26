@@ -137,6 +137,7 @@ class App extends Component {
                 // : <CoffeeTable dataMapsProp={this.state.dataMaps} dataHeaderProp={this.state.dataHeader} />
               : <div>
                 Mapeados: {this.state.rowCount}<br></br>Insira o endereço de quem está sem dinheiro e com fome e o selecione tipo de alimento:
+        {/* RADIO BUTTON */}
         <ul>
           <li>
             <label>
@@ -162,12 +163,11 @@ class App extends Component {
             </label>
           </li>
         </ul>
-
-                  <NameForm alimento={this.state.alimento}/> 
-                  <MyLocationButton location={this.state.center}  alimento={this.state.alimento}/>  
-                  <br></br>
-                  <a class="wpbtn" title="share to whatsapp" href="whatsapp://send?text=Para marcar no mapa e alimentar quem tem fome, achei esse site: https://rslgp.github.io/mapafome"> <img class="wp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""/>
-                  Compartilhar no Whatsapp</a>
+        {/* FIM RADIO BUTTON */}
+                <MyLocationButton location={this.state.center}  alimento={this.state.alimento}/> 
+                <NameForm alimento={this.state.alimento}/> 
+                <a class="wpbtn" title="share to whatsapp" href="whatsapp://send?text=Para marcar no mapa e alimentar quem tem fome, achei esse site: https://rslgp.github.io/mapafome"> <img class="wp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""/>
+                Compartilhar no Whatsapp</a>
 
               </div>
                

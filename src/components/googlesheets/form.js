@@ -42,7 +42,7 @@ class NameForm extends Component {
         //row = { Name: "new name", Value: "new value" };
         const rows = await sheet.getRows();
         // Total row count
-        const row = { Roaster:  self.state.alimento, URL:"", City: self.state.value, Date: new Date().toISOString() };
+        const row = { Roaster:  self.state.alimento, URL:"", City: self.state.value, DateISO: new Date().toISOString() };
         const result = await sheet.addRow(row);
         console.log(result);
        
@@ -78,7 +78,7 @@ class NameForm extends Component {
       return (
         <form onSubmit={this.handleSubmit}>
           <label>
-            <input className="TextField" type="text" placeholder='Insira o endereço' value={this.state.value} onChange={this.handleChange} />
+            <input className="TextField" type="text" placeholder='Insira rua,bairro,cidade,estado' value={this.state.value} onChange={this.handleChange} />
           </label>
           <input className="SubmitButton" type="submit" value="Enviar Endereço" />
         </form>
