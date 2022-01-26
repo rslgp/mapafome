@@ -20,10 +20,12 @@ class NameForm extends Component {
       this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
-      if (nextProps.alimento !== this.state.alimento) {
-        this.setState({ alimento: nextProps.alimento });
+    //ATUALIZAR PROPS VINDAS DO PAI
+    static getDerivedStateFromProps(nextProps, state) {
+      if (state && nextProps.alimento !== state.alimento){ 
+        state.alimento=nextProps.alimento;
       }
+      return state;
     }
   
     handleChange(event) {
@@ -50,7 +52,7 @@ class NameForm extends Component {
         // Total row count
         const row = { Roaster:  self.state.alimento, URL:"", City: self.state.value, DateISO: new Date().toISOString() };
         const result = await sheet.addRow(row);
-        console.log(result);
+        // console.log(result);
        
 
         rows.forEach((x) => { if (x.Coordinates) { x.mapCoords = JSON.parse(x.Coordinates); } });
@@ -59,10 +61,10 @@ class NameForm extends Component {
 
         if (needsUpdates && needsUpdates.length > 0) {
             for (let index in needsUpdates) {
-            let city = needsUpdates[index].City;
-                console.log(city);
+                let city = needsUpdates[index].City;
                 try {
                     let providerResult = await provider.search({ query: city.replace('-',",") + ', Brazil' });
+                    
                     console.log(providerResult);
                     let latlon = [providerResult[0].y, providerResult[0].x];
                     needsUpdates[index].Coordinates = JSON.stringify(latlon); // Convert obj to string
@@ -72,10 +74,15 @@ class NameForm extends Component {
                     window.location.reload();
                 }
                 catch (e) {
+                  console.log("ERRO");
+                    //await needsUpdates[index].delete();
+                    await result.delete();
                     console.log(e);
+                    self.setState({isLoading: false});
                 }
             }
         }
+        //self.setState({isLoading: false});
     })(this);
       event.preventDefault();
     }
