@@ -10,6 +10,7 @@
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^13.1.1",
     "google-spreadsheet": "^3.0.10",
+    "javascript-time-ago": "^2.3.10",
     "leaflet": "^1.6.0",
     "leaflet-geosearch": "^3.2.2",
     "leaflet.markercluster": "^1.5.0",

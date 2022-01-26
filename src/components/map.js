@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
-import { MapContainer, Marker, TileLayer, Tooltip, AttributionControl } from "react-leaflet";
+import { MapContainer, Marker, TileLayer, Tooltip, AttributionControl, Popup } from "react-leaflet";
 import L from 'leaflet';
 import "leaflet/dist/leaflet.css";
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import "react-leaflet-markercluster/dist/styles.min.css";
-import coffeeBean from '../images/bean.svg'
+import coffeeBean from '../images/bean.svg';
+import TimeAgo from 'javascript-time-ago';
+
+import pt from 'javascript-time-ago/locale/pt.json';
+TimeAgo.addDefaultLocale(pt);
+
+const timeAgo = new TimeAgo();
 
 // Leaflet custom marker
 const myIcon = new L.Icon({
@@ -41,7 +47,7 @@ class CoffeeMap extends Component {
                     center={this.state.center}
                     attributionControl={false}>
                     <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        attribution=" &copy; <a href='http://openstreetmap.org' target='_blank'>OpenStreetMap</a>"
+                        attribution=" &copy; <a href='http://openstreetmap.org' target='_blank' rel='noreferrer'>OpenStreetMap</a>"
                     />
 
                     <AttributionControl
@@ -55,24 +61,41 @@ class CoffeeMap extends Component {
                         maxClusterRadius={35}
                     >
                         {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
-                            let { City, mapCoords, Roaster, URL } = dataItem;
+                            let { City, mapCoords, Roaster, URL, DateISO } = dataItem;
+                            let googleDirection = `https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`;
+                            let precisandoMsg = `Precisando de ${Roaster}`;
+                            let dateMarked;
+                            if(DateISO) dateMarked = timeAgo.format(Date.now() - (Date.now() - new Date(DateISO).getTime()) );
+                            
+                            
                             return (
                                 <Marker
                                     eventHandlers={{
-                                        click: (e) => { alert(`Precisando de ${Roaster}`); console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) }
+                                        click: (e) => { 
+                                            // alert(`Precisando de ${Roaster}`); 
+                                            console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); 
+                                            // window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) 
+                                        }
                                     }}
                                     icon={myIcon}
                                     key={k}
                                     center={[mapCoords[0], mapCoords[1]]}
                                     position={[mapCoords[0], mapCoords[1]]}
                                 >
-                                    <Tooltip
-                                        direction="auto"
-                                        offset={[15, 0]}
-                                        opacity={1}>
-                                        <span><a href={URL}>Precisando de<br></br>{Roaster}</a></span>
-                                        {/* <span>{City}, BR</span> */}
-                                    </Tooltip>
+                                    <Popup>
+                                        <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino</a>
+                                        <br/>
+                                        {precisandoMsg}
+                                        <br/>
+                                        {dateMarked}
+                                    </Popup>
+                                    {/* <Tooltip
+                                        // direction="auto"
+                                        // offset={[15, 0]}
+                                        // opacity={1}>
+                                        // <span><a href={URL}>Precisando de<br></br>{Roaster}</a></span>
+                                        // <span>{City}, BR</span>
+                                    </Tooltip> */}
                                 </Marker>);
                         })}
                     </MarkerClusterGroup>

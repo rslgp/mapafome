@@ -14,7 +14,7 @@ class NameForm extends Component {
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
     }
-    
+
     componentWillReceiveProps(nextProps) {
       if (nextProps.alimento !== this.state.alimento) {
         this.setState({ alimento: nextProps.alimento });
@@ -39,7 +39,7 @@ class NameForm extends Component {
                 const sheet = doc.sheetsByIndex[0];
                 const rows = await sheet.getRows();
                 // Total row count
-                const row = { Roaster: self.state.alimento, URL:"", City: "", Coordinates:JSON.stringify([self.props.location[0], self.props.location[1]]), Date: new Date().toISOString() };
+                const row = { Roaster: self.state.alimento, URL:"", City: "", Coordinates:JSON.stringify([self.props.location[0], self.props.location[1]]), DateISO: new Date().toISOString() };
                 
                 const result = await sheet.addRow(row);
                 console.log(result);
