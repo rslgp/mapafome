@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
 
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 const provider = new OpenStreetMapProvider();
@@ -12,7 +14,7 @@ const doc = new GoogleSpreadsheet(process.env.REACT_APP_GOOGLESHEETID);
 class NameForm extends Component {
     constructor(props) {
       super(props);
-      this.state = {value: '', alimento: props.alimento};
+      this.state = {value: '', alimento: props.alimento, isLoading:false};
   
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -30,6 +32,10 @@ class NameForm extends Component {
   
     handleSubmit(event) {
       //alert('Um endereço foi enviado: ' + this.state.value);
+      if(this.state.value === '') {event.preventDefault();return;}
+      
+      this.setState({isLoading: true});
+
       (async function main(self) {
         await doc.useServiceAccountAuth({
             client_email: process.env.REACT_APP_GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -76,6 +82,9 @@ class NameForm extends Component {
   
     render() {
       return (
+        this.state.isLoading ?
+        <div><CircularProgress /></div>
+        :
         <form onSubmit={this.handleSubmit}>
           <label>
             <input className="TextField" type="text" placeholder='Insira rua,bairro,cidade,estado' value={this.state.value} onChange={this.handleChange} />

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 
@@ -9,7 +11,7 @@ const doc = new GoogleSpreadsheet(process.env.REACT_APP_GOOGLESHEETID);
 class NameForm extends Component {
     constructor(props) {
       super(props);
-      this.state = {value: '', location: props.location, alimento: props.alimento};
+      this.state = {value: '', location: props.location, alimento: props.alimento, isLoading:props.isLoading};
   
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,7 +29,7 @@ class NameForm extends Component {
   
     handleSubmit(event) { 
         //navigator.geolocation.getCurrentPosition(function(position) {
-            
+        this.setState({isLoading: true});
             (async function main(self) {
                 await doc.useServiceAccountAuth({
                     client_email: process.env.REACT_APP_GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -51,9 +53,13 @@ class NameForm extends Component {
   
     render() {
       return (
-        <button className="SubmitButton" onClick={this.handleSubmit}>
-          Marcar Minha Localização Atual
-        </button>
+          this.state.isLoading ?
+          <div><CircularProgress /></div>
+          :
+          <button className="SubmitButton" onClick={this.handleSubmit}>
+            Marcar Minha Localização Atual
+          </button>
+        
       );
     }
   }

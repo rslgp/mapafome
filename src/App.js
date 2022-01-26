@@ -166,7 +166,7 @@ class App extends Component {
         {/* FIM RADIO BUTTON */}
                 <MyLocationButton location={this.state.center}  alimento={this.state.alimento}/> 
                 <NameForm alimento={this.state.alimento}/> 
-                <a class="wpbtn" title="share to whatsapp" href="whatsapp://send?text=Para marcar no mapa e alimentar quem tem fome, achei esse site: https://rslgp.github.io/mapafome"> <img class="wp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""/>
+                <a className="wpbtn" title="share to whatsapp" href="whatsapp://send?text=Para marcar no mapa e alimentar quem tem fome, achei esse site: https://rslgp.github.io/mapafome"> <img className="wp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""/>
                 Compartilhar no Whatsapp</a>
 
               </div>
