@@ -18,7 +18,7 @@ import Grid from '@material-ui/core/Grid';
 
 // Google Analytics
 function initializeReactGA() {
-  ReactGA.initialize('G-3TLCJYWGYD');
+  ReactGA.initialize('UA-172868315-1');
   ReactGA.pageview(window.location.pathname + window.location.search);
 }
 
