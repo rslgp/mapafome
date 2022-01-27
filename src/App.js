@@ -9,13 +9,16 @@ import CoffeeMap from './components/map.js';
 import ReactGA from 'react-ga';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+
+import qr from './images/qr.svg';
+
 // Material-UI
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
 // Google Analytics
 function initializeReactGA() {
-  ReactGA.initialize('UA-159568942-2');
+  ReactGA.initialize('G-3TLCJYWGYD');
   ReactGA.pageview(window.location.pathname + window.location.search);
 }
 
@@ -125,7 +128,7 @@ class App extends Component {
           <Grid item xs={12} sm={8}>
             <Paper id="CoffeeMap" className="fadeIn">
               {this.state.isLoading
-                ? <div className="flexLoading"><div className="loading">Brewing...</div></div>
+                ? <div className="flexLoading"><div className="loading">Carregando...</div></div>
                 : <CoffeeMap dataMapsProp={this.state.dataMaps} location={this.state.center}/>
               }
             </Paper>
@@ -168,6 +171,8 @@ class App extends Component {
                 <NameForm alimento={this.state.alimento}/> 
                 <a className="wpbtn" title="share to whatsapp" href="whatsapp://send?text=Para marcar no mapa e alimentar quem tem fome, achei esse site: https://rslgp.github.io/mapafome"> <img className="wp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""/>
                 Compartilhar no Whatsapp</a>
+
+                <img src={qr}/>
 
               </div>
                
