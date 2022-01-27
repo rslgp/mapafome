@@ -42,6 +42,33 @@ class NameForm extends Component {
         });
       event.preventDefault();
     }
+
+    componentDidMount() {
+      
+    //salvar acesso  
+      
+    (async function main(self) {
+      try{
+        await doc.useServiceAccountAuth({
+          client_email: process.env.REACT_APP_GOOGLE_SERVICE_ACCOUNT_EMAIL,
+          private_key: process.env.REACT_APP_GOOGLE_PRIVATE_KEY,
+        });
+    
+        await doc.loadInfo(); // Loads document properties and worksheets
+    
+        const sheet = doc.sheetsByIndex[1];
+        
+        await sheet.loadCells('A2');
+        const a1 = sheet.getCell(1, 0);
+        a1.value+=1;
+        await sheet.saveUpdatedCells();
+      }catch(e){
+        
+      }
+      
+    })(this);
+
+  }
   
     render() {
       return (
