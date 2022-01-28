@@ -5,6 +5,7 @@ import "leaflet/dist/leaflet.css";
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import "react-leaflet-markercluster/dist/styles.min.css";
 import coffeeBean from '../images/bean.svg';
+import hub from '../images/hub.svg';
 import TimeAgo from 'javascript-time-ago';
 
 import pt from 'javascript-time-ago/locale/pt.json';
@@ -17,6 +18,15 @@ const myIcon = new L.Icon({
     // Coffee bean attribution -- Thanks! https://commons.wikimedia.org/wiki/File:Coffee_bean_symbol.svg
     iconUrl: coffeeBean,
     iconSize: new L.Point(20, 20),
+    className: 'leaflet-bean-icon',
+});
+
+
+// Leaflet custom marker
+const hubIcon = new L.Icon({
+    // Coffee bean attribution -- Thanks! https://commons.wikimedia.org/wiki/File:Coffee_bean_symbol.svg
+    iconUrl: hub,
+    iconSize: new L.Point(30, 30),
     className: 'leaflet-bean-icon',
 });
 
@@ -63,10 +73,18 @@ class CoffeeMap extends Component {
                         {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
                             let { City, mapCoords, Roaster, URL, DateISO } = dataItem;
                             let googleDirection = `https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`;
-                            let precisandoMsg = `Precisando de ${Roaster}`;
+                            
                             let dateMarked;
                             if(DateISO) dateMarked = timeAgo.format(Date.now() - (Date.now() - new Date(DateISO).getTime()) );
                             
+                            let precisandoMsg, CurrentIcon;
+                            if(Roaster === "Doador"){
+                                precisandoMsg = "Recebendo alimento para distribuir";
+                                CurrentIcon = hubIcon;
+                            }else{
+                                precisandoMsg = `Precisando de ${Roaster}`;
+                                CurrentIcon = myIcon;
+                            }
                             
                             return (
                                 <Marker
@@ -77,7 +95,7 @@ class CoffeeMap extends Component {
                                             // window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) 
                                         }
                                     }}
-                                    icon={myIcon}
+                                    icon= {CurrentIcon} 
                                     key={k}
                                     center={[mapCoords[0], mapCoords[1]]}
                                     position={[mapCoords[0], mapCoords[1]]}

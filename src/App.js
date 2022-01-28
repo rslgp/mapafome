@@ -165,12 +165,26 @@ class App extends Component {
               Alimento pronto
             </label>
           </li>
+
+          
+          <li>
+            <label>
+              <input
+                type="radio"
+                value="Doador"
+                checked={this.state.alimento === "Doador"}
+                onChange={this.setTipoAlimento}
+              />
+              Sou doador(a)
+            </label>
+          </li>
         </ul>
         {/* FIM RADIO BUTTON */}
                 <MyLocationButton location={this.state.center}  alimento={this.state.alimento}/> 
                 <NameForm alimento={this.state.alimento}/> 
                 <a className="wpbtn" title="share to whatsapp" href="whatsapp://send?text=Para marcar no mapa e alimentar quem tem fome, achei esse site: https://rslgp.github.io/mapafome"> <img className="wp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""/>
                 Compartilhar no Whatsapp</a>
+                <a target='_blank' rel="noreferrer" href="https://t.me/share?url=https%3A%2F%2Frslgp.github.io%2Fmapafome&amp;text=Para%20marcar%20no%20mapa%20e%20alimentar%20quem%20tem%20fome%2C%20achei%20esse%20site%3A" class="tgme_widget_share_btn"><img class="telegram" src="https://telegram.org/img/WidgetButton_LogoSmall.png" alt=""></img></a>
 
                 <img src={qr}/>
 
