@@ -16,6 +16,12 @@ class NameForm extends Component {
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
 
+    }
+
+    
+  componentDidMount() {
+      
+    //salvar acesso  
       
     (async function main(self) {
       try{
@@ -31,17 +37,12 @@ class NameForm extends Component {
         await sheet.loadCells('A2');
         const a1 = sheet.getCell(1, 0);
         a1.value+=1;
-        await sheet.saveCells(a1);
+        await sheet.saveUpdatedCells();
       }catch(e){
         
       }
       
     })(this);
-    }
-
-    
-  componentDidMount() {
-      
 
   }
 
