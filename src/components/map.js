@@ -79,10 +79,10 @@ class CoffeeMap extends Component {
                             
                             let precisandoMsg, CurrentIcon;
                             if(Roaster === "Doador"){
-                                precisandoMsg = "Recebendo alimento para distribuir";
+                                precisandoMsg = "Recebendo alimento para distribuir"+URL;
                                 CurrentIcon = hubIcon;
                             }else{
-                                precisandoMsg = `Precisando de ${Roaster}`;
+                                precisandoMsg = `Precisando de ${Roaster}`+URL;
                                 CurrentIcon = myIcon;
                             }
                             
