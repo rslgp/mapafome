@@ -36,6 +36,7 @@ const doc = new GoogleSpreadsheet(process.env.REACT_APP_GOOGLESHEETID);
 
 // Provider for leaflet-geosearch plugin
 const provider = new OpenStreetMapProvider();
+//limit osm https://operations.osmfoundation.org/policies/nominatim/
 
 class App extends Component {
 
