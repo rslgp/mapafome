@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
 
-import { OpenStreetMapProvider } from 'leaflet-geosearch';
+import { 
+  OpenStreetMapProvider,
+  // BingProvider 
+} from 'leaflet-geosearch';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 const provider = new OpenStreetMapProvider();
+
+// = new BingProvider({
+//   params: {
+//     key: process.env.REACT_APP_BING_MAPS_API_KEY
+//   },
+// });
+//
 
 // Google Sheets Document ID -- PROD
 const doc = new GoogleSpreadsheet(process.env.REACT_APP_GOOGLESHEETID);
@@ -48,44 +58,34 @@ class NameForm extends Component {
 
         const sheet = doc.sheetsByIndex[0];
         //row = { Name: "new name", Value: "new value" };
-        const rows = await sheet.getRows();
+        
         // Total row count
         const row = { Roaster:  self.state.alimento, URL:"", City: self.state.value, DateISO: new Date().toISOString() };
-        const result = await sheet.addRow(row);
-        // console.log(result);
-       
-
-        rows.forEach((x) => { if (x.Coordinates) { x.mapCoords = JSON.parse(x.Coordinates); } });
-
-        var needsUpdates = rows.filter((x) => { return !x.Coordinates; });
-
-        if (needsUpdates && needsUpdates.length > 0) {
-            for (let index in needsUpdates) {
-                let city = needsUpdates[index].City;
-                try {
-                    let providerResult = await provider.search({ query: city.replace('-',",") + ', Brazil' });
-                    
-                    console.log(providerResult);
-                    let latlon = [providerResult[0].y, providerResult[0].x];
-                    needsUpdates[index].Coordinates = JSON.stringify(latlon); // Convert obj to string
-                    needsUpdates[index].mapCoords = latlon;
-                    await needsUpdates[index].save(); // Save to remote Google Sheet
-                    
-                    window.location.reload();
-                }
-                catch (e) {
-                  console.log("ERRO");
-                    //await needsUpdates[index].delete();
-                    await result.delete();
-                    console.log(e);
-                    self.setState({isLoading: false});
-                }
-            }
+        
+        try{
+          let providerResult = await provider.search({ query: self.state.value.replace('-',",") + ', Brazil' });
+  
+          if(providerResult.length !== 0 ){
+              // throw new Error("endereco-nao-encontrado");
+  
+              console.log(providerResult);
+              let latlon = [providerResult[0].y, providerResult[0].x];
+              row.Coordinates = JSON.stringify(latlon); // Convert obj to string
+              //needsUpdates[index].mapCoords = latlon;
+              await row.save(); // Save to remote Google Sheet
+          }
+        }catch(e){
+            console.log("ERRO");
+            console.log(e);
+            await sheet.addRow(row);
         }
-        //self.setState({isLoading: false});
-    })(this);
+       
+        self.setState({isLoading: false});
+      })(this);
       event.preventDefault();
     }
+
+    
   
     render() {
       return (

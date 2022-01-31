@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import './App.css';
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
 import Header from './components/header';
+
 import NameForm from './components/googlesheets/form';
 import MyLocationButton from './components/googlesheets/mylocation';
+
 import CoffeeMap from './components/map.js';
 // import CoffeeTable from './components/table';
 import ReactGA from 'react-ga';
@@ -91,24 +93,36 @@ class App extends Component {
       self.setState({ dataMaps: rows });
 
       var needsUpdates = rows.filter((x) => { return !x.Coordinates; });
-
+      if(needsUpdates.length === 0) console.log("nao precisa atualizar");
       if (needsUpdates && needsUpdates.length > 0) {
-        for (let index in needsUpdates) {
-          let city = needsUpdates[index].City;
-
-          try {
-            console.log(city);
-            let providerResult = await provider.search({ query: city.replace('-',",") + ', Brazil' });
-            let latlon = [providerResult[0].y, providerResult[0].x];
-            needsUpdates[index].Coordinates = JSON.stringify(latlon); // Convert obj to string
-            needsUpdates[index].mapCoords = latlon;
-            await needsUpdates[index].save(); // Save to remote Google Sheet
+          for (let index in needsUpdates) {
+            // if(needsUpdates[index]._rawData.length===0) needsUpdates[index].delete(); //se deixar rows vazias na planilha
+              let city = needsUpdates[index].City;
+              setTimeout(() => 
+                  {
+                      (async function main() {
+                          try{
+                              let providerResult = await provider.search({ query: city.replace('-',",") + ', Brazil' });
+                      
+                              if(providerResult.length !== 0 ){
+                                  // throw new Error("endereco-nao-encontrado");
+                      
+                                  console.log(providerResult);
+                                  let latlon = [providerResult[0].y, providerResult[0].x];
+                                  needsUpdates[index].Coordinates = JSON.stringify(latlon); // Convert obj to string
+                                  //needsUpdates[index].mapCoords = latlon;
+                                  await needsUpdates[index].save(); // Save to remote Google Sheet
+                              }
+                          }catch(e){
+                              console.log("ERRO");
+                              console.log(e);
+                          }
+                      })();
+                  
+                  },1300                        
+              );
+              
           }
-          catch (e) {
-            console.log(e);
-          }
-        }
-
         self.setState({ dataMaps: rows });
       }
 
@@ -175,7 +189,7 @@ class App extends Component {
                 checked={this.state.alimento === "Doador"}
                 onChange={this.setTipoAlimento}
               />
-              Sou doador(a)
+              Recebo para doar
             </label>
           </li>
         </ul>
@@ -184,9 +198,9 @@ class App extends Component {
                 <NameForm alimento={this.state.alimento}/> 
                 <a className="wpbtn" title="share to whatsapp" href="whatsapp://send?text=Para marcar no mapa e alimentar quem tem fome, achei esse site: https://rslgp.github.io/mapafome"> <img className="wp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""/>
                 Compartilhar no Whatsapp</a>
-                <a target='_blank' rel="noreferrer" href="https://t.me/share?url=https%3A%2F%2Frslgp.github.io%2Fmapafome&amp;text=Para%20marcar%20no%20mapa%20e%20alimentar%20quem%20tem%20fome%2C%20achei%20esse%20site%3A" class="tgme_widget_share_btn"><img class="telegram" src="https://telegram.org/img/WidgetButton_LogoSmall.png" alt=""></img></a>
+                <a target='_blank' rel="noreferrer" href="https://t.me/share?url=https%3A%2F%2Frslgp.github.io%2Fmapafome&amp;text=Para%20marcar%20no%20mapa%20e%20alimentar%20quem%20tem%20fome%2C%20achei%20esse%20site%3A" className="tgme_widget_share_btn"><img className="telegram" src="https://telegram.org/img/WidgetButton_LogoSmall.png" alt=""></img></a>
 
-                <img src={qr}/>
+                <img src={qr} alt=""/>
 
               </div>
                
