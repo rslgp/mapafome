@@ -72,15 +72,15 @@ class NameForm extends Component {
               let latlon = [providerResult[0].y, providerResult[0].x];
               row.Coordinates = JSON.stringify(latlon); // Convert obj to string
               //needsUpdates[index].mapCoords = latlon;
-              await row.save(); // Save to remote Google Sheet
           }
         }catch(e){
             console.log("ERRO");
             console.log(e);
-            await sheet.addRow(row);
         }
+        await sheet.addRow(row);
        
         self.setState({isLoading: false});
+        window.location.reload();
       })(this);
       event.preventDefault();
     }
