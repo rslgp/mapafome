@@ -77,6 +77,12 @@ class CoffeeMap extends Component {
                             let dateMarked;
                             if(DateISO) dateMarked = timeAgo.format(Date.now() - (Date.now() - new Date(DateISO).getTime()) );
                             
+                            //filtrar datas antigas
+                            // if(
+                            //     dateMarked.includes("semana") 
+                            // //&& Number(dateMarked.replace(/[^0-9]/g,'')) > 7
+                            // ) return (<div></div>);
+                            
                             let precisandoMsg, CurrentIcon;
                             if(Roaster === "Doador"){
                                 precisandoMsg = "Recebendo alimento para distribuir"+URL;
