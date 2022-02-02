@@ -71,12 +71,12 @@ class CoffeeMap extends Component {
                         maxClusterRadius={35}
                     >
                         {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
-                            let { City, mapCoords, Roaster, URL, DateISO } = dataItem;
+                            let { City, mapCoords, Roaster, URL, DateISO, Telefone } = dataItem;
                             let googleDirection = `https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`;
                             
                             let dateMarked;
                             if(DateISO) dateMarked = timeAgo.format(Date.now() - (Date.now() - new Date(DateISO).getTime()) );
-                            
+                            if(Telefone) Telefone="tel:"+Telefone;
                             //filtrar datas antigas
                             // if(
                             //     dateMarked.includes("semana") 
@@ -111,7 +111,7 @@ class CoffeeMap extends Component {
                                         <br/>
                                         {precisandoMsg}
                                         <br/>
-                                        {dateMarked}
+                                        {dateMarked} {Telefone}
                                     </Popup>
                                     {/* <Tooltip
                                         // direction="auto"

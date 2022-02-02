@@ -20,13 +20,19 @@ import Grid from '@material-ui/core/Grid';
 
 import CleanOld from './components/googlesheets/cleanold';
 
+import AesEncryption from "aes-encryption";
+
+const aes = new AesEncryption();
+
 // Google Analytics
 function initializeReactGA() {
   ReactGA.initialize('UA-172868315-1');
   ReactGA.pageview(window.location.pathname + window.location.search);
 }
 
-initializeReactGA()
+initializeReactGA();
+
+aes.setSecretKey(process.env.REACT_APP_CRYPTSEED+"F");
 
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
@@ -52,10 +58,13 @@ class App extends Component {
       dataHeader: [{ label: "Índice" }, { label: "Lugar" }],
       rowCount: '',
       center:[-8.0671132,-34.8766719],
-      alimento:'Alimento não perecível'
+      alimento:'Alimento de cesta básica',
+      telefone:'',
+      telefoneEncryptado:''
     }
 
     this.setTipoAlimento = this.setTipoAlimento.bind(this);
+    this.handleChangeTelefone = this.handleChangeTelefone.bind(this);
   }
 
   setTipoAlimento(event){
@@ -63,6 +72,14 @@ class App extends Component {
       alimento: event.target.value
     });
 
+  }
+
+  handleChangeTelefone(event) {
+    let telefoneValue = event.target.value.replace(/[^0-9]/g,'');
+    if(telefoneValue.length >= 8){
+      this.setState({telefoneEncryptado: aes.encrypt(telefoneValue)});
+    }
+    this.setState({telefone: telefoneValue});
   }
 
   componentDidMount() {
@@ -91,7 +108,17 @@ class App extends Component {
       // Total row count
       self.setState({ rowCount: rows.length });
 
-      rows.forEach((x) => { if (x.Coordinates) { x.mapCoords = JSON.parse(x.Coordinates); } });
+      rows.forEach((x) => { 
+        if (x.Coordinates) { x.mapCoords = JSON.parse(x.Coordinates); 
+          if(x.Telefone) {
+            try{
+              x.Telefone = aes.decrypt(x.Telefone);
+            }catch(e){
+              //problema ao decriptar, string nao esta no formato hex
+            }
+          } 
+        } 
+      });
 
       self.setState({ dataMaps: rows });
 
@@ -163,11 +190,11 @@ class App extends Component {
             <label>
               <input
                 type="radio"
-                value="Alimento não perecível"
-                checked={this.state.alimento === "Alimento não perecível"}
+                value="Alimento de cesta básica"
+                checked={this.state.alimento === "Alimento de cesta básica"}
                 onChange={this.setTipoAlimento}
               />
-              Alimento não perecível
+              Alimento de cesta básica
             </label>
           </li>
           
@@ -197,8 +224,9 @@ class App extends Component {
           </li>
         </ul>
         {/* FIM RADIO BUTTON */}
-                <MyLocationButton location={this.state.center} alimento={this.state.alimento}/> 
-                <NameForm alimento={this.state.alimento}/> 
+        <input className="TextField" type="text" placeholder='Insira telefone se quiser' value={this.state.telefone} onChange={this.handleChangeTelefone} />
+                <MyLocationButton location={this.state.center} alimento={this.state.alimento} telefone={this.state.telefoneEncryptado}/> 
+                <NameForm alimento={this.state.alimento} telefone={this.state.telefoneEncryptado}/> 
                 <a className="wpbtn" title="share to whatsapp" href="whatsapp://send?text=Para marcar no mapa e alimentar quem tem fome, achei esse site: https://rslgp.github.io/mapafome"> <img className="wp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""/>
                 Compartilhar no Whatsapp</a>
                 <a target='_blank' rel="noreferrer" href="https://t.me/share?url=https%3A%2F%2Frslgp.github.io%2Fmapafome&amp;text=Para%20marcar%20no%20mapa%20e%20alimentar%20quem%20tem%20fome%2C%20achei%20esse%20site%3A" className="tgme_widget_share_btn"><img className="telegram" src="https://telegram.org/img/WidgetButton_LogoSmall.png" alt=""></img></a>
