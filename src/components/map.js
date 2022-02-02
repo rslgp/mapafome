@@ -6,6 +6,7 @@ import MarkerClusterGroup from 'react-leaflet-markercluster';
 import "react-leaflet-markercluster/dist/styles.min.css";
 import coffeeBean from '../images/bean.svg';
 import hub from '../images/hub.svg';
+import CurrentLocationSVG from '../images/currentLocation.svg';
 import TimeAgo from 'javascript-time-ago';
 
 import pt from 'javascript-time-ago/locale/pt.json';
@@ -24,9 +25,14 @@ const myIcon = new L.Icon({
 
 // Leaflet custom marker
 const hubIcon = new L.Icon({
-    // Coffee bean attribution -- Thanks! https://commons.wikimedia.org/wiki/File:Coffee_bean_symbol.svg
     iconUrl: hub,
     iconSize: new L.Point(30, 30),
+    className: 'leaflet-bean-icon',
+});
+
+const CurrentLocation = new L.Icon({
+    iconUrl: CurrentLocationSVG,
+    iconSize: new L.Point(150, 150),
     className: 'leaflet-bean-icon',
 });
 
@@ -64,19 +70,35 @@ class CoffeeMap extends Component {
                         position="bottomleft"
                         prefix={false}
                     />
-
+                    
+                    <Marker
+                            icon= {CurrentLocation} 
+                            key={"currentPosition"}
+                            center={this.state.center}
+                            position={this.state.center}
+                            
+                        >
+                    <Popup
+                        direction="auto"
+                        offset={[2, 0]}
+                        opacity={1}>
+                        <span>você está aqui</span>
+                    </Popup>
+                        </Marker>
                     <MarkerClusterGroup
                         spiderfyDistanceMultiplier={1}
                         showCoverageOnHover={false}
                         maxClusterRadius={35}
                     >
+                        {/* //voce esta aqui */}
+                        
                         {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
                             let { City, mapCoords, Roaster, URL, DateISO, Telefone } = dataItem;
                             let googleDirection = `https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`;
                             
                             let dateMarked;
                             if(DateISO) dateMarked = timeAgo.format(Date.now() - (Date.now() - new Date(DateISO).getTime()) );
-                            if(Telefone) Telefone="tel:"+Telefone;
+                            if(Telefone) Telefone="contato:"+Telefone;
                             //filtrar datas antigas
                             // if(
                             //     dateMarked.includes("semana") 
