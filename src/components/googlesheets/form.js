@@ -24,7 +24,12 @@ const doc = new GoogleSpreadsheet(process.env.REACT_APP_GOOGLESHEETID);
 class NameForm extends Component {
     constructor(props) {
       super(props);
-      this.state = {value: '', alimento: props.alimento, isLoading:false};
+      this.state = {
+        value: '', 
+        alimento: props.alimento, 
+        isLoading:false,
+        telefone:props.telefone
+      };
   
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,8 +37,13 @@ class NameForm extends Component {
 
     //ATUALIZAR PROPS VINDAS DO PAI
     static getDerivedStateFromProps(nextProps, state) {
-      if (state && nextProps.alimento !== state.alimento){ 
-        state.alimento=nextProps.alimento;
+      if(state){
+        if (nextProps.alimento !== state.alimento){ 
+          state.alimento=nextProps.alimento;
+        }
+        if (nextProps.telefone !== state.telefone){ 
+          state.telefone=nextProps.telefone;
+        }
       }
       return state;
     }
@@ -60,7 +70,7 @@ class NameForm extends Component {
         //row = { Name: "new name", Value: "new value" };
         
         // Total row count
-        const row = { Roaster:  self.state.alimento, URL:", nº"+self.state.value.replace(/[^0-9]/g,''), City: self.state.value, DateISO: new Date().toISOString() };
+        const row = { Roaster:  self.state.alimento, URL:", nº"+self.state.value.replace(/[^0-9]/g,''), City: self.state.value, DateISO: new Date().toISOString(), Telefone: self.state.telefone };
         
         try{
           let providerResult = await provider.search({ query: self.state.value.replace('-',",") + ', Brazil' });
@@ -94,7 +104,7 @@ class NameForm extends Component {
         :
         <form onSubmit={this.handleSubmit}>
           <label>
-            <input className="TextField" type="text" placeholder='Insira rua,bairro,cidade,estado' value={this.state.value} onChange={this.handleChange} />
+            <input className="TextField" type="text" placeholder='Insira rua,nº,bairro,cidade,estado' value={this.state.value} onChange={this.handleChange} />
           </label>
           <input className="SubmitButton" type="submit" value="Enviar Endereço" />
         </form>

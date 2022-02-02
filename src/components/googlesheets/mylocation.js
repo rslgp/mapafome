@@ -11,7 +11,13 @@ const doc = new GoogleSpreadsheet(process.env.REACT_APP_GOOGLESHEETID);
 class NameForm extends Component {
     constructor(props) {
       super(props);
-      this.state = {value: '', location: props.location, alimento: props.alimento, isLoading:props.isLoading};
+      this.state = {
+        value: '', 
+        location: props.location, 
+        alimento: props.alimento, 
+        isLoading:props.isLoading,
+        telefone:props.telefone,
+      };
   
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -48,8 +54,14 @@ class NameForm extends Component {
 
     //ATUALIZAR PROPS VINDAS DO PAI
     static getDerivedStateFromProps(nextProps, state) {
-      if (state && nextProps.alimento !== state.alimento){ 
-        state.alimento=nextProps.alimento;
+      if(state){
+
+        if (nextProps.alimento !== state.alimento){ 
+          state.alimento=nextProps.alimento;
+        }
+        if (nextProps.telefone !== state.telefone){ 
+          state.telefone=nextProps.telefone;
+        }
       }
       return state;
     }
@@ -72,7 +84,7 @@ class NameForm extends Component {
                 const sheet = doc.sheetsByIndex[0];
                 const rows = await sheet.getRows();
                 // Total row count
-                const row = { Roaster: self.state.alimento, URL:"", City: "", Coordinates:JSON.stringify([self.props.location[0], self.props.location[1]]), DateISO: new Date().toISOString() };
+                const row = { Roaster: self.state.alimento, URL:"", City: "", Coordinates:JSON.stringify([self.props.location[0], self.props.location[1]]), DateISO: new Date().toISOString(), Telefone: self.props.telefone };
                 
                 const result = await sheet.addRow(row);
                 console.log(result);
