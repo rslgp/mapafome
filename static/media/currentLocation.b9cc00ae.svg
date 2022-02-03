@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
-  <ellipse style="stroke: rgb(0, 0, 0); fill-rule: nonzero; fill: rgb(8, 0, 255);" cx="257.985" cy="259.065" rx="16.611" ry="16.611" bx:origin="-7.037957 -1.302234"/>
-  <path d="M 200.997 118.754 H 274.787 L 274.787 103.754 L 314.787 123.754 L 274.787 143.754 L 274.787 128.754 H 200.997 V 118.754 Z" style="stroke: rgb(0, 0, 0); fill: rgb(13, 0, 255);" transform="matrix(0.007299, 0.999973, -0.999973, 0.007299, 379.438995, -79.042435)" bx:shape="arrow 200.997 103.754 113.79 40 10 40 0 1@e8828465" bx:origin="0.654847 6.753674"/>
-</svg>
