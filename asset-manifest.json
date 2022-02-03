@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/mapafome/static/css/main.c49e5ef3.chunk.css",
-    "main.js": "/mapafome/static/js/main.7f80475e.chunk.js",
-    "main.js.map": "/mapafome/static/js/main.7f80475e.chunk.js.map",
+    "main.js": "/mapafome/static/js/main.c8915104.chunk.js",
+    "main.js.map": "/mapafome/static/js/main.c8915104.chunk.js.map",
     "runtime-main.js": "/mapafome/static/js/runtime-main.3b486bf8.js",
     "runtime-main.js.map": "/mapafome/static/js/runtime-main.3b486bf8.js.map",
     "static/css/2.b3ad4daa.chunk.css": "/mapafome/static/css/2.b3ad4daa.chunk.css",
@@ -13,7 +13,7 @@
     "static/css/main.c49e5ef3.chunk.css.map": "/mapafome/static/css/main.c49e5ef3.chunk.css.map",
     "static/js/2.ca78b677.chunk.js.LICENSE.txt": "/mapafome/static/js/2.ca78b677.chunk.js.LICENSE.txt",
     "static/media/bean.59d85c01.svg": "/mapafome/static/media/bean.59d85c01.svg",
-    "static/media/currentLocation.001b2221.svg": "/mapafome/static/media/currentLocation.001b2221.svg",
+    "static/media/currentLocation.b9cc00ae.svg": "/mapafome/static/media/currentLocation.b9cc00ae.svg",
     "static/media/hub.8d920506.svg": "/mapafome/static/media/hub.8d920506.svg",
     "static/media/qr.20154bbf.svg": "/mapafome/static/media/qr.20154bbf.svg"
   },
@@ -22,6 +22,6 @@
     "static/css/2.b3ad4daa.chunk.css",
     "static/js/2.ca78b677.chunk.js",
     "static/css/main.c49e5ef3.chunk.css",
-    "static/js/main.7f80475e.chunk.js"
+    "static/js/main.c8915104.chunk.js"
   ]
 }
