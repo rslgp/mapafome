@@ -5,6 +5,7 @@ import Header from './components/header';
 
 import NameForm from './components/googlesheets/form';
 import MyLocationButton from './components/googlesheets/mylocation';
+import Sugestao from './components/googlesheets/sugestao';
 
 import CoffeeMap from './components/map.js';
 // import CoffeeTable from './components/table';
@@ -231,8 +232,10 @@ class App extends Component {
                 Compartilhar no Whatsapp</a>
                 <a target='_blank' rel="noreferrer" href="https://t.me/share?url=https%3A%2F%2Frslgp.github.io%2Fmapafome&amp;text=Para%20marcar%20no%20mapa%20e%20alimentar%20quem%20tem%20fome%2C%20achei%20esse%20site%3A" className="tgme_widget_share_btn"><img className="telegram" src="https://telegram.org/img/WidgetButton_LogoSmall.png" alt=""></img></a>
 
-                <img src={qr} alt=""/>
+                {/* <img src={qr} alt=""/> */}
                 {/* <CleanOld></CleanOld> */}
+
+                <Sugestao/>
 
               </div>
                

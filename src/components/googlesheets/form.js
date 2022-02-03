@@ -70,7 +70,11 @@ class NameForm extends Component {
         //row = { Name: "new name", Value: "new value" };
         
         // Total row count
-        const row = { Roaster:  self.state.alimento, URL:", nº"+self.state.value.replace(/[^0-9]/g,''), City: self.state.value, DateISO: new Date().toISOString(), Telefone: self.state.telefone };
+        let numero = self.state.value.replace(/[^0-9]/g,'');
+        if(numero !== ''){
+          numero = ", nº"+numero;
+        }
+        const row = { Roaster:  self.state.alimento, URL:numero, City: self.state.value, DateISO: new Date().toISOString(), Telefone: self.state.telefone };
         
         try{
           let providerResult = await provider.search({ query: self.state.value.replace('-',",") + ', Brazil' });

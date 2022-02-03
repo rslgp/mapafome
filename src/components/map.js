@@ -34,6 +34,7 @@ const CurrentLocation = new L.Icon({
     iconUrl: CurrentLocationSVG,
     iconSize: new L.Point(150, 150),
     className: 'leaflet-bean-icon',
+    interactive: false
 });
 
 class CoffeeMap extends Component {
@@ -76,14 +77,22 @@ class CoffeeMap extends Component {
                             key={"currentPosition"}
                             center={this.state.center}
                             position={this.state.center}
-                            
+
+                            eventHandlers={{
+                                click: (e) => { 
+                                    e.preventDefault();
+                                }
+                            }}
+
+                            interactive={false}
                         >
-                    <Popup
+                            
+                    {/* <Popup
                         direction="auto"
                         offset={[2, 0]}
                         opacity={1}>
                         <span>você está aqui</span>
-                    </Popup>
+                    </Popup> */}
                         </Marker>
                     <MarkerClusterGroup
                         spiderfyDistanceMultiplier={1}
