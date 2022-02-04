@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/mapafome/static/css/main.bdc64a11.chunk.css",
-    "main.js": "/mapafome/static/js/main.91ec7fb2.chunk.js",
-    "main.js.map": "/mapafome/static/js/main.91ec7fb2.chunk.js.map",
+    "main.css": "/mapafome/static/css/main.c8afb109.chunk.css",
+    "main.js": "/mapafome/static/js/main.e38cbbae.chunk.js",
+    "main.js.map": "/mapafome/static/js/main.e38cbbae.chunk.js.map",
     "runtime-main.js": "/mapafome/static/js/runtime-main.3b486bf8.js",
     "runtime-main.js.map": "/mapafome/static/js/runtime-main.3b486bf8.js.map",
     "static/css/2.b3ad4daa.chunk.css": "/mapafome/static/css/2.b3ad4daa.chunk.css",
@@ -10,10 +10,11 @@
     "static/js/2.b4bba6dc.chunk.js.map": "/mapafome/static/js/2.b4bba6dc.chunk.js.map",
     "index.html": "/mapafome/index.html",
     "static/css/2.b3ad4daa.chunk.css.map": "/mapafome/static/css/2.b3ad4daa.chunk.css.map",
-    "static/css/main.bdc64a11.chunk.css.map": "/mapafome/static/css/main.bdc64a11.chunk.css.map",
+    "static/css/main.c8afb109.chunk.css.map": "/mapafome/static/css/main.c8afb109.chunk.css.map",
     "static/js/2.b4bba6dc.chunk.js.LICENSE.txt": "/mapafome/static/js/2.b4bba6dc.chunk.js.LICENSE.txt",
     "static/media/bean.59d85c01.svg": "/mapafome/static/media/bean.59d85c01.svg",
     "static/media/currentLocation.b9cc00ae.svg": "/mapafome/static/media/currentLocation.b9cc00ae.svg",
+    "static/media/green.72b1a10c.svg": "/mapafome/static/media/green.72b1a10c.svg",
     "static/media/hub.8d920506.svg": "/mapafome/static/media/hub.8d920506.svg",
     "static/media/qr.20154bbf.svg": "/mapafome/static/media/qr.20154bbf.svg"
   },
@@ -21,7 +22,7 @@
     "static/js/runtime-main.3b486bf8.js",
     "static/css/2.b3ad4daa.chunk.css",
     "static/js/2.b4bba6dc.chunk.js",
-    "static/css/main.bdc64a11.chunk.css",
-    "static/js/main.91ec7fb2.chunk.js"
+    "static/css/main.c8afb109.chunk.css",
+    "static/js/main.e38cbbae.chunk.js"
   ]
 }
