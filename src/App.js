@@ -3,7 +3,7 @@ import './App.css';
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
 import Header from './components/header';
 
-import NameForm from './components/googlesheets/form';
+import InserirEndereco from './components/googlesheets/endereco';
 import MyLocationButton from './components/googlesheets/mylocation';
 import Sugestao from './components/googlesheets/sugestao';
 
@@ -191,7 +191,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header rowCountProp={this.state.rowCount} />
-        {/* <NameForm/>
+        {/* <InserirEndereco/>
         <MyLocationButton location={this.state.center}/> */}
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8}>
@@ -279,7 +279,7 @@ class App extends Component {
                 telefone={this.state.telefoneEncryptado}
                 diaSemana={this.state.diaSemana}
                 /> 
-                <NameForm 
+                <InserirEndereco 
                 alimento={this.state.alimento} 
                 telefone={this.state.telefoneEncryptado}
                 diaSemana={this.state.diaSemana}
