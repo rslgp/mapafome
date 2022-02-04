@@ -6,6 +6,7 @@ import MarkerClusterGroup from 'react-leaflet-markercluster';
 import "react-leaflet-markercluster/dist/styles.min.css";
 import coffeeBean from '../images/bean.svg';
 import hub from '../images/hub.svg';
+import green from '../images/green.svg';
 import CurrentLocationSVG from '../images/currentLocation.svg';
 import TimeAgo from 'javascript-time-ago';
 
@@ -27,6 +28,13 @@ const myIcon = new L.Icon({
 const hubIcon = new L.Icon({
     iconUrl: hub,
     iconSize: new L.Point(30, 30),
+    className: 'leaflet-bean-icon',
+});
+
+// Leaflet custom marker
+const greenIcon = new L.Icon({
+    iconUrl: green,
+    iconSize: new L.Point(35, 35),
     className: 'leaflet-bean-icon',
 });
 
@@ -102,7 +110,7 @@ class CoffeeMap extends Component {
                         {/* //voce esta aqui */}
                         
                         {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
-                            let { City, mapCoords, Roaster, URL, DateISO, Telefone } = dataItem;
+                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana } = dataItem;
                             let googleDirection = `https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`;
                             
                             let dateMarked;
@@ -115,12 +123,27 @@ class CoffeeMap extends Component {
                             // ) return (<div></div>);
                             
                             let precisandoMsg, CurrentIcon;
-                            if(Roaster === "Doador"){
-                                precisandoMsg = "Recebendo alimento para distribuir"+URL;
-                                CurrentIcon = hubIcon;
-                            }else{
-                                precisandoMsg = `Precisando de ${Roaster}`+URL;
-                                CurrentIcon = myIcon;
+                            switch(Roaster){
+                                case "Doador":
+                                    precisandoMsg = "Recebendo alimento para distribuir"+URL;
+                                    CurrentIcon = hubIcon;
+                                    break;
+                                
+                                case "Alimento de cesta básica":
+                                case "Alimento pronto":
+                                    precisandoMsg = `Precisando de ${Roaster}`+URL;
+                                    CurrentIcon = myIcon;
+                                    break;
+                                
+                                case "PrecisandoBuscar":
+                                    precisandoMsg = `Precisando de pessoas para buscar `+DiaSemana;
+                                    CurrentIcon = greenIcon;
+                                    break;
+                                
+                                default:
+                                    precisandoMsg = `Precisando de ${Roaster}`+URL;
+                                    CurrentIcon = myIcon;
+                                    break;
                             }
                             
                             return (

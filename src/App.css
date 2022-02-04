@@ -61,7 +61,15 @@ button, .SubmitButton {
   cursor: pointer;
   border-radius: 3px;
 }
-
+.greenHub{
+  background-color: #baffb8;
+}
+.blueHub{
+  background-color: #cfd7fa;
+}
+.yellowHub{
+  background-color: #e0ab44;
+}
 textarea{
   width: 100%;
   height: 100px;
