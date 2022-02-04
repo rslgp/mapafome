@@ -45,6 +45,54 @@ const CurrentLocation = new L.Icon({
     interactive: false
 });
 
+const markerclusterOptionsPrecisando = function (cluster) {
+        var childCount = cluster.getChildCount();
+        var c = ' marker-cluster-';
+        if (childCount < 10) {
+          c += 'small';
+        } 
+        else if (childCount < 100) {
+          c += 'medium';
+        } 
+        else {
+          c += 'large';
+        }
+       
+        return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', 
+         className: 'marker-cluster' + c + '-precisandoCluster', iconSize: new L.Point(40, 40) });
+        };
+
+  const markerclusterOptionsAnjos = (cluster) => {
+    var childCount = cluster.getChildCount();
+    var c = ' marker-cluster-';
+    if (childCount < 10) {
+      c += 'small';
+    } 
+    else if (childCount < 100) {
+      c += 'medium';
+    } 
+    else {
+      c += 'large';
+    }
+   
+    return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', 
+     className: 'marker-cluster' + c +'-anjosCluster', iconSize: new L.Point(40, 40) });
+    };
+
+  function getClusterClass(markers) {
+    const combinedMarker = false;
+  
+    // Disabling rule, because we need to break loop at specific condition
+    for (const marker of markers) { // eslint-disable-line no-restricted-syntax
+      if (marker.options.someMarkerCustomOption) {
+        combinedMarker = true;
+        break;
+      }
+    }
+  
+    return combinedMarker ? 'combined' : 'single';
+  };
+
 class CoffeeMap extends Component {
 
     // Initial state
@@ -102,13 +150,13 @@ class CoffeeMap extends Component {
                         <span>você está aqui</span>
                     </Popup> */}
                         </Marker>
+
                     <MarkerClusterGroup
                         spiderfyDistanceMultiplier={1}
                         showCoverageOnHover={false}
                         maxClusterRadius={35}
-                    >
-                        {/* //voce esta aqui */}
-                        
+                        iconCreateFunction={markerclusterOptionsAnjos}
+                    >                        
                         {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
                             let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana } = dataItem;
                             let googleDirection = `https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`;
@@ -133,11 +181,84 @@ class CoffeeMap extends Component {
                                 case "Alimento pronto":
                                     precisandoMsg = `Precisando de ${Roaster}`+URL;
                                     CurrentIcon = myIcon;
+                                    return (<div></div>);
                                     break;
                                 
                                 case "PrecisandoBuscar":
                                     precisandoMsg = `Precisando de pessoas para buscar `+DiaSemana;
                                     CurrentIcon = greenIcon;
+                                    break;
+                                
+                                default:
+                                    precisandoMsg = `Precisando de ${Roaster}`+URL;
+                                    CurrentIcon = myIcon;
+                                    return (<div></div>);
+                                    break;
+                            }
+                            
+                            return (
+                                <Marker
+                                    eventHandlers={{
+                                        click: (e) => { 
+                                            // alert(`Precisando de ${Roaster}`); 
+                                            console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); 
+                                            // window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) 
+                                        }
+                                    }}
+                                    icon= {CurrentIcon} 
+                                    key={k}
+                                    center={[mapCoords[0], mapCoords[1]]}
+                                    position={[mapCoords[0], mapCoords[1]]}
+                                >
+                                    <Popup>
+                                        <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino</a>
+                                        <br/>
+                                        {precisandoMsg}
+                                        <br/>
+                                        {dateMarked} {Telefone}
+                                    </Popup>
+                                    {/* <Tooltip
+                                        // direction="auto"
+                                        // offset={[15, 0]}
+                                        // opacity={1}>
+                                        // <span><a href={URL}>Precisando de<br></br>{Roaster}</a></span>
+                                        // <span>{City}, BR</span>
+                                    </Tooltip> */}
+                                </Marker>);
+                        })}
+                    </MarkerClusterGroup>
+
+                    
+                    <MarkerClusterGroup
+                        spiderfyDistanceMultiplier={1}
+                        showCoverageOnHover={false}
+                        maxClusterRadius={35}
+                        iconCreateFunction={markerclusterOptionsPrecisando}
+                    >                        
+                        {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
+                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana } = dataItem;
+                            let googleDirection = `https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`;
+                            
+                            let dateMarked;
+                            if(DateISO) dateMarked = timeAgo.format(Date.now() - (Date.now() - new Date(DateISO).getTime()) );
+                            if(Telefone) Telefone="contato:"+Telefone;
+                            //filtrar datas antigas
+                            // if(
+                            //     dateMarked.includes("semana") 
+                            // //&& Number(dateMarked.replace(/[^0-9]/g,'')) > 7
+                            // ) return (<div></div>);
+                            
+                            let precisandoMsg, CurrentIcon;
+                            switch(Roaster){
+                                case "PrecisandoBuscar":
+                                case "Doador":
+                                    return (<div></div>);
+                                    break;
+                                
+                                case "Alimento de cesta básica":
+                                case "Alimento pronto":
+                                    precisandoMsg = `Precisando de ${Roaster}`+URL;
+                                    CurrentIcon = myIcon;
                                     break;
                                 
                                 default:
@@ -177,6 +298,8 @@ class CoffeeMap extends Component {
                                 </Marker>);
                         })}
                     </MarkerClusterGroup>
+
+                    
                 </MapContainer>
             </div>
         );
