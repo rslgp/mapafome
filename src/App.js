@@ -61,11 +61,14 @@ class App extends Component {
       center:[-8.0671132,-34.8766719],
       alimento:'Alimento de cesta básica',
       telefone:'',
-      telefoneEncryptado:''
+      telefoneEncryptado:'',
+      diaSemana:''
     }
 
+    this.dropDownMenu = React.createRef();
     this.setTipoAlimento = this.setTipoAlimento.bind(this);
     this.handleChangeTelefone = this.handleChangeTelefone.bind(this);
+    this.setDiaSemana = this.setDiaSemana.bind(this);
   }
 
   setTipoAlimento(event){
@@ -73,6 +76,27 @@ class App extends Component {
       alimento: event.target.value
     });
 
+    if(event.target.value === 'PrecisandoBuscar'){
+      this.setState({
+        diaSemana: this.dropDownMenu.current.value
+      });
+
+    }else{
+      this.setState({
+        diaSemana: ''
+      });
+
+    }
+
+  }
+
+  setDiaSemana(event){
+    this.setState({
+      diaSemana: event.target.selectedOptions[0].value
+    });
+    // console.log(this.dropDownMenu.current.value);
+    // console.log(event.target.selectedOptions[0].value);
+    // console.log(this.state.diaSemana);
   }
 
   handleChangeTelefone(event) {
@@ -184,36 +208,36 @@ class App extends Component {
                 ? <div className="flexLoading"><div className="loading"><CircularProgress /></div></div>
                 // : <CoffeeTable dataMapsProp={this.state.dataMaps} dataHeaderProp={this.state.dataHeader} />
               : <div>
-                Mapeados: {this.state.rowCount}<br></br>Insira o endereço de quem está sem dinheiro e com fome e o selecione tipo de alimento:
+                Mapeados: {this.state.rowCount}<br></br>No Mapa da Fome todos podem ser ponte entre as cores ou contribuir, nele existem as<span className="yellowHub">  pessoas </span> que  estão passando necessidade e fome (pedindo comida pronta ou de cesta básica),as<span className="blueHub">  pessoas </span>que fazem sopão solidário, alimenta quem tem fome, ongs e as<span className="greenHub"> pessoas </span>que trabalham com alimentos onde acontece desperdício, cada um tem sua cor no mapa, se você for uma dessas pessoas selecione sua cor e se marque no mapa:
         {/* RADIO BUTTON */}
         <ul>
           <li>
-            <label>
+            <label className='yellowHub'>
               <input
                 type="radio"
                 value="Alimento de cesta básica"
                 checked={this.state.alimento === "Alimento de cesta básica"}
                 onChange={this.setTipoAlimento}
               />
-              Alimento de cesta básica
+              Preciso de Alimento de cesta básica
             </label>
           </li>
           
           <li>
-            <label>
+            <label className='yellowHub'>
               <input
                 type="radio"
                 value="Alimento pronto"
                 checked={this.state.alimento === "Alimento pronto"}
                 onChange={this.setTipoAlimento}
               />
-              Alimento pronto
+              Preciso de Alimento pronto
             </label>
           </li>
 
           
           <li>
-            <label>
+            <label className='blueHub'>
               <input
                 type="radio"
                 value="Doador"
@@ -223,11 +247,44 @@ class App extends Component {
               Recebo para doar
             </label>
           </li>
+
+          
+          <li>
+            <label className='greenHub'>
+              <input
+                type="radio"
+                value="PrecisandoBuscar"
+                checked={this.state.alimento === "PrecisandoBuscar"}
+                onChange={this.setTipoAlimento}
+              />
+              Tenho alimento perto de se perder 
+            </label>
+            <select ref= {this.dropDownMenu} id="dia" onChange={this.setDiaSemana}>
+              <option value="Hoje">Hoje</option>
+              <option value="toda Segunda">toda Segunda</option>
+              <option value="toda Terça">toda Terça</option>
+              <option value="toda Quarta">toda Quarta</option>
+              <option value="toda Quinta">toda Quinta</option>
+              <option value="toda Sexta">toda Sexta</option>
+              <option value="todo Sábado">todo Sábado</option>
+              <option value="todo Domingo">todo Domingo</option>
+            </select>
+          </li>
         </ul>
         {/* FIM RADIO BUTTON */}
         <input className="TextField" type="text" placeholder='Insira telefone se quiser' value={this.state.telefone} onChange={this.handleChangeTelefone} />
-                <MyLocationButton location={this.state.center} alimento={this.state.alimento} telefone={this.state.telefoneEncryptado}/> 
-                <NameForm alimento={this.state.alimento} telefone={this.state.telefoneEncryptado}/> 
+                <MyLocationButton 
+                location={this.state.center} 
+                alimento={this.state.alimento} 
+                telefone={this.state.telefoneEncryptado}
+                diaSemana={this.state.diaSemana}
+                /> 
+                <NameForm 
+                alimento={this.state.alimento} 
+                telefone={this.state.telefoneEncryptado}
+                diaSemana={this.state.diaSemana}
+                /> 
+
                 <a className="wpbtn" title="share to whatsapp" href="whatsapp://send?text=Para marcar no mapa e alimentar quem tem fome, achei esse site: https://rslgp.github.io/mapafome"> <img className="wp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""/>
                 Compartilhar no Whatsapp</a>
                 <a target='_blank' rel="noreferrer" href="https://t.me/share?url=https%3A%2F%2Frslgp.github.io%2Fmapafome&amp;text=Para%20marcar%20no%20mapa%20e%20alimentar%20quem%20tem%20fome%2C%20achei%20esse%20site%3A" className="tgme_widget_share_btn"><img className="telegram" src="https://telegram.org/img/WidgetButton_LogoSmall.png" alt=""></img></a>
