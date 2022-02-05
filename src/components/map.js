@@ -116,7 +116,7 @@ class CoffeeMap extends Component {
                 <MapContainer
                     style={{ height: "89vh", width: "100%" }}
                     zoom={screensizeZoom}
-                    maxZoom={20}
+                    maxZoom={18}
                     center={this.state.center}
                     attributionControl={false}>
                     <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
