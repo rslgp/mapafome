@@ -208,7 +208,7 @@ class App extends Component {
                 ? <div className="flexLoading"><div className="loading"><CircularProgress /></div></div>
                 // : <CoffeeTable dataMapsProp={this.state.dataMaps} dataHeaderProp={this.state.dataHeader} />
               : <div>
-                Mapeados: {this.state.rowCount}<br></br>No Mapa da Fome todos podem ser ponte entre as cores ou contribuir, nele existem as<span className="yellowHub">  pessoas </span> que  estão passando necessidade e fome (pedindo comida pronta ou de cesta básica),as<span className="blueHub">  pessoas </span>que fazem sopão solidário, alimenta quem tem fome, ongs, voluntários que realizam distribuição de alimentos e as<span className="greenHub"> pessoas </span>que trabalham com alimentos onde acontece desperdício, cada um tem sua cor no mapa, se você for uma dessas pessoas selecione sua cor e se marque no mapa:
+                Mapeados: {this.state.rowCount}<br></br>Se você se identifica selecione sua cor e se marque no mapa (mais informações no final da página):
         {/* RADIO BUTTON */}
         <ul>
           <li>
@@ -291,7 +291,7 @@ class App extends Component {
 
                 {/* <img src={qr} alt=""/> */}
                 {/* <CleanOld></CleanOld> */}
-
+                No Mapa da Fome todos podem ser ponte entre as cores ou contribuir, nele existem as<span className="yellowHub">  pessoas </span> que  estão passando necessidade e fome (pedindo comida pronta ou de cesta básica),as<span className="blueHub">  pessoas </span>que fazem sopão solidário, alimenta quem tem fome, ongs, voluntários que realizam distribuição de alimentos e as<span className="greenHub"> pessoas </span>que trabalham com alimentos onde acontece desperdício, cada um tem sua cor no mapa.
                 <Sugestao/>
 
               </div>

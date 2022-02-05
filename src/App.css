@@ -69,7 +69,7 @@ button, .SubmitButton {
   background-color: #cfd7fa;
 }
 .yellowHub{
-  background-color: #e0ab44;
+  background-color: #ffdf9d;
 }
 textarea{
   width: 100%;
@@ -264,7 +264,7 @@ a.tgme_widget_share_btn {
 
 
 .marker-cluster-small-precisandoCluster {
-  background-color: rgb(102, 100, 0);
+  background-color: rgb(212, 162, 64);
 }
 
 .marker-cluster-small-precisandoCluster div {
@@ -272,7 +272,7 @@ a.tgme_widget_share_btn {
 }
 
 .marker-cluster-medium-precisandoCluster {
-  background-color: rgb(102, 80, 0) !important;
+  background-color: rgb(216, 174, 59) !important;
 }
 
 .marker-cluster-medium-precisandoCluster div {
@@ -280,7 +280,7 @@ a.tgme_widget_share_btn {
 }
 
 .marker-cluster-large-precisandoCluster {
-  background-color: rgb(102, 60, 0) !important;
+  background-color: rgb(163, 97, 5) !important;
 }
 
 .marker-cluster-large-precisandoCluster div {
