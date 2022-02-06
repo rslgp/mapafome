@@ -1,28 +1,29 @@
 {
   "files": {
-    "main.css": "/mapafome/static/css/main.2b1fd8bc.chunk.css",
-    "main.js": "/mapafome/static/js/main.de35d798.chunk.js",
-    "main.js.map": "/mapafome/static/js/main.de35d798.chunk.js.map",
+    "main.css": "/mapafome/static/css/main.c61322ec.chunk.css",
+    "main.js": "/mapafome/static/js/main.0d8fd737.chunk.js",
+    "main.js.map": "/mapafome/static/js/main.0d8fd737.chunk.js.map",
     "runtime-main.js": "/mapafome/static/js/runtime-main.3b486bf8.js",
     "runtime-main.js.map": "/mapafome/static/js/runtime-main.3b486bf8.js.map",
     "static/css/2.b3ad4daa.chunk.css": "/mapafome/static/css/2.b3ad4daa.chunk.css",
-    "static/js/2.00e8877c.chunk.js": "/mapafome/static/js/2.00e8877c.chunk.js",
-    "static/js/2.00e8877c.chunk.js.map": "/mapafome/static/js/2.00e8877c.chunk.js.map",
+    "static/js/2.23d0d1ff.chunk.js": "/mapafome/static/js/2.23d0d1ff.chunk.js",
+    "static/js/2.23d0d1ff.chunk.js.map": "/mapafome/static/js/2.23d0d1ff.chunk.js.map",
     "index.html": "/mapafome/index.html",
     "static/css/2.b3ad4daa.chunk.css.map": "/mapafome/static/css/2.b3ad4daa.chunk.css.map",
-    "static/css/main.2b1fd8bc.chunk.css.map": "/mapafome/static/css/main.2b1fd8bc.chunk.css.map",
-    "static/js/2.00e8877c.chunk.js.LICENSE.txt": "/mapafome/static/js/2.00e8877c.chunk.js.LICENSE.txt",
+    "static/css/main.c61322ec.chunk.css.map": "/mapafome/static/css/main.c61322ec.chunk.css.map",
+    "static/js/2.23d0d1ff.chunk.js.LICENSE.txt": "/mapafome/static/js/2.23d0d1ff.chunk.js.LICENSE.txt",
     "static/media/bean.8d52f968.svg": "/mapafome/static/media/bean.8d52f968.svg",
     "static/media/currentLocation.b9cc00ae.svg": "/mapafome/static/media/currentLocation.b9cc00ae.svg",
     "static/media/green.00533c2a.svg": "/mapafome/static/media/green.00533c2a.svg",
     "static/media/hub.4f920e1b.svg": "/mapafome/static/media/hub.4f920e1b.svg",
-    "static/media/qr.20154bbf.svg": "/mapafome/static/media/qr.20154bbf.svg"
+    "static/media/qr.20154bbf.svg": "/mapafome/static/media/qr.20154bbf.svg",
+    "static/media/red.651e6e29.svg": "/mapafome/static/media/red.651e6e29.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.3b486bf8.js",
     "static/css/2.b3ad4daa.chunk.css",
-    "static/js/2.00e8877c.chunk.js",
-    "static/css/main.2b1fd8bc.chunk.css",
-    "static/js/main.de35d798.chunk.js"
+    "static/js/2.23d0d1ff.chunk.js",
+    "static/css/main.c61322ec.chunk.css",
+    "static/js/main.0d8fd737.chunk.js"
   ]
 }
