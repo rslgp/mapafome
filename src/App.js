@@ -264,7 +264,37 @@ class App extends Component {
             </label>
           </li>
 
-          
+          <li>
+          <label className='redHub'>
+              <input
+                type="radio"
+                value="EntregaAlimentoPronto"
+                checked={this.state.alimento === "EntregaAlimentoPronto"}
+                onChange={this.setTipoAlimento}
+              />
+              Entrego refeições em ponto fixo
+            </label>
+            <select ref= {this.dropDownMenuSemana} id="dia" onChange={this.setDiaSemana}>
+              <option value="toda Segunda">toda Segunda</option>
+              <option value="toda Terça">toda Terça</option>
+              <option value="toda Quarta">toda Quarta</option>
+              <option value="toda Quinta">toda Quinta</option>
+              <option value="toda Sexta">toda Sexta</option>
+              <option value="todo Sábado">todo Sábado</option>
+              <option value="todo Domingo">todo Domingo</option>
+            </select>
+            <select ref= {this.dropDownMenuHorario} id="horario" onChange={this.setHorario}>
+              <option value="manhã 05:30">manhã 05:30</option>
+              <option value="manhã 06:30">manhã 06:30</option>
+              <option value="tarde 13:30">tarde 13:30</option>
+              <option value="tarde 16:30">tarde 16:30</option>
+              <option value="noite 18:30">noite 18:30</option>
+              <option value="noite 19:30">noite 19:30</option>
+            </select>
+          </li>
+
+
+          <br></br>
           <li>
             <label className='greenHub'>
               <input
@@ -296,34 +326,8 @@ class App extends Component {
 
             
           </li>
-          <li>
-          <label className='redHub'>
-              <input
-                type="radio"
-                value="EntregaAlimentoPronto"
-                checked={this.state.alimento === "EntregaAlimentoPronto"}
-                onChange={this.setTipoAlimento}
-              />
-              Entrego refeições em ponto fixo
-            </label>
-            <select ref= {this.dropDownMenuSemana} id="dia" onChange={this.setDiaSemana}>
-              <option value="toda Segunda">toda Segunda</option>
-              <option value="toda Terça">toda Terça</option>
-              <option value="toda Quarta">toda Quarta</option>
-              <option value="toda Quinta">toda Quinta</option>
-              <option value="toda Sexta">toda Sexta</option>
-              <option value="todo Sábado">todo Sábado</option>
-              <option value="todo Domingo">todo Domingo</option>
-            </select>
-            <select ref= {this.dropDownMenuHorario} id="horario" onChange={this.setHorario}>
-              <option value="manhã 05:30">manhã 05:30</option>
-              <option value="manhã 06:30">manhã 06:30</option>
-              <option value="tarde 13:30">tarde 13:30</option>
-              <option value="tarde 16:30">tarde 16:30</option>
-              <option value="noite 18:30">noite 18:30</option>
-              <option value="noite 19:30">noite 19:30</option>
-            </select>
-          </li>
+
+        
         </ul>
         {/* FIM RADIO BUTTON */}
         <input className="TextField" type="text" placeholder='Insira telefone se quiser' value={this.state.telefone} onChange={this.handleChangeTelefone} />

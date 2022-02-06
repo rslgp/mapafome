@@ -85,6 +85,11 @@ const markerclusterOptionsPrecisando = function (cluster) {
      className: 'marker-cluster' + c +'-anjosCluster', iconSize: new L.Point(40, 40) });
     };
 
+    const markerclusterOptionsEntrega = (cluster) => {       
+        return new L.DivIcon({ html: '<div><span>' + cluster.getChildCount() + '</span></div>', 
+         className: 'redHub marker-cluster', iconSize: new L.Point(40, 40) });
+    };
+
 
 class CoffeeMap extends Component {
 
@@ -336,7 +341,7 @@ class CoffeeMap extends Component {
                         spiderfyDistanceMultiplier={1}
                         showCoverageOnHover={false}
                         maxClusterRadius={35}
-                        iconCreateFunction={markerclusterOptionsPrecisando}
+                        iconCreateFunction={markerclusterOptionsEntrega}
                     >                        
                         {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
                             let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario } = dataItem;
