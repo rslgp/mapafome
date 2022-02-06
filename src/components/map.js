@@ -109,6 +109,7 @@ class CoffeeMap extends Component {
 
 
 {/* https://github.com/dhis2-club-tanzania/function-maintenance/blob/0dadaa96955156b6ddefc0fcf9dd54e45ffb9458/src/app/shared/modules/ngx-dhis2-visualization/modules/map/constants/tile-layer.constant.ts */}
+{/* https://www.arcgis.com/apps/mapviewer/index.html */}
                     {/* <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         attribution=" &copy; <a href='http://openstreetmap.org' target='_blank' rel='noreferrer'>OpenStreetMap</a>"
                     /> */}
@@ -142,13 +143,13 @@ class CoffeeMap extends Component {
                     <LayersControl position="topleft">
                     <LayersControl.BaseLayer checked name="Mapa">
                     <TileLayer url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
-                     attribution=" &copy; <a href='http://openstreetmap.org' target='_blank' rel='noreferrer'>OpenStreetMap</a>"
+                     attribution=" &copy; <a href='http://openstreetmap.org' target='_blank' rel='noreferrer'>OSM</a>"
                     />
                     </LayersControl.BaseLayer>
 
                     <LayersControl.BaseLayer name="Satelite">
                     <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-                        attribution=" &copy; <a href='http://openstreetmap.org' target='_blank' rel='noreferrer'>OpenStreetMap</a>"
+                        attribution=" &copy; <a href='https://www.arcgis.com/apps/mapviewer/index.html' target='_blank' rel='noreferrer'>Esri</a>"
                     />
                     </LayersControl.BaseLayer>
                     </LayersControl>
