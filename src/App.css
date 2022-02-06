@@ -52,7 +52,13 @@ body, h1, h2, h3, h4, p {
 
 
 /* CUSTOM */
-
+.relativePosition{
+  position: relative;
+}
+.toolPanel{
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
 button, .SubmitButton {
   background-color: #3897f0;
   border: 1px solid #3897f0;
