@@ -63,13 +63,16 @@ class App extends Component {
       telefone:'',
       telefoneEncryptado:'',
       diaSemana:'',
-      tileMapOption:true
+      horario:'',
+
     }
 
-    this.dropDownMenu = React.createRef();
+    this.dropDownMenuSemana = React.createRef();
+    this.dropDownMenuHorario = React.createRef();
     this.setTipoAlimento = this.setTipoAlimento.bind(this);
     this.handleChangeTelefone = this.handleChangeTelefone.bind(this);
     this.setDiaSemana = this.setDiaSemana.bind(this);
+    this.setHorario = this.setHorario.bind(this);
   }
 
   setTipoAlimento(event){
@@ -79,12 +82,14 @@ class App extends Component {
 
     if(event.target.value === 'PrecisandoBuscar' || event.target.value === 'EntregaAlimentoPronto'){
       this.setState({
-        diaSemana: this.dropDownMenu.current.value
+        diaSemana: this.dropDownMenuSemana.current.value,
+        horario: this.dropDownMenuHorario.current.value
       });
 
     }else{
       this.setState({
-        diaSemana: ''
+        diaSemana: '',
+        horario: ''
       });
 
     }
@@ -95,7 +100,17 @@ class App extends Component {
     this.setState({
       diaSemana: event.target.selectedOptions[0].value
     });
-    // console.log(this.dropDownMenu.current.value);
+    // console.log(this.dropDownMenuSemana.current.value);
+    // console.log(event.target.selectedOptions[0].value);
+    // console.log(this.state.diaSemana);
+  }
+
+  
+  setHorario(event){
+    this.setState({
+      horario: event.target.selectedOptions[0].value
+    });
+    // console.log(this.dropDownMenuSemana.current.value);
     // console.log(event.target.selectedOptions[0].value);
     // console.log(this.state.diaSemana);
   }
@@ -260,7 +275,7 @@ class App extends Component {
               />
               Tenho alimento perto de se perder 
             </label>
-            <select ref= {this.dropDownMenu} id="dia" onChange={this.setDiaSemana}>
+            <select ref= {this.dropDownMenuSemana} id="dia" onChange={this.setDiaSemana}>
               <option value="Hoje">Hoje</option>
               <option value="toda Segunda">toda Segunda</option>
               <option value="toda Terça">toda Terça</option>
@@ -269,6 +284,14 @@ class App extends Component {
               <option value="toda Sexta">toda Sexta</option>
               <option value="todo Sábado">todo Sábado</option>
               <option value="todo Domingo">todo Domingo</option>
+            </select>
+            <select ref= {this.dropDownMenuHorario} id="horario" onChange={this.setHorario}>
+              <option value="manhã 05:30">manhã 05:30</option>
+              <option value="manhã 06:30">manhã 06:30</option>
+              <option value="tarde 13:30">tarde 13:30</option>
+              <option value="tarde 16:30">tarde 16:30</option>
+              <option value="noite 18:30">noite 18:30</option>
+              <option value="noite 19:30">noite 19:30</option>
             </select>
 
             
@@ -283,7 +306,7 @@ class App extends Component {
               />
               Entrego refeições em ponto fixo
             </label>
-            <select ref= {this.dropDownMenu} id="dia" onChange={this.setDiaSemana}>
+            <select ref= {this.dropDownMenuSemana} id="dia" onChange={this.setDiaSemana}>
               <option value="toda Segunda">toda Segunda</option>
               <option value="toda Terça">toda Terça</option>
               <option value="toda Quarta">toda Quarta</option>
@@ -291,6 +314,14 @@ class App extends Component {
               <option value="toda Sexta">toda Sexta</option>
               <option value="todo Sábado">todo Sábado</option>
               <option value="todo Domingo">todo Domingo</option>
+            </select>
+            <select ref= {this.dropDownMenuHorario} id="horario" onChange={this.setHorario}>
+              <option value="manhã 05:30">manhã 05:30</option>
+              <option value="manhã 06:30">manhã 06:30</option>
+              <option value="tarde 13:30">tarde 13:30</option>
+              <option value="tarde 16:30">tarde 16:30</option>
+              <option value="noite 18:30">noite 18:30</option>
+              <option value="noite 19:30">noite 19:30</option>
             </select>
           </li>
         </ul>
@@ -301,11 +332,13 @@ class App extends Component {
                 alimento={this.state.alimento} 
                 telefone={this.state.telefoneEncryptado}
                 diaSemana={this.state.diaSemana}
+                horario={this.state.horario}
                 /> 
                 <InserirEndereco 
                 alimento={this.state.alimento} 
                 telefone={this.state.telefoneEncryptado}
                 diaSemana={this.state.diaSemana}
+                horario={this.state.horario}
                 /> 
 
                 <a className="wpbtn" title="share to whatsapp" href="whatsapp://send?text=Para marcar no mapa e alimentar quem tem fome, achei esse site: https://rslgp.github.io/mapafome"> <img className="wp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""/>
@@ -314,7 +347,7 @@ class App extends Component {
 
                 {/* <img src={qr} alt=""/> */}
                 {/* <CleanOld></CleanOld> */}
-                No Mapa da Fome todos podem ser ponte entre as cores ou contribuir, nele existem as<span className="yellowHub">  pessoas </span> que  estão passando necessidade e fome (pedindo comida pronta ou de cesta básica),as<span className="blueHub">  pessoas </span>que fazem sopão solidário, alimenta quem tem fome, ongs, voluntários que realizam distribuição de alimentos e as<span className="greenHub"> pessoas </span>que trabalham com alimentos onde acontece desperdício, cada um tem sua cor no mapa.
+                No Mapa da Fome todos podem ser ponte entre as cores ou contribuir, nele existem as<span className="yellowHub">  pessoas </span> que  estão passando necessidade e fome (pedindo comida pronta ou de cesta básica),as<span className="blueHub">  pessoas </span>que fazem sopão solidário, alimenta quem tem fome, ongs, voluntários que realizam distribuição de alimentos e as<span className="greenHub"> pessoas </span>que trabalham com alimentos onde acontece desperdício, e<span className="redHub">  pessoas </span>que entregam alimentação em ponto fixo em certo dia na semana cada um tem sua cor no mapa.
                 <Sugestao/>
 
               </div>

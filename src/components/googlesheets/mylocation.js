@@ -66,6 +66,9 @@ class NameForm extends Component {
         if (nextProps.diaSemana !== state.diaSemana){ 
           state.diaSemana=nextProps.diaSemana;
         }
+        if (nextProps.horario !== state.horario){ 
+          state.horario=nextProps.horario;
+        }
       }
       return state;
     }
@@ -95,7 +98,9 @@ class NameForm extends Component {
                   Coordinates:JSON.stringify([self.props.location[0], self.props.location[1]]), 
                   DateISO: new Date().toISOString(), 
                   Telefone: self.props.telefone, 
-                  DiaSemana:self.props.diaSemana };
+                  DiaSemana:self.props.diaSemana,
+                  Horario:self.props.horario,
+                };
                 
                 const result = await sheet.addRow(row);
                 console.log(result);

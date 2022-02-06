@@ -30,6 +30,7 @@ class NameForm extends Component {
         isLoading:false,
         telefone:props.telefone,
         diaSemana:props.diaSemana,
+        horario:props.horario,
       };
   
       this.handleChange = this.handleChange.bind(this);
@@ -47,6 +48,9 @@ class NameForm extends Component {
         }
         if (nextProps.diaSemana !== state.diaSemana){ 
           state.diaSemana=nextProps.diaSemana;
+        }
+        if (nextProps.horario !== state.horario){ 
+          state.horario=nextProps.horario;
         }
       }
       return state;
@@ -89,7 +93,9 @@ class NameForm extends Component {
           URL:numero, City: self.state.value,
           DateISO: new Date().toISOString(), 
           Telefone: self.state.telefone, 
-          DiaSemana: self.state.diaSemana };
+          DiaSemana: self.state.diaSemana, 
+          Horario: self.state.horario,
+        };
         
         try{
           let providerResult = await provider.search({ query: self.state.value.replace('-',",") + ', Brazil' });
