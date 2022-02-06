@@ -71,6 +71,10 @@ button, .SubmitButton {
 .yellowHub{
   background-color: #ffdf9d;
 }
+.redHub{
+  background-color: #fca099;
+}
+
 
 .leaflet-touch .leaflet-control-layers-toggle {  
   width: 28px !important;
