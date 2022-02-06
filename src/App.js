@@ -77,7 +77,7 @@ class App extends Component {
       alimento: event.target.value
     });
 
-    if(event.target.value === 'PrecisandoBuscar'){
+    if(event.target.value === 'PrecisandoBuscar' || event.target.value === 'EntregaAlimentoPronto'){
       this.setState({
         diaSemana: this.dropDownMenu.current.value
       });
@@ -262,6 +262,28 @@ class App extends Component {
             </label>
             <select ref= {this.dropDownMenu} id="dia" onChange={this.setDiaSemana}>
               <option value="Hoje">Hoje</option>
+              <option value="toda Segunda">toda Segunda</option>
+              <option value="toda Terça">toda Terça</option>
+              <option value="toda Quarta">toda Quarta</option>
+              <option value="toda Quinta">toda Quinta</option>
+              <option value="toda Sexta">toda Sexta</option>
+              <option value="todo Sábado">todo Sábado</option>
+              <option value="todo Domingo">todo Domingo</option>
+            </select>
+
+            
+          </li>
+          <li>
+          <label className='redHub'>
+              <input
+                type="radio"
+                value="EntregaAlimentoPronto"
+                checked={this.state.alimento === "EntregaAlimentoPronto"}
+                onChange={this.setTipoAlimento}
+              />
+              Entrego refeições em ponto fixo
+            </label>
+            <select ref= {this.dropDownMenu} id="dia" onChange={this.setDiaSemana}>
               <option value="toda Segunda">toda Segunda</option>
               <option value="toda Terça">toda Terça</option>
               <option value="toda Quarta">toda Quarta</option>

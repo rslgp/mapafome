@@ -7,6 +7,7 @@ import "react-leaflet-markercluster/dist/styles.min.css";
 import coffeeBean from '../images/bean.svg';
 import hub from '../images/hub.svg';
 import green from '../images/green.svg';
+import red from '../images/red.svg';
 import CurrentLocationSVG from '../images/currentLocation.svg';
 import TimeAgo from 'javascript-time-ago';
 
@@ -34,6 +35,11 @@ const hubIcon = new L.Icon({
 // Leaflet custom marker
 const greenIcon = new L.Icon({
     iconUrl: green,
+    iconSize: new L.Point(35, 35),
+    className: 'leaflet-bean-icon',
+});
+const redIcon = new L.Icon({
+    iconUrl: red,
     iconSize: new L.Point(35, 35),
     className: 'leaflet-bean-icon',
 });
@@ -302,8 +308,77 @@ class CoffeeMap extends Component {
                                     break;
                                 
                                 default:
-                                    precisandoMsg = `Precisando de ${Roaster}`+URL;
-                                    CurrentIcon = myIcon;
+                                    return (<div></div>);
+                                    break;
+                            }
+                            
+                            return (
+                                <Marker
+                                    eventHandlers={{
+                                        click: (e) => { 
+                                            // alert(`Precisando de ${Roaster}`); 
+                                            console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); 
+                                            // window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) 
+                                        }
+                                    }}
+                                    icon= {CurrentIcon} 
+                                    key={k}
+                                    center={[mapCoords[0], mapCoords[1]]}
+                                    position={[mapCoords[0], mapCoords[1]]}
+                                >
+                                    <Popup>
+                                        <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino</a>
+                                        <br/>
+                                        {precisandoMsg}
+                                        <br/>
+                                        {dateMarked} {Telefone}
+                                    </Popup>
+                                    {/* <Tooltip
+                                        // direction="auto"
+                                        // offset={[15, 0]}
+                                        // opacity={1}>
+                                        // <span><a href={URL}>Precisando de<br></br>{Roaster}</a></span>
+                                        // <span>{City}, BR</span>
+                                    </Tooltip> */}
+                                </Marker>);
+                        })}
+                    </MarkerClusterGroup>
+
+                    <MarkerClusterGroup
+                        spiderfyDistanceMultiplier={1}
+                        showCoverageOnHover={false}
+                        maxClusterRadius={35}
+                        iconCreateFunction={markerclusterOptionsPrecisando}
+                    >                        
+                        {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
+                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana } = dataItem;
+                            let googleDirection = `https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`;
+                            
+                            let dateMarked;
+                            if(DateISO) dateMarked = timeAgo.format(Date.now() - (Date.now() - new Date(DateISO).getTime()) );
+                            if(Telefone) Telefone="contato:"+Telefone;
+                            //filtrar datas antigas
+                            // if(
+                            //     dateMarked.includes("semana") 
+                            // //&& Number(dateMarked.replace(/[^0-9]/g,'')) > 7
+                            // ) return (<div></div>);
+                            
+                            let precisandoMsg, CurrentIcon;
+                            switch(Roaster){
+                                case "PrecisandoBuscar":
+                                case "Doador":
+                                    case "Alimento de cesta básica":
+                                    case "Alimento pronto":
+                                    return (<div></div>);
+                                    break;
+
+                                case "EntregaAlimentoPronto":
+                                    precisandoMsg = `Entregando refeições prontas `+DiaSemana;
+                                    CurrentIcon = redIcon;
+                                    break;
+                                
+                                default:
+                                    return (<div></div>);
                                     break;
                             }
                             
