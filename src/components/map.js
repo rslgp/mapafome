@@ -198,13 +198,14 @@ class CoffeeMap extends Component {
                         </Marker>
 
                     <MarkerClusterGroup
+                    // grupo de onde pode ajudar
                         spiderfyDistanceMultiplier={1}
                         showCoverageOnHover={false}
                         maxClusterRadius={35}
                         iconCreateFunction={markerclusterOptionsAnjos}
                     >                        
                         {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
-                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana } = dataItem;
+                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario } = dataItem;
                             let googleDirection = `https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`;
                             
                             let dateMarked;
@@ -222,22 +223,12 @@ class CoffeeMap extends Component {
                                     precisandoMsg = "Recebendo alimento para distribuir"+URL;
                                     CurrentIcon = hubIcon;
                                     break;
-                                
-                                case "Alimento de cesta básica":
-                                case "Alimento pronto":
-                                    precisandoMsg = `Precisando de ${Roaster}`+URL;
-                                    CurrentIcon = myIcon;
-                                    return (<div></div>);
-                                    break;
-                                
                                 case "PrecisandoBuscar":
-                                    precisandoMsg = `Precisando de pessoas para buscar `+DiaSemana;
+                                    precisandoMsg = `Precisando de pessoas para buscar `+DiaSemana + " pela "+Horario;
                                     CurrentIcon = greenIcon;
-                                    break;
+                                    break;                                
                                 
                                 default:
-                                    precisandoMsg = `Precisando de ${Roaster}`+URL;
-                                    CurrentIcon = myIcon;
                                     return (<div></div>);
                                     break;
                             }
@@ -276,6 +267,7 @@ class CoffeeMap extends Component {
 
                     
                     <MarkerClusterGroup
+                    // grupo dos que precisam
                         spiderfyDistanceMultiplier={1}
                         showCoverageOnHover={false}
                         maxClusterRadius={35}
@@ -295,12 +287,7 @@ class CoffeeMap extends Component {
                             // ) return (<div></div>);
                             
                             let precisandoMsg, CurrentIcon;
-                            switch(Roaster){
-                                case "PrecisandoBuscar":
-                                case "Doador":
-                                    return (<div></div>);
-                                    break;
-                                
+                            switch(Roaster){                                
                                 case "Alimento de cesta básica":
                                 case "Alimento pronto":
                                     precisandoMsg = `Precisando de ${Roaster}`+URL;
@@ -345,13 +332,14 @@ class CoffeeMap extends Component {
                     </MarkerClusterGroup>
 
                     <MarkerClusterGroup
+                    // grupo de entrega de alimentos prontos
                         spiderfyDistanceMultiplier={1}
                         showCoverageOnHover={false}
                         maxClusterRadius={35}
                         iconCreateFunction={markerclusterOptionsPrecisando}
                     >                        
                         {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
-                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana } = dataItem;
+                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario } = dataItem;
                             let googleDirection = `https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`;
                             
                             let dateMarked;
@@ -365,15 +353,8 @@ class CoffeeMap extends Component {
                             
                             let precisandoMsg, CurrentIcon;
                             switch(Roaster){
-                                case "PrecisandoBuscar":
-                                case "Doador":
-                                    case "Alimento de cesta básica":
-                                    case "Alimento pronto":
-                                    return (<div></div>);
-                                    break;
-
                                 case "EntregaAlimentoPronto":
-                                    precisandoMsg = `Entregando refeições prontas `+DiaSemana;
+                                    precisandoMsg = `Entregando refeições prontas `+DiaSemana+" pela "+Horario;
                                     CurrentIcon = redIcon;
                                     break;
                                 
