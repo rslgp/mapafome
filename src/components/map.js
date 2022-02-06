@@ -140,8 +140,13 @@ class CoffeeMap extends Component {
                     {/* <TileLayer url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
                         attribution=" &copy; <a href='http://openstreetmap.org' target='_blank' rel='noreferrer'>OpenStreetMap</a>"
                     />  */}
-                    <LayersControl position="topleft">
-                    <LayersControl.BaseLayer checked name="Mapa">
+                    <LayersControl position="bottomleft">
+                    <LayersControl.BaseLayer checked name="Waze">
+                    <TileLayer url="https://worldtiles1.waze.com/tiles/{z}/{x}/{y}.png"
+                        attribution=" &copy; <a href='www.waze.com/pt-BR/live-map' target='_blank' rel='noreferrer'>Waze</a>"
+                    />
+                    </LayersControl.BaseLayer>
+                    <LayersControl.BaseLayer  name="Mapa">
                     <TileLayer url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
                      attribution=" &copy; <a href='http://openstreetmap.org' target='_blank' rel='noreferrer'>OSM</a>"
                     />
@@ -152,6 +157,8 @@ class CoffeeMap extends Component {
                         attribution=" &copy; <a href='https://www.arcgis.com/apps/mapviewer/index.html' target='_blank' rel='noreferrer'>Esri</a>"
                     />
                     </LayersControl.BaseLayer>
+
+                    
                     </LayersControl>
 
 
