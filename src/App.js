@@ -62,7 +62,8 @@ class App extends Component {
       alimento:'Alimento de cesta básica',
       telefone:'',
       telefoneEncryptado:'',
-      diaSemana:''
+      diaSemana:'',
+      tileMapOption:true
     }
 
     this.dropDownMenu = React.createRef();
@@ -198,7 +199,7 @@ class App extends Component {
             <Paper id="CoffeeMap" className="fadeIn">
               {this.state.isLoading
                 ? <div className="flexLoading"><div className="loading">Carregando...</div></div>
-                : <CoffeeMap dataMapsProp={this.state.dataMaps} location={this.state.center}/>
+                : <CoffeeMap dataMapsProp={this.state.dataMaps} location={this.state.center} tileMapOption={this.state.tileMapOption}/>
               }
             </Paper>
           </Grid>
@@ -208,7 +209,7 @@ class App extends Component {
                 ? <div className="flexLoading"><div className="loading"><CircularProgress /></div></div>
                 // : <CoffeeTable dataMapsProp={this.state.dataMaps} dataHeaderProp={this.state.dataHeader} />
               : <div>
-                Mapeados: {this.state.rowCount}<br></br>Se você se identifica selecione sua cor e se marque no mapa (mais informações no final da página):
+                Mapeados: {this.state.rowCount}<br></br>No mapa clique na bolinha para saber como ajudar.<br></br> Você pode se marcar ou marcar alguém, <br></br>selecione a situação e confirme o local (mais informações no final da página):
         {/* RADIO BUTTON */}
         <ul>
           <li>

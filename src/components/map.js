@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MapContainer, Marker, TileLayer, Tooltip, AttributionControl, Popup } from "react-leaflet";
+import { MapContainer, Marker, TileLayer, Tooltip, AttributionControl, Popup, LayersControl } from "react-leaflet";
 import L from 'leaflet';
 import "leaflet/dist/leaflet.css";
 import MarkerClusterGroup from 'react-leaflet-markercluster';
@@ -79,19 +79,6 @@ const markerclusterOptionsPrecisando = function (cluster) {
      className: 'marker-cluster' + c +'-anjosCluster', iconSize: new L.Point(40, 40) });
     };
 
-  function getClusterClass(markers) {
-    const combinedMarker = false;
-  
-    // Disabling rule, because we need to break loop at specific condition
-    for (const marker of markers) { // eslint-disable-line no-restricted-syntax
-      if (marker.options.someMarkerCustomOption) {
-        combinedMarker = true;
-        break;
-      }
-    }
-  
-    return combinedMarker ? 'combined' : 'single';
-  };
 
 class CoffeeMap extends Component {
 
@@ -101,7 +88,7 @@ class CoffeeMap extends Component {
         
         this.state = {
             dataMaps: [],
-            center: props.location
+            center: props.location,
         }
     }
 
@@ -119,9 +106,54 @@ class CoffeeMap extends Component {
                     maxZoom={18}
                     center={this.state.center}
                     attributionControl={false}>
-                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+
+
+{/* https://github.com/dhis2-club-tanzania/function-maintenance/blob/0dadaa96955156b6ddefc0fcf9dd54e45ffb9458/src/app/shared/modules/ngx-dhis2-visualization/modules/map/constants/tile-layer.constant.ts */}
+                    {/* <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        attribution=" &copy; <a href='http://openstreetmap.org' target='_blank' rel='noreferrer'>OpenStreetMap</a>"
+                    /> */}
+                     {/* <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+                        attribution=" &copy; <a href='http://openstreetmap.org' target='_blank' rel='noreferrer'>OpenStreetMap</a>"
+                    /> */}
+                    {/* <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
+                        attribution=" &copy; <a href='http://openstreetmap.org' target='_blank' rel='noreferrer'>OpenStreetMap</a>"
+                    /> */}
+
+                    
+                     {/* {this.state.tileMapOption ? 
+                     <TileLayer url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+                     attribution=" &copy; <a href='http://openstreetmap.org' target='_blank' rel='noreferrer'>OpenStreetMap</a>"
+                 />
+                    :
+                    <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
                         attribution=" &copy; <a href='http://openstreetmap.org' target='_blank' rel='noreferrer'>OpenStreetMap</a>"
                     />
+                } */}
+
+                     {/* <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}"
+                        attribution=" &copy; <a href='http://openstreetmap.org' target='_blank' rel='noreferrer'>OpenStreetMap</a>"
+                    /> */}
+                    {/* <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"
+                        attribution=" &copy; <a href='http://openstreetmap.org' target='_blank' rel='noreferrer'>OpenStreetMap</a>"
+                    />  */}
+                    {/* <TileLayer url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+                        attribution=" &copy; <a href='http://openstreetmap.org' target='_blank' rel='noreferrer'>OpenStreetMap</a>"
+                    />  */}
+                    <LayersControl position="topleft">
+                    <LayersControl.BaseLayer checked name="Mapa">
+                    <TileLayer url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+                     attribution=" &copy; <a href='http://openstreetmap.org' target='_blank' rel='noreferrer'>OpenStreetMap</a>"
+                    />
+                    </LayersControl.BaseLayer>
+
+                    <LayersControl.BaseLayer name="Satelite">
+                    <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+                        attribution=" &copy; <a href='http://openstreetmap.org' target='_blank' rel='noreferrer'>OpenStreetMap</a>"
+                    />
+                    </LayersControl.BaseLayer>
+                    </LayersControl>
+
+
 
                     <AttributionControl
                         position="bottomleft"
