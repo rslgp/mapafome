@@ -46,6 +46,7 @@ class Sugestoes extends Component {
         await sheet.addRow(row);
        
         self.setState({isLoading: false});
+        alert("sugestão enviada com sucesso");
       })(this);
       event.preventDefault();
     }

@@ -21,6 +21,12 @@ import Grid from '@material-ui/core/Grid';
 
 import CleanOld from './components/googlesheets/cleanold';
 
+
+import coffeeBean from './images/bean.svg';
+import hub from './images/hub.svg';
+import green from './images/green.svg';
+import red from './images/red.svg';
+
 import AesEncryption from "aes-encryption";
 
 const aes = new AesEncryption();
@@ -219,118 +225,125 @@ class App extends Component {
             </Paper>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Paper id="CoffeeTable">
+            <Paper id="CoffeeTable"  className="toolPanel">
               {this.state.isLoading
                 ? <div className="flexLoading"><div className="loading"><CircularProgress /></div></div>
                 // : <CoffeeTable dataMapsProp={this.state.dataMaps} dataHeaderProp={this.state.dataHeader} />
-              : <div>
+              : 
+              
+    <div className='relativePosition'>
                 Mapeados: {this.state.rowCount}<br></br>No mapa clique na bolinha para saber como ajudar.<br></br> Você pode se marcar ou marcar alguém, <br></br>selecione a situação e confirme o local (mais informações no final da página):
         {/* RADIO BUTTON */}
-        <ul>
-          <li>
-            <label className='yellowHub'>
-              <input
-                type="radio"
-                value="Alimento de cesta básica"
-                checked={this.state.alimento === "Alimento de cesta básica"}
-                onChange={this.setTipoAlimento}
-              />
-              Preciso de Alimento de cesta básica
-            </label>
-          </li>
-          
-          <li>
-            <label className='yellowHub'>
-              <input
-                type="radio"
-                value="Alimento pronto"
-                checked={this.state.alimento === "Alimento pronto"}
-                onChange={this.setTipoAlimento}
-              />
-              Preciso de Alimento pronto
-            </label>
-          </li>
-
-          
-          <li>
-            <label className='blueHub'>
-              <input
-                type="radio"
-                value="Doador"
-                checked={this.state.alimento === "Doador"}
-                onChange={this.setTipoAlimento}
-              />
-              Recebo para doar
-            </label>
-          </li>
-
-          <li>
-          <label className='redHub'>
-              <input
-                type="radio"
-                value="EntregaAlimentoPronto"
-                checked={this.state.alimento === "EntregaAlimentoPronto"}
-                onChange={this.setTipoAlimento}
-              />
-              Entrego refeições em ponto fixo
-            </label>
-            <select ref= {this.dropDownMenuSemana} id="dia" onChange={this.setDiaSemana}>
-              <option value="toda Segunda">toda Segunda</option>
-              <option value="toda Terça">toda Terça</option>
-              <option value="toda Quarta">toda Quarta</option>
-              <option value="toda Quinta">toda Quinta</option>
-              <option value="toda Sexta">toda Sexta</option>
-              <option value="todo Sábado">todo Sábado</option>
-              <option value="todo Domingo">todo Domingo</option>
-            </select>
-            <select ref= {this.dropDownMenuHorario} id="horario" onChange={this.setHorario}>
-              <option value="manhã 05:30">manhã 05:30</option>
-              <option value="manhã 06:30">manhã 06:30</option>
-              <option value="tarde 13:30">tarde 13:30</option>
-              <option value="tarde 16:30">tarde 16:30</option>
-              <option value="noite 18:30">noite 18:30</option>
-              <option value="noite 19:30">noite 19:30</option>
-            </select>
-          </li>
-
-
-          <br></br>
-          <li>
-            <label className='greenHub'>
-              <input
-                type="radio"
-                value="PrecisandoBuscar"
-                checked={this.state.alimento === "PrecisandoBuscar"}
-                onChange={this.setTipoAlimento}
-              />
-              Tenho alimento perto de se perder 
-            </label>
-            <select ref= {this.dropDownMenuSemana} id="dia" onChange={this.setDiaSemana}>
-              <option value="Hoje">Hoje</option>
-              <option value="toda Segunda">toda Segunda</option>
-              <option value="toda Terça">toda Terça</option>
-              <option value="toda Quarta">toda Quarta</option>
-              <option value="toda Quinta">toda Quinta</option>
-              <option value="toda Sexta">toda Sexta</option>
-              <option value="todo Sábado">todo Sábado</option>
-              <option value="todo Domingo">todo Domingo</option>
-            </select>
-            <select ref= {this.dropDownMenuHorario} id="horario" onChange={this.setHorario}>
-              <option value="manhã 05:30">manhã 05:30</option>
-              <option value="manhã 06:30">manhã 06:30</option>
-              <option value="tarde 13:30">tarde 13:30</option>
-              <option value="tarde 16:30">tarde 16:30</option>
-              <option value="noite 18:30">noite 18:30</option>
-              <option value="noite 19:30">noite 19:30</option>
-            </select>
+        <div className='relativePosition'>
+          <ul>
+            <li>
+              <label className='yellowHub'>
+                <input
+                  type="radio"
+                  value="Alimento de cesta básica"
+                  checked={this.state.alimento === "Alimento de cesta básica"}
+                  onChange={this.setTipoAlimento}
+                />
+                Preciso de Alimento de cesta básica <img width="30px" height="30px" src={coffeeBean}></img>
+              </label>
+            </li>
+            
+            <li>
+              <label className='yellowHub'>
+                <input
+                  type="radio"
+                  value="Alimento pronto"
+                  checked={this.state.alimento === "Alimento pronto"}
+                  onChange={this.setTipoAlimento}
+                />
+                Preciso de Alimento pronto <img width="30px" height="30px" src={coffeeBean}></img>
+              </label>
+            </li>
 
             
-          </li>
+            <li>
+              <label className='blueHub'>
+                <input
+                  type="radio"
+                  value="Doador"
+                  checked={this.state.alimento === "Doador"}
+                  onChange={this.setTipoAlimento}
+                />
+                Recebo para doar <img width="30px" height="30px" src={hub}></img>
+              </label>
+            </li>
 
-        
-        </ul>
+            <li>
+            <label className='redHub'>
+                <input
+                  type="radio"
+                  value="EntregaAlimentoPronto"
+                  checked={this.state.alimento === "EntregaAlimentoPronto"}
+                  onChange={this.setTipoAlimento}
+                />
+                Entrego refeições em ponto fixo <img width="30px" height="30px" src={red}></img>
+              </label>
+              <select ref= {this.dropDownMenuSemana} id="dia" onChange={this.setDiaSemana}>
+                <option value="toda Segunda">toda Segunda</option>
+                <option value="toda Terça">toda Terça</option>
+                <option value="toda Quarta">toda Quarta</option>
+                <option value="toda Quinta">toda Quinta</option>
+                <option value="toda Sexta">toda Sexta</option>
+                <option value="todo Sábado">todo Sábado</option>
+                <option value="todo Domingo">todo Domingo</option>
+              </select>
+              <select ref= {this.dropDownMenuHorario} id="horario" onChange={this.setHorario}>
+                <option value="manhã 05:30">manhã 05:30</option>
+                <option value="manhã 06:30">manhã 06:30</option>
+                <option value="tarde 13:30">tarde 13:30</option>
+                <option value="tarde 16:30">tarde 16:30</option>
+                <option value="noite 18:30">noite 18:30</option>
+                <option value="noite 19:30">noite 19:30</option>
+              </select>
+            </li>
+
+
+            <br></br>
+            <li>
+              <label className='greenHub'>
+                <input
+                  type="radio"
+                  value="PrecisandoBuscar"
+                  checked={this.state.alimento === "PrecisandoBuscar"}
+                  onChange={this.setTipoAlimento}
+                />
+                Tenho alimento perto de se perder  <img width="30px" height="30px" src={green}></img>
+              </label>
+              <select ref= {this.dropDownMenuSemana} id="dia" onChange={this.setDiaSemana}>
+                <option value="Hoje">Hoje</option>
+                <option value="toda Segunda">toda Segunda</option>
+                <option value="toda Terça">toda Terça</option>
+                <option value="toda Quarta">toda Quarta</option>
+                <option value="toda Quinta">toda Quinta</option>
+                <option value="toda Sexta">toda Sexta</option>
+                <option value="todo Sábado">todo Sábado</option>
+                <option value="todo Domingo">todo Domingo</option>
+              </select>
+              <select ref= {this.dropDownMenuHorario} id="horario" onChange={this.setHorario}>
+                <option value="manhã 05:30">manhã 05:30</option>
+                <option value="manhã 06:30">manhã 06:30</option>
+                <option value="tarde 13:30">tarde 13:30</option>
+                <option value="tarde 16:30">tarde 16:30</option>
+                <option value="noite 18:30">noite 18:30</option>
+                <option value="noite 19:30">noite 19:30</option>
+              </select>
+
+              
+            </li>
+
+          
+          </ul>
+    </div>
         {/* FIM RADIO BUTTON */}
-        <input className="TextField" type="text" placeholder='Insira telefone se quiser' value={this.state.telefone} onChange={this.handleChangeTelefone} />
+        <br></br>
+        <br></br>
+            <div className='relativePosition'>
+                <input className="TextField tfMarginUp" type="text" placeholder='Insira telefone se quiser' value={this.state.telefone} onChange={this.handleChangeTelefone} />
                 <MyLocationButton 
                 location={this.state.center} 
                 alimento={this.state.alimento} 
@@ -353,8 +366,8 @@ class App extends Component {
                 {/* <CleanOld></CleanOld> */}
                 No Mapa da Fome todos podem ser ponte entre as cores ou contribuir, nele existem as<span className="yellowHub">  pessoas </span> que  estão passando necessidade e fome (pedindo comida pronta ou de cesta básica),as<span className="blueHub">  pessoas </span>que fazem sopão solidário, alimenta quem tem fome, ongs, voluntários que realizam distribuição de alimentos e as<span className="greenHub"> pessoas </span>que trabalham com alimentos onde acontece desperdício, e<span className="redHub">  pessoas </span>que entregam alimentação em ponto fixo em certo dia na semana cada um tem sua cor no mapa.
                 <Sugestao/>
-
               </div>
+          </div>
                
               
               }
