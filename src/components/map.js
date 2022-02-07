@@ -215,7 +215,19 @@ class CoffeeMap extends Component {
                             
                             let dateMarked;
                             if(DateISO) dateMarked = timeAgo.format(Date.now() - (Date.now() - new Date(DateISO).getTime()) );
-                            if(Telefone) Telefone="contato:"+Telefone;
+                            if(Telefone){
+                                switch(Telefone.length){
+                                    case 8:
+                                        Telefone="contato:"+Telefone.replace(/(\d{4})(\d{4})/g, "$1-$2");
+                                        break;
+                                    case 9:
+                                        Telefone="contato:"+Telefone.replace(/(\d{5})(\d{4})/g, "$1-$2");
+                                        break;
+                                    default:
+                                        Telefone="contato:"+Telefone.replace(/(\d{2})(\d{5})(\d{4})/g, "($1) $2-$3");
+                                        break;
+                                }
+                            }
                             //filtrar datas antigas
                             // if(
                             //     dateMarked.includes("semana") 
@@ -286,8 +298,19 @@ class CoffeeMap extends Component {
                             
                             let dateMarked;
                             if(DateISO) dateMarked = timeAgo.format(Date.now() - (Date.now() - new Date(DateISO).getTime()) );
-                            if(Telefone) Telefone="contato:"+Telefone;
-                            //filtrar datas antigas
+                            if(Telefone){
+                                switch(Telefone.length){
+                                    case 8:
+                                        Telefone="contato:"+Telefone.replace(/(\d{4})(\d{4})/g, "$1-$2");
+                                        break;
+                                    case 9:
+                                        Telefone="contato:"+Telefone.replace(/(\d{5})(\d{4})/g, "$1-$2");
+                                        break;
+                                    default:
+                                        Telefone="contato:"+Telefone.replace(/(\d{2})(\d{5})(\d{4})/g, "($1) $2-$3");
+                                        break;
+                                }
+                            }//filtrar datas antigas
                             // if(
                             //     dateMarked.includes("semana") 
                             // //&& Number(dateMarked.replace(/[^0-9]/g,'')) > 7
@@ -353,8 +376,19 @@ class CoffeeMap extends Component {
                             
                             let dateMarked;
                             if(DateISO) dateMarked = timeAgo.format(Date.now() - (Date.now() - new Date(DateISO).getTime()) );
-                            if(Telefone) Telefone="contato:"+Telefone;
-                            //filtrar datas antigas
+                            if(Telefone){
+                                switch(Telefone.length){
+                                    case 8:
+                                        Telefone="contato:"+Telefone.replace(/(\d{4})(\d{4})/g, "$1-$2");
+                                        break;
+                                    case 9:
+                                        Telefone="contato:"+Telefone.replace(/(\d{5})(\d{4})/g, "$1-$2");
+                                        break;
+                                    default:
+                                        Telefone="contato:"+Telefone.replace(/(\d{2})(\d{5})(\d{4})/g, "($1) $2-$3");
+                                        break;
+                                }
+                            }//filtrar datas antigas
                             // if(
                             //     dateMarked.includes("semana") 
                             // //&& Number(dateMarked.replace(/[^0-9]/g,'')) > 7
