@@ -232,7 +232,7 @@ class App extends Component {
               : 
               
     <div className='relativePosition'>
-                Mapeados: {this.state.rowCount}<br></br>No mapa clique na bolinha para saber como ajudar.<br></br> Você pode se marcar ou marcar alguém, <br></br>selecione a situação e confirme o local (mais informações no final da página):
+                Mapeados: {this.state.rowCount}<br></br>No mapa clique na bolinha para saber como ajudar.<br></br> Você pode se marcar ou marcar outra pessoa, <br></br>selecione a situação e confirme o local (mais informações no final da página):
         {/* RADIO BUTTON */}
         <div className='relativePosition'>
           <ul>
@@ -367,7 +367,11 @@ class App extends Component {
 
                 {/* <img src={qr} alt=""/> */}
                 {/* <CleanOld></CleanOld> */}
-                No Mapa da Fome todos podem ser ponte entre as cores ou contribuir, nele existem as<span className="yellowHub">  pessoas </span> que  estão passando necessidade e fome (pedindo comida pronta ou de cesta básica),as<span className="blueHub">  pessoas </span>que fazem sopão solidário, alimenta quem tem fome, ongs, voluntários que realizam distribuição de alimentos e as<span className="greenHub"> pessoas </span>que trabalham com alimentos onde acontece desperdício, e<span className="redHub">  pessoas </span>que entregam alimentação em ponto fixo em certo dia na semana cada um tem sua cor no mapa.
+                No Mapa da Fome você pode encontrar a quem ajudar e fazer novas marcações, caso uma opção represente você ou outra pessoa, selecione, coloque número para contato se quiser, e confirme com localização atual ou endereço e número
+                <br></br><span className="yellowHub">  em amarelo são pessoas <img width="30px" height="30px" src={coffeeBean}></img></span>em vulnerabilidade social e insegurança alimentar que estão com fome em casa ou na rua, --precisam de alimento
+                <br></br><span className="blueHub">  em azul pessoas <img width="30px" height="30px" src={hub}></img></span>que recebem alimentos ou recursos para distribuir alimento ou refeições na comunidade (exemplo: sopão solidário, ongs, voluntários) --precisam de doações
+                <br></br><span className="redHub">  em vermelho são pessoas <img width="30px" height="30px" src={red}></img></span>que entregam refeição em ponto fixo na rua em certo dia na semana. --ponto de entrega de alimento pronto
+                <br></br><span className="greenHub">  em verde são pessoas <img width="30px" height="30px" src={green}></img></span>que trabalham com alimentos e precisam destinar os alimentos não comercializados ou não consumidos e não tem pessoas para buscar esses alimentos --precisam de voluntários para buscar 
                 <Sugestao/>
               </div>
           </div>
