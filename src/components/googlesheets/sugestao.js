@@ -29,24 +29,29 @@ class Sugestoes extends Component {
       if(this.state.value === '') {event.preventDefault();return;}
       
       this.setState({isLoading: true});
-
+      
       (async function main(self) {
-        await doc.useServiceAccountAuth({
-            client_email: process.env.REACT_APP_GOOGLE_SERVICE_ACCOUNT_EMAIL,
-            private_key: process.env.REACT_APP_GOOGLE_PRIVATE_KEY,
-        });
+        try{
+          await doc.useServiceAccountAuth({
+              client_email: process.env.REACT_APP_GOOGLE_SERVICE_ACCOUNT_EMAIL,
+              private_key: process.env.REACT_APP_GOOGLE_PRIVATE_KEY,
+          });
 
-        await doc.loadInfo(); // Loads document properties and worksheets
+          await doc.loadInfo(); // Loads document properties and worksheets
 
-        const sheet = doc.sheetsByIndex[2];
-        //row = { Name: "new name", Value: "new value" };
+          const sheet = doc.sheetsByIndex[2];
+          //row = { Name: "new name", Value: "new value" };
+          
+          const row = { Sugestao: self.state.value, DateISO: new Date().toISOString()};
+          
+          await sheet.addRow(row);
         
-        const row = { Sugestao: self.state.value, DateISO: new Date().toISOString()};
+          self.setState({isLoading: false});
+          alert("sugestão enviada com sucesso");
+        }catch(e){
+          alert("Erro, tente novamente");
+        }
         
-        await sheet.addRow(row);
-       
-        self.setState({isLoading: false});
-        alert("sugestão enviada com sucesso");
       })(this);
       event.preventDefault();
     }

@@ -79,8 +79,39 @@ class App extends Component {
     this.handleChangeTelefone = this.handleChangeTelefone.bind(this);
     this.setDiaSemana = this.setDiaSemana.bind(this);
     this.setHorario = this.setHorario.bind(this);
+    this.removePonto = this.removePonto.bind(this);
   }
 
+  removePonto(coords){
+    console.log("remover "+coords);
+    let motivo = prompt("por qual motivo (em resumo) gostaria de deletar esse ponto?");
+    if(motivo !== null){
+      (async function main(self) {
+        try{
+          await doc.useServiceAccountAuth({
+            client_email: process.env.REACT_APP_GOOGLE_SERVICE_ACCOUNT_EMAIL,
+            private_key: process.env.REACT_APP_GOOGLE_PRIVATE_KEY,
+            });
+
+            await doc.loadInfo(); // Loads document properties and worksheets
+
+            const sheet = doc.sheetsByIndex[3];
+            //row = { Name: "new name", Value: "new value" };
+            
+            const row = { Motivo: motivo, Ponto: JSON.stringify(coords), DateISO: new Date().toISOString()};
+            
+            await sheet.addRow(row);
+          
+            alert("pedido de deletar enviado com sucesso");
+        }catch(e){
+          alert("ERRO, tente novamente");
+          //console.log(e);
+
+        }
+        
+      })(motivo, coords);
+    }
+  }
   setTipoAlimento(event){
     this.setState({
       alimento: event.target.value
@@ -220,7 +251,7 @@ class App extends Component {
             <Paper id="CoffeeMap" className="fadeIn">
               {this.state.isLoading
                 ? <div className="flexLoading"><div className="loading">Carregando...</div></div>
-                : <CoffeeMap dataMapsProp={this.state.dataMaps} location={this.state.center} tileMapOption={this.state.tileMapOption}/>
+                : <CoffeeMap dataMapsProp={this.state.dataMaps} location={this.state.center} tileMapOption={this.state.tileMapOption} removerPonto={this.removePonto}/>
               }
             </Paper>
           </Grid>
@@ -232,7 +263,7 @@ class App extends Component {
               : 
               
     <div className='relativePosition'>
-                Mapeados: {this.state.rowCount}<br></br>No mapa clique na bolinha para saber como ajudar ou traçar uma rota.<br></br> Você pode se marcar ou marcar outra pessoa, <br></br>selecione a situação e confirme o local (mais informações no final da página):
+                Mapeados: {this.state.rowCount}<br></br>No mapa clique na bolinha para saber como ajudar.<br></br> Você pode se marcar ou marcar outra pessoa, <br></br>selecione a situação e confirme o local (mais informações no final da página):
         {/* RADIO BUTTON */}
         <div className='relativePosition'>
           <ul>
