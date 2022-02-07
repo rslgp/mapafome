@@ -232,7 +232,7 @@ class App extends Component {
               : 
               
     <div className='relativePosition'>
-                Mapeados: {this.state.rowCount}<br></br>No mapa clique na bolinha para saber como ajudar.<br></br> Você pode se marcar ou marcar outra pessoa, <br></br>selecione a situação e confirme o local (mais informações no final da página):
+                Mapeados: {this.state.rowCount}<br></br>No mapa clique na bolinha para saber como ajudar ou traçar uma rota.<br></br> Você pode se marcar ou marcar outra pessoa, <br></br>selecione a situação e confirme o local (mais informações no final da página):
         {/* RADIO BUTTON */}
         <div className='relativePosition'>
           <ul>
@@ -372,7 +372,16 @@ class App extends Component {
                 <br></br><span className="blueHub">  em azul pessoas <img width="30px" height="30px" src={hub}></img></span>que recebem alimentos ou recursos para distribuir alimento ou refeições na comunidade (exemplo: sopão solidário, ongs, voluntários) --precisam de doações
                 <br></br><span className="redHub">  em vermelho são pessoas <img width="30px" height="30px" src={red}></img></span>que entregam refeição em ponto fixo na rua em certo dia na semana. --ponto de entrega de alimento pronto
                 <br></br><span className="greenHub">  em verde são pessoas <img width="30px" height="30px" src={green}></img></span>que trabalham com alimentos e precisam destinar os alimentos não comercializados ou não consumidos e não tem pessoas para buscar esses alimentos --precisam de voluntários para buscar 
-                <Sugestao/>
+              
+                
+                <br></br><br></br>serve para 
+
+<br></br>-mapear pessoas que estão com fome na rua ou em casa
+<br></br>-mapear iniciativas que recebem recursos para fazer doação
+<br></br>-mostrar no mapa onde e quando tem alimento sendo distribuído
+<br></br>-mostrar no mapa lugares comerciais que precisam de voluntários para buscar alimentos não consumidos ou não comercializados
+<br></br> é possível traçar uma rota ao destino ao clicar Ir para o destino, e ser redirecionado para o Google Maps            
+<Sugestao/>
               </div>
           </div>
                
