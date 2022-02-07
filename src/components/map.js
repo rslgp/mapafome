@@ -258,6 +258,8 @@ class CoffeeMap extends Component {
                                         {precisandoMsg}
                                         <br/>
                                         {dateMarked} {Telefone}
+                                        <br/>
+                                        <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]])}>deletar</button>
                                     </Popup>
                                     {/* <Tooltip
                                         // direction="auto"
@@ -324,6 +326,8 @@ class CoffeeMap extends Component {
                                         {precisandoMsg}
                                         <br/>
                                         {dateMarked} {Telefone}
+                                        <br/>
+                                        <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]])}>deletar</button>
                                     </Popup>
                                     {/* <Tooltip
                                         // direction="auto"
@@ -388,6 +392,8 @@ class CoffeeMap extends Component {
                                         {precisandoMsg}
                                         <br/>
                                         {dateMarked} {Telefone}
+                                        <br/>
+                                        <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]])}>deletar</button>
                                     </Popup>
                                     {/* <Tooltip
                                         // direction="auto"
