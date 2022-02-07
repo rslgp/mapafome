@@ -32,6 +32,7 @@ class NameForm extends Component {
 
         await doc.loadInfo(); // Loads document properties and worksheets
 
+        //incompatibilidade com limitar regiao
         const sheet = doc.sheetsByIndex[0];
         //row = { Name: "new name", Value: "new value" };
         const row = { Roaster: "new name", URL:"", City: self.state.value };

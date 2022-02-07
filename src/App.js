@@ -172,7 +172,7 @@ class App extends Component {
       self.setState({center: [position.coords.latitude, position.coords.longitude]}) 
     });
 
-    (async function main() {
+    (async function main(self) {
       // Use service account creds
       await doc.useServiceAccountAuth({
         client_email: process.env.REACT_APP_GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -180,8 +180,46 @@ class App extends Component {
       });
 
       await doc.loadInfo(); // Loads document properties and worksheets
-
-      const sheet = doc.sheetsByIndex[0];
+      
+      /*https://www.keene.edu/campus/maps/tool/
+        long, lat
+        x, y
+        -52.2070313, 2.20
+        -52.4267578, -13.9234039
+        -34.3212891, -14.0939572
+        -34.3212891, 1.6696855
+0: -8.0256189
+1: -34.9175702
+        -55.4589844, -32.6578757
+        -55.5468750, -14.1791861
+        -38.1445313, -14.1791861
+        -38.0566406, -32.8426736
+      */
+     console.log((self.state.center[0]<-14.18 && self.state.center[0] > -32.66) +" "+ (self.state.center[1]>-55.55 && self.state.center[1] < -38.06)  );
+     //limitar regiao
+      let regiao;
+      if(
+        //cima baixo
+        self.state.center[0]<2.20 && self.state.center[0] > -14.09
+        &&
+        //esquerda direita
+        self.state.center[1]>-52.42 && self.state.center[1] < -34.32        
+        ){
+          //nordeste
+          regiao=0;
+        }
+        else
+        if(
+          //cima baixo
+          self.state.center[0]<-14.18 && self.state.center[0] > -32.66
+          &&
+          //esquerda direita
+          self.state.center[1]>-55.55 && self.state.center[1] < -38.06        
+          ){
+            //sudeste
+            regiao=3;
+          }
+      const sheet = doc.sheetsByIndex[regiao];
       const rows = await sheet.getRows();
       // Total row count
       self.setState({ rowCount: rows.length });
@@ -237,7 +275,7 @@ class App extends Component {
       // Loading message 
       self.setState({ isLoading: false })
 
-    })();
+    })(self);
   }
 
   render() {
@@ -400,7 +438,7 @@ class App extends Component {
                 {/* <CleanOld></CleanOld> */}
                 No Mapa da Fome você pode encontrar a quem ajudar e fazer novas marcações, caso uma opção represente você ou outra pessoa, selecione, coloque número para contato se quiser, e confirme com localização atual ou endereço e número
                 <br></br><span className="yellowHub">  em amarelo são pessoas <img width="30px" height="30px" src={coffeeBean}></img></span>em vulnerabilidade social e insegurança alimentar que estão com fome em casa ou na rua, --precisam de alimento
-                <br></br><span className="blueHub">  em azul pessoas <img width="30px" height="30px" src={hub}></img></span>que recebem alimentos ou recursos para distribuir alimento ou refeições na comunidade (exemplo: sopão solidário, ongs, voluntários) --precisam de doações
+                <br></br><span className="blueHub">  em azul são pessoas <img width="30px" height="30px" src={hub}></img></span>que recebem alimentos ou recursos para distribuir alimento ou refeições na comunidade (exemplo: sopão solidário, ongs, voluntários) --precisam de doações
                 <br></br><span className="redHub">  em vermelho são pessoas <img width="30px" height="30px" src={red}></img></span>que entregam refeição em ponto fixo na rua em certo dia na semana. --ponto de entrega de alimento pronto
                 <br></br><span className="greenHub">  em verde são pessoas <img width="30px" height="30px" src={green}></img></span>que trabalham com alimentos e precisam destinar os alimentos não comercializados ou não consumidos e não tem pessoas para buscar esses alimentos --precisam de voluntários para buscar 
               

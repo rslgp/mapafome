@@ -87,8 +87,32 @@ class NameForm extends Component {
                 });
         
                 await doc.loadInfo(); // Loads document properties and worksheets
-        
-                const sheet = doc.sheetsByIndex[0];
+                console.log([self.props.location[0], self.props.location[1]])
+
+                
+                let regiao;
+                if(
+                  //cima baixo
+                  self.state.center[0]<2.20 && self.state.center[0] > -14.09
+                  &&
+                  //esquerda direita
+                  self.state.center[1]>-52.42 && self.state.center[1] < -34.32        
+                  ){
+                    //nordeste
+                    regiao=0;
+                  }
+                  else
+                  if(
+                    //cima baixo
+                    self.state.center[0]<-14.18 && self.state.center[0] > -32.66
+                    &&
+                    //esquerda direita
+                    self.state.center[1]>-55.55 && self.state.center[1] < -38.06        
+                    ){
+                      //sudeste
+                      regiao=4;
+                    }
+                const sheet = doc.sheetsByIndex[regiao];
                 const rows = await sheet.getRows();
                 // Total row count
                 const row = { 
