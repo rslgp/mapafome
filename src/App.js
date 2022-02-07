@@ -283,6 +283,7 @@ class App extends Component {
                 />
                 Entrego refeições em ponto fixo <img width="30px" height="30px" src={red}></img>
               </label>
+              <br></br>
               <select ref= {this.dropDownMenuSemana} id="dia" onChange={this.setDiaSemana}>
                 <option value="toda Segunda">toda Segunda</option>
                 <option value="toda Terça">toda Terça</option>
@@ -314,6 +315,7 @@ class App extends Component {
                 />
                 Tenho alimento perto de se perder  <img width="30px" height="30px" src={green}></img>
               </label>
+              <br></br>
               <select ref= {this.dropDownMenuSemana} id="dia" onChange={this.setDiaSemana}>
                 <option value="Hoje">Hoje</option>
                 <option value="toda Segunda">toda Segunda</option>
