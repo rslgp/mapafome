@@ -18,14 +18,16 @@ class NameForm extends Component {
         isLoading:props.isLoading,
         telefone:props.telefone,
         diaSemana:props.diaSemana,
+        numero:'',
       };
   
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
 
+      this.handleChangeNumero = this.handleChangeNumero.bind(this);
+
     }
 
-    
   componentDidMount() {
       
     //salvar acesso  
@@ -76,9 +78,19 @@ class NameForm extends Component {
     handleChange(event) {
       this.setState({value: event.target.value});
     }
+    
+    handleChangeNumero(event) {
+      let numero = event.target.value.replace(/[^0-9]/g,'');
+      this.setState({numero: numero});
+    }
   
     handleSubmit(event) { 
         //navigator.geolocation.getCurrentPosition(function(position) {
+        if(this.state.location[0]===-8.0671132 && this.state.location[1]===-34.8766719){
+          alert("Localização do celular está desativada, tente novamente com a localização ativa");
+          event.preventDefault();
+          return;
+        }
         this.setState({isLoading: true});
             (async function main(self) {
                 await doc.useServiceAccountAuth({
@@ -87,16 +99,14 @@ class NameForm extends Component {
                 });
         
                 await doc.loadInfo(); // Loads document properties and worksheets
-                console.log([self.props.location[0], self.props.location[1]])
-
                 
                 let regiao;
                 if(
                   //cima baixo
-                  self.state.center[0]<2.20 && self.state.center[0] > -14.09
+                  self.state.location[0]<2.20 && self.state.location[0] > -14.09
                   &&
                   //esquerda direita
-                  self.state.center[1]>-52.42 && self.state.center[1] < -34.32        
+                  self.state.location[1]>-52.42 && self.state.location[1] < -34.32        
                   ){
                     //nordeste
                     regiao=0;
@@ -104,10 +114,10 @@ class NameForm extends Component {
                   else
                   if(
                     //cima baixo
-                    self.state.center[0]<-14.18 && self.state.center[0] > -32.66
+                    self.state.location[0]<-14.18 && self.state.location[0] > -32.66
                     &&
                     //esquerda direita
-                    self.state.center[1]>-55.55 && self.state.center[1] < -38.06        
+                    self.state.location[1]>-55.55 && self.state.location[1] < -38.06        
                     ){
                       //sudeste
                       regiao=4;
@@ -120,7 +130,7 @@ class NameForm extends Component {
                 // Total row count
                 const row = { 
                   Roaster: self.state.alimento, 
-                  URL:"", 
+                  URL:", nº"+self.state.numero, 
                   City: "", 
                   Coordinates:JSON.stringify([self.props.location[0], self.props.location[1]]), 
                   DateISO: new Date().toISOString(), 
@@ -142,9 +152,12 @@ class NameForm extends Component {
           this.state.isLoading ?
           <div><CircularProgress /></div>
           :
-          <button className="SubmitButton" onClick={this.handleSubmit}>
-            Marcar Minha Localização Atual
-          </button>
+          <div>
+            <input type="text" placeholder='nº do local' value={this.state.numero} onChange={this.handleChangeNumero} />
+            <button className="SubmitButton" onClick={this.handleSubmit}>
+              Marcar Minha Localização Atual
+            </button>
+          </div>
         
       );
     }
