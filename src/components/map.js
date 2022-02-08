@@ -210,7 +210,7 @@ class CoffeeMap extends Component {
                         iconCreateFunction={markerclusterOptionsAnjos}
                     >                        
                         {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
-                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario } = dataItem;
+                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, AlimentoEntregue} = dataItem;
                             let googleDirection = `https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`;
                             
                             let dateMarked;
@@ -269,9 +269,12 @@ class CoffeeMap extends Component {
                                         <br/>
                                         {precisandoMsg}
                                         <br/>
-                                        {dateMarked} {Telefone}
+                                        {dateMarked} {Telefone} 
+                                        <br/>{"(Qtde entregue:"+AlimentoEntregue+")"}
                                         <br/>
                                         <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>deletar</button>
+                                        <span>    </span>
+                                            <button className='buttonsSidebySide floatRight' onClick={() => this.props.entregarAlimento([mapCoords[0], mapCoords[1]])}>entreguei</button>
                                     </Popup>
                                     {/* <Tooltip
                                         // direction="auto"
@@ -293,7 +296,7 @@ class CoffeeMap extends Component {
                         iconCreateFunction={markerclusterOptionsPrecisando}
                     >                        
                         {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
-                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana } = dataItem;
+                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, AlimentoEntregue} = dataItem;
                             let googleDirection = `https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`;
                             
                             let dateMarked;
@@ -348,9 +351,14 @@ class CoffeeMap extends Component {
                                         <br/>
                                         {precisandoMsg}
                                         <br/>
-                                        {dateMarked} {Telefone}
+                                        {dateMarked} {Telefone} 
+                                        <br/>{" (Qtde entregue:"+AlimentoEntregue+")"}
                                         <br/>
-                                        <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>deletar</button>
+                                        <div className='buttonsSidebySide'>
+                                            <button className='buttonsSidebySide' onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>deletar</button>
+                                            <span>    </span>
+                                            <button className='buttonsSidebySide floatRight' onClick={() => this.props.entregarAlimento([mapCoords[0], mapCoords[1]])}>entreguei</button>
+                                        </div>
                                     </Popup>
                                     {/* <Tooltip
                                         // direction="auto"
@@ -371,7 +379,7 @@ class CoffeeMap extends Component {
                         iconCreateFunction={markerclusterOptionsEntrega}
                     >                        
                         {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
-                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario } = dataItem;
+                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, AlimentoEntregue } = dataItem;
                             let googleDirection = `https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`;
                             
                             let dateMarked;
@@ -425,9 +433,12 @@ class CoffeeMap extends Component {
                                         <br/>
                                         {precisandoMsg}
                                         <br/>
-                                        {dateMarked} {Telefone}
+                                        {dateMarked} {Telefone} 
+                                        <br/>{" (Qtde entregue:"+AlimentoEntregue+")"}
                                         <br/>
                                         <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>deletar</button>
+                                        <span>    </span>
+                                            <button className='buttonsSidebySide floatRight' onClick={() => this.props.entregarAlimento([mapCoords[0], mapCoords[1]])}>entreguei</button>
                                     </Popup>
                                     {/* <Tooltip
                                         // direction="auto"

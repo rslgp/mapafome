@@ -52,6 +52,13 @@ body, h1, h2, h3, h4, p {
 
 
 /* CUSTOM */
+.floatRight{
+  float: right;
+}
+.buttonsSidebySide{  
+  margin: 0 auto;
+  display: inline;
+}
 .nLocal{
   width: 54px;
 }

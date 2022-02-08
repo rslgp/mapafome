@@ -95,6 +95,7 @@ class NameForm extends Component {
           Telefone: self.state.telefone, 
           DiaSemana: self.state.diaSemana, 
           Horario: self.state.horario,
+          AlimentoEntregue:0,
         };
         
         try{
