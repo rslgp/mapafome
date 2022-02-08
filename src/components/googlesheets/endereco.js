@@ -57,6 +57,7 @@ class NameForm extends Component {
     }
   
     handleChange(event) {
+      if(event.target.value.length > 100) return; 
       this.setState({value: event.target.value});
     }
   
@@ -88,15 +89,31 @@ class NameForm extends Component {
           self.setState({isLoading: false});
           return;
         }
-        const row = { 
-          Roaster:  self.state.alimento, 
-          URL:numero, City: self.state.value,
-          DateISO: new Date().toISOString(), 
-          Telefone: self.state.telefone, 
-          DiaSemana: self.state.diaSemana, 
-          Horario: self.state.horario,
-          AlimentoEntregue:0,
+        // const row = { 
+        //   Roaster:  self.state.alimento, 
+        //   URL:numero, City: self.state.value,
+        //   DateISO: new Date().toISOString(), 
+        //   Telefone: self.state.telefone, 
+        //   DiaSemana: self.state.diaSemana, 
+        //   Horario: self.state.horario,
+        //   AlimentoEntregue:0,
+        // };
+
+        const row = {
+          Dados: JSON.stringify(
+            { 
+              "Roaster":  self.state.alimento, 
+              "URL":numero, 
+              "City": self.state.value,
+              "DateISO": new Date().toISOString(), 
+              "Telefone": self.state.telefone, 
+              "DiaSemana": self.state.diaSemana, 
+              "Horario": self.state.horario,
+              "AlimentoEntregue":0,
+            }
+          )
         };
+
         
         try{
           let providerResult = await provider.search({ query: self.state.value.replace('-',",") + ', Brazil' });
@@ -108,10 +125,13 @@ class NameForm extends Component {
               let latlon = [providerResult[0].y, providerResult[0].x];
               row.Coordinates = JSON.stringify(latlon); // Convert obj to string
               //needsUpdates[index].mapCoords = latlon;
+          }else{
+             throw new Error("endereco-nao-encontrado");
           }
         }catch(e){
             console.log("ERRO");
             console.log(e);
+            alert("Houve um problema ao cadastrar endereço, porfavor use o botão Marcar Localização Atual");
         }
         await sheet.addRow(row);
        

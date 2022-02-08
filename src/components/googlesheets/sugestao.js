@@ -21,6 +21,7 @@ class Sugestoes extends Component {
 
   
     handleChange(event) {
+      if(event.target.value.length > 1000) return;
       this.setState({value: event.target.value});
     }
   

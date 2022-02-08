@@ -80,6 +80,7 @@ class NameForm extends Component {
     }
     
     handleChangeNumero(event) {
+      if(event.target.value.length > 6) return;
       let numero = event.target.value.replace(/[^0-9]/g,'');
       this.setState({numero: numero});
     }
@@ -111,39 +112,58 @@ class NameForm extends Component {
                     //nordeste
                     regiao=0;
                   }
-                  else
-                  if(
-                    //cima baixo
-                    self.state.location[0]<-14.18 && self.state.location[0] > -32.66
-                    &&
-                    //esquerda direita
-                    self.state.location[1]>-55.55 && self.state.location[1] < -38.06        
-                    ){
-                      //sudeste
-                      regiao=4;
-                    }else{
+                  // else
+                  // if(
+                  //   //cima baixo
+                  //   self.state.location[0]<-14.18 && self.state.location[0] > -32.66
+                  //   &&
+                  //   //esquerda direita
+                  //   self.state.location[1]>-55.55 && self.state.location[1] < -38.06        
+                  //   ){
+                  //     //sudeste
+                  //     regiao=4;
+                  //   }
+                    else{
                       alert("Região não suportada");
                       return;
                     }
                 const sheet = doc.sheetsByIndex[regiao];
-                const rows = await sheet.getRows();
+                // const rows = await sheet.getRows();
                 // Total row count
 
                 if(self.state.numero !== ''){
                   self.state.numero = ", nº"+self.state.numero;
                 }
                 
-                const row = { 
-                  Roaster: self.state.alimento, 
-                  URL:self.state.numero, 
-                  City: "", 
-                  Coordinates:JSON.stringify([self.props.location[0], self.props.location[1]]), 
-                  DateISO: new Date().toISOString(), 
-                  Telefone: self.props.telefone, 
-                  DiaSemana:self.props.diaSemana,
-                  Horario:self.props.horario,
-                  AlimentoEntregue:0,
-                };
+                // const row = { 
+                //   Roaster: self.state.alimento, 
+                //   URL:self.state.numero, 
+                //   City: "", 
+                //   Coordinates:JSON.stringify([self.props.location[0], self.props.location[1]]), 
+                //   DateISO: new Date().toISOString(), 
+                //   Telefone: self.props.telefone, 
+                //   DiaSemana:self.props.diaSemana,
+                //   Horario:self.props.horario,
+                //   AlimentoEntregue:0,
+                // };
+
+                
+            const row = {
+              Dados: JSON.stringify(
+                { 
+                  "Roaster": self.state.alimento, 
+                  "URL":self.state.numero, 
+                  "City": "", 
+                  "Coordinates":JSON.stringify([self.props.location[0], self.props.location[1]]), 
+                  "DateISO": new Date().toISOString(), 
+                  "Telefone": self.props.telefone, 
+                  "DiaSemana":self.props.diaSemana,
+                  "Horario":self.props.horario,
+                  "AlimentoEntregue":0
+                }
+
+              )
+            };
                 
                 const result = await sheet.addRow(row);
                 console.log(result);

@@ -183,6 +183,7 @@ class App extends Component {
   }
 
   handleChangeTelefone(event) {
+    if(event.target.value.length>15) return;
     let telefoneValue = event.target.value.replace(/[^0-9]/g,'');
     if(telefoneValue.length >= 8){
       this.setState({telefoneEncryptado: aes.encrypt(telefoneValue)});
@@ -237,72 +238,104 @@ class App extends Component {
           //nordeste
           regiao=0;
         }
-        else
-        if(
-          //cima baixo
-          self.state.center[0]<-14.18 && self.state.center[0] > -32.66
-          &&
-          //esquerda direita
-          self.state.center[1]>-55.55 && self.state.center[1] < -38.06        
-          ){
-            //sudeste
-            regiao=3;
-          }else{
-            alert("Região não suportada");
+        // else
+        // if(
+        //   //cima baixo
+        //   self.state.center[0]<-14.18 && self.state.center[0] > -32.66
+        //   &&
+        //   //esquerda direita
+        //   self.state.center[1]>-55.55 && self.state.center[1] < -38.06        
+        //   ){
+        //     //sudeste
+        //     regiao=3;
+        //   }
+          else{
+            alert("Região ainda não suportada");
             return;
           }
       const sheet = doc.sheetsByIndex[regiao];
       const rows = await sheet.getRows();
       // Total row count
       self.setState({ rowCount: rows.length });
+      
+      // rows.filter( (x) => { return !x.Data}).map( (x) => {
+      //   x.Dados = JSON.stringify(
+      //     { 
+      //       "Roaster": x.Roaster, 
+      //       "URL": x.URL, 
+      //       "City": x.City, 
+      //       "Coordinates": x.Coordinates, 
+      //       "DateISO": x.DateISO, 
+      //       "Telefone": x.Telefone, 
+      //       "DiaSemana": x.DiaSemana,
+      //       "Horario": x.Horario,
+      //       "AlimentoEntregue": x.AlimentoEntregue
+      //     }
+      //   );
+      //   (async function main(x){
+          
+      //   await x.save();
+      //   })(x);
 
-      rows.forEach((x) => { 
-        if (x.Coordinates) { x.mapCoords = JSON.parse(x.Coordinates); 
-          if(x.Telefone) {
+      // })
+      rows.forEach((x) => {
+        let dados = JSON.parse(x.Dados);
+        x.Roaster = dados.Roaster;
+        x.URL = dados.URL;
+        x.City = dados.City;
+        x.Coordinates = dados.Coordinates;
+        x.DateISO = dados.DateISO;
+        x.Telefone = dados.Telefone;
+        x.DiaSemana = dados.DiaSemana;
+        x.Horario = dados.Horario;
+        x.AlimentoEntregue = dados.AlimentoEntregue;
+        
+        if (dados.Coordinates) { x.mapCoords = JSON.parse(x.Coordinates); 
+          if(dados.Telefone) {
             try{
               x.Telefone = aes.decrypt(x.Telefone);
             }catch(e){
               //problema ao decriptar, string nao esta no formato hex
             }
           } 
-        } 
+        }
+       
       });
-
       self.setState({ dataMaps: rows });
 
-      var needsUpdates = rows.filter((x) => { return !x.Coordinates; });
-      if(needsUpdates.length === 0) console.log("nao precisa atualizar");
-      if (needsUpdates && needsUpdates.length > 0) {
-          for (let index in needsUpdates) {
-            // if(needsUpdates[index]._rawData.length===0) needsUpdates[index].delete(); //se deixar rows vazias na planilha
-              let city = needsUpdates[index].City;
-              setTimeout(() => 
-                  {
-                      (async function main() {
-                          try{
-                              let providerResult = await provider.search({ query: city.replace('-',",") + ', Brazil' });
+      // var needsUpdates = rows.filter((x) => { x = JSON.parse(x); return !x.Coordinates; });
+      // if(needsUpdates.length === 0) console.log("nao precisa atualizar");
+      // if (needsUpdates && needsUpdates.length > 0) {
+      //     for (let index in needsUpdates) {
+      //       // if(needsUpdates[index]._rawData.length===0) needsUpdates[index].delete(); //se deixar rows vazias na planilha
+      //         let city = needsUpdates[index].City;
+      //         setTimeout(() => 
+      //             {
+      //                 (async function main() {
+      //                     try{
+      //                         let providerResult = await provider.search({ query: city.replace('-',",") + ', Brazil' });
                       
-                              if(providerResult.length !== 0 ){
-                                  // throw new Error("endereco-nao-encontrado");
+      //                         if(providerResult.length !== 0 ){
+      //                             // throw new Error("endereco-nao-encontrado");
                       
-                                  console.log(providerResult);
-                                  let latlon = [providerResult[0].y, providerResult[0].x];
-                                  needsUpdates[index].Coordinates = JSON.stringify(latlon); // Convert obj to string
-                                  //needsUpdates[index].mapCoords = latlon;
-                                  await needsUpdates[index].save(); // Save to remote Google Sheet
-                              }
-                          }catch(e){
-                              console.log("ERRO");
-                              console.log(e);
-                          }
-                      })();
+      //                             console.log(providerResult);
+      //                             let latlon = [providerResult[0].y, providerResult[0].x];
+      //                             needsUpdates[index].Coordinates = JSON.stringify(latlon); // Convert obj to string
+      //                             //needsUpdates[index].mapCoords = latlon;
+      //                             await needsUpdates[index].save(); // Save to remote Google Sheet
+      //                         }
+      //                     }catch(e){
+      //                         console.log("ERRO");
+      //                         console.log(e);
+      //                     }
+      //                 })();
                   
-                  },1300                        
-              );
+      //             },1300                        
+      //         );
               
-          }
-        self.setState({ dataMaps: rows });
-      }
+      //     }
+      //   self.setState({ dataMaps: rows });
+      // }
 
       // Loading message 
       self.setState({ isLoading: false })
