@@ -128,15 +128,21 @@ class NameForm extends Component {
                 const sheet = doc.sheetsByIndex[regiao];
                 const rows = await sheet.getRows();
                 // Total row count
+
+                if(self.state.numero !== ''){
+                  self.state.numero = ", nº"+self.state.numero;
+                }
+                
                 const row = { 
                   Roaster: self.state.alimento, 
-                  URL:", nº"+self.state.numero, 
+                  URL:self.state.numero, 
                   City: "", 
                   Coordinates:JSON.stringify([self.props.location[0], self.props.location[1]]), 
                   DateISO: new Date().toISOString(), 
                   Telefone: self.props.telefone, 
                   DiaSemana:self.props.diaSemana,
                   Horario:self.props.horario,
+                  AlimentoEntregue:0,
                 };
                 
                 const result = await sheet.addRow(row);

@@ -112,6 +112,36 @@ class App extends Component {
       })(motivo, coords);
     }
   }
+
+  entregarAlimento(coords){
+    (async function main(self) {
+      try{
+        await doc.useServiceAccountAuth({
+          client_email: process.env.REACT_APP_GOOGLE_SERVICE_ACCOUNT_EMAIL,
+          private_key: process.env.REACT_APP_GOOGLE_PRIVATE_KEY,
+          });
+
+          await doc.loadInfo(); // Loads document properties and worksheets
+
+          const sheet = doc.sheetsByIndex[0];
+          //row = { Name: "new name", Value: "new value" };
+          
+          const rows = await sheet.getRows();
+          let rowEncontrada = rows.filter((x) => { return x.Coordinates === JSON.stringify(coords); });
+          
+          console.log(rowEncontrada[0].City);
+          rowEncontrada[0].AlimentoEntregue++;
+          await rowEncontrada[0].save();
+          
+          window.location.reload();
+      }catch(e){
+        //console.log(e);
+
+      }
+      
+    })(coords);
+  }
+
   setTipoAlimento(event){
     this.setState({
       alimento: event.target.value
@@ -291,7 +321,7 @@ class App extends Component {
             <Paper id="CoffeeMap" className="fadeIn">
               {this.state.isLoading
                 ? <div className="flexLoading"><div className="loading">Carregando...</div></div>
-                : <CoffeeMap dataMapsProp={this.state.dataMaps} location={this.state.center} tileMapOption={this.state.tileMapOption} removerPonto={this.removerPonto}/>
+                : <CoffeeMap dataMapsProp={this.state.dataMaps} location={this.state.center} tileMapOption={this.state.tileMapOption} removerPonto={this.removerPonto} entregarAlimento={this.entregarAlimento}/>
               }
             </Paper>
           </Grid>
@@ -303,7 +333,7 @@ class App extends Component {
               : 
               
     <div className='relativePosition'>
-                Mapeados: {this.state.rowCount}<br></br>No mapa clique na bolinha para saber como ajudar.<br></br> Você pode se marcar ou marcar outra pessoa, <br></br>selecione a situação e confirme o local (mais informações no final da página):
+                Mapeados: {this.state.rowCount}<br></br>No mapa clique na bolinha para saber como ajudar.<br></br> Você pode se incluir ou incluir outra pessoa, <br></br>selecione a situação e confirme o local (mais informações no final da página):
         {/* RADIO BUTTON */}
         <div className='relativePosition'>
           <ul>
