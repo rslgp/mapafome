@@ -111,6 +111,9 @@ class NameForm extends Component {
                     ){
                       //sudeste
                       regiao=4;
+                    }else{
+                      alert("Região não suportada");
+                      return;
                     }
                 const sheet = doc.sheetsByIndex[regiao];
                 const rows = await sheet.getRows();
