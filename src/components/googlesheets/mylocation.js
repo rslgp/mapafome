@@ -87,7 +87,7 @@ class NameForm extends Component {
     handleSubmit(event) { 
         //navigator.geolocation.getCurrentPosition(function(position) {
         if(this.state.location[0]===-8.0671132 && this.state.location[1]===-34.8766719){
-          alert("Localização do celular está desativada, tente novamente com a localização ativa");
+          alert("Localização do celular está desativada, ative, recarregue a página e tente novamente com a localização ativa");
           event.preventDefault();
           return;
         }
@@ -153,9 +153,9 @@ class NameForm extends Component {
           <div><CircularProgress /></div>
           :
           <div>
-            <input type="text" placeholder='nº do local' value={this.state.numero} onChange={this.handleChangeNumero} />
+            <input className='nLocal' type="text" placeholder='nº' value={this.state.numero} onChange={this.handleChangeNumero} />
             <button className="SubmitButton" onClick={this.handleSubmit}>
-              Marcar Minha Localização Atual
+              marcar Localização Atual
             </button>
           </div>
         
