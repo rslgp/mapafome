@@ -65,7 +65,7 @@ class App extends Component {
       dataHeader: [{ label: "Índice" }, { label: "Lugar" }],
       rowCount: '',
       center:[-8.0671132,-34.8766719],
-      alimento:'Alimento de cesta básica',
+      alimento:'Alimento pronto',
       telefone:'',
       telefoneEncryptado:'',
       diaSemana:'',
@@ -370,6 +370,19 @@ class App extends Component {
         {/* RADIO BUTTON */}
         <div className='relativePosition'>
           <ul>
+            
+          <li>
+              <label className='yellowHub'>
+                <input
+                  type="radio"
+                  value="Alimento pronto"
+                  checked={this.state.alimento === "Alimento pronto"}
+                  onChange={this.setTipoAlimento}
+                />
+                Pessoa precisando de Alimento pronto <img width="30px" height="30px" src={coffeeBean}></img>
+              </label>
+            </li>
+
             <li>
               <label className='yellowHub'>
                 <input
@@ -381,20 +394,7 @@ class App extends Component {
                 Preciso de Alimento de cesta básica <img width="30px" height="30px" src={coffeeBean}></img>
               </label>
             </li>
-            
-            <li>
-              <label className='yellowHub'>
-                <input
-                  type="radio"
-                  value="Alimento pronto"
-                  checked={this.state.alimento === "Alimento pronto"}
-                  onChange={this.setTipoAlimento}
-                />
-                Preciso de Alimento pronto <img width="30px" height="30px" src={coffeeBean}></img>
-              </label>
-            </li>
-
-            
+                        
             <li>
               <label className='blueHub'>
                 <input
