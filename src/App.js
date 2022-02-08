@@ -79,10 +79,10 @@ class App extends Component {
     this.handleChangeTelefone = this.handleChangeTelefone.bind(this);
     this.setDiaSemana = this.setDiaSemana.bind(this);
     this.setHorario = this.setHorario.bind(this);
-    this.removePonto = this.removePonto.bind(this);
+    this.removerPonto = this.removerPonto.bind(this);
   }
 
-  removePonto(coords){
+  removerPonto(coords, categoriaPonto){
     console.log("remover "+coords);
     let motivo = prompt("por qual motivo (em resumo) gostaria de deletar esse ponto?");
     if(motivo !== null){
@@ -95,10 +95,10 @@ class App extends Component {
 
             await doc.loadInfo(); // Loads document properties and worksheets
 
-            const sheet = doc.sheetsByIndex[3];
+            const sheet = doc.sheetsByIndex[4];
             //row = { Name: "new name", Value: "new value" };
             
-            const row = { Motivo: motivo, Ponto: JSON.stringify(coords), DateISO: new Date().toISOString()};
+            const row = { Motivo: motivo, Ponto: JSON.stringify(coords), DateISO: new Date().toISOString(), CategoriaPonto:categoriaPonto};
             
             await sheet.addRow(row);
           
@@ -195,7 +195,6 @@ class App extends Component {
         -38.1445313, -14.1791861
         -38.0566406, -32.8426736
       */
-     console.log((self.state.center[0]<-14.18 && self.state.center[0] > -32.66) +" "+ (self.state.center[1]>-55.55 && self.state.center[1] < -38.06)  );
      //limitar regiao
       let regiao;
       if(
@@ -218,6 +217,9 @@ class App extends Component {
           ){
             //sudeste
             regiao=3;
+          }else{
+            alert("Região não suportada");
+            return;
           }
       const sheet = doc.sheetsByIndex[regiao];
       const rows = await sheet.getRows();
@@ -289,7 +291,7 @@ class App extends Component {
             <Paper id="CoffeeMap" className="fadeIn">
               {this.state.isLoading
                 ? <div className="flexLoading"><div className="loading">Carregando...</div></div>
-                : <CoffeeMap dataMapsProp={this.state.dataMaps} location={this.state.center} tileMapOption={this.state.tileMapOption} removerPonto={this.removePonto}/>
+                : <CoffeeMap dataMapsProp={this.state.dataMaps} location={this.state.center} tileMapOption={this.state.tileMapOption} removerPonto={this.removerPonto}/>
               }
             </Paper>
           </Grid>
