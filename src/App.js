@@ -13,6 +13,8 @@ import ReactGA from 'react-ga';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 
+import envVariables from './components/variaveisAmbiente';
+
 import qr from './images/qr.svg';
 
 // Material-UI
@@ -230,10 +232,10 @@ class App extends Component {
       let regiao;
       if(
         //cima baixo
-        self.state.center[0]<2.20 && self.state.center[0] > -14.09
+        self.state.center[0]< envVariables.mapArea.teto && self.state.center[0] > envVariables.mapArea.chao
         &&
         //esquerda direita
-        self.state.center[1]>-52.42 && self.state.center[1] < -34.32        
+        self.state.center[1]>envVariables.mapArea.paredeEsquerda && self.state.center[1] < envVariables.mapArea.paredeDireita       
         ){
           //nordeste
           regiao=0;
