@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import envVariables from '../variaveisAmbiente';
+
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 
@@ -104,10 +106,10 @@ class NameForm extends Component {
                 let regiao;
                 if(
                   //cima baixo
-                  self.state.location[0]<2.20 && self.state.location[0] > -14.09
+                  self.state.location[0]< envVariables.mapArea.teto && self.state.location[0] > envVariables.mapArea.chao
                   &&
                   //esquerda direita
-                  self.state.location[1]>-52.42 && self.state.location[1] < -34.32        
+                  self.state.location[1]>envVariables.mapArea.paredeEsquerda && self.state.location[1] < envVariables.mapArea.paredeDireita        
                   ){
                     //nordeste
                     regiao=0;
