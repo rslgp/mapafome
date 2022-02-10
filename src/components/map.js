@@ -100,8 +100,19 @@ class CoffeeMap extends Component {
         this.state = {
             dataMaps: [],
             center: props.location,
+            filtro: props.filtro,
         }
     }
+
+     //ATUALIZAR PROPS VINDAS DO PAI
+     static getDerivedStateFromProps(nextProps, state) {
+        if(state){
+          if (nextProps.filtro !== state.filtro){ 
+            state.filtro=nextProps.filtro;
+          }
+        }
+        return state;
+      }
 
     render() {
 
@@ -202,7 +213,86 @@ class CoffeeMap extends Component {
                     </Popup> */}
                         </Marker>
 
-                    <MarkerClusterGroup
+                        {/* {(() => {
+                            switch(this.state.filtro) {
+                                case "Todos":
+                                    return ([
+                                        this.renderDoadoresAzul(),
+                                        this.renderDoadoresVerde(),
+                                        this.renderNecessitados(),
+                                        this.renderDoadoresVermelho()]
+                                    )
+                                    break;
+                                case "Necessitados":
+                                    return ([
+                                        this.renderNecessitados()]
+                                    )
+                                    break;
+                                case "Doadores":
+                                    return ([
+                                        this.renderDoadoresAzul(),
+                                        this.renderDoadoresVerde(),
+                                        this.renderDoadoresVermelho()]
+                                    )
+                                    break;
+                                case "Refeição Pronta":
+                                    return ([
+                                        this.renderDoadoresVerde(),
+                                        this.renderDoadoresVermelho()]
+                                    )
+                                    break;
+                            }
+                        })()} */}
+                        {this.renderSwitch(this.state.filtro)}
+
+                    
+                </MapContainer>
+            </div>
+        );
+    }
+
+    
+    setupVariables(mapCoords,DateISO,Telefone){
+        let googleDirection = `https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`;
+                            
+        let dateMarked = timeAgo.format(Date.now() - (Date.now() - new Date(DateISO).getTime()) );
+         //if(DateISO) dateMarked
+        if(Telefone){
+            switch(Telefone.length){
+                case 8:
+                    Telefone="contato:"+Telefone.replace(/(\d{4})(\d{4})/g, "$1-$2");
+                    break;
+                case 9:
+                    Telefone="contato:"+Telefone.replace(/(\d{5})(\d{4})/g, "$1-$2");
+                    break;
+                default:
+                    Telefone="contato:"+Telefone.replace(/(\d{2})(\d{5})(\d{4})/g, "($1) $2-$3");
+                    break;
+            }
+        }
+        return {googleDirection, dateMarked, Telefone};
+    }
+
+    configPopup(googleDirection, precisandoMsg, dateMarked, contato, 
+        AlimentoEntregue, mapCoords, Roaster){
+        return <Popup>
+            <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino 
+            <img className="directionIcon" src="https://maps.gstatic.com/tactile/omnibox/directions-2x-20150909.png"></img></a>
+            <br/>
+            {precisandoMsg}
+            <br/>
+            {dateMarked} {contato} 
+            <br/>{"(Qtde entregue:"+AlimentoEntregue+")"}
+            <br/>
+            <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>deletar</button>
+            <span>    </span>
+            <button className='buttonsSidebySide floatRight' onClick={() => this.props.entregarAlimento([mapCoords[0], mapCoords[1]])}>entreguei</button>
+                                    
+        </Popup>
+    }
+
+    renderDoadoresAzul(){
+        return <MarkerClusterGroup
                     // grupo de onde pode ajudar
                         spiderfyDistanceMultiplier={1}
                         showCoverageOnHover={false}
@@ -211,23 +301,9 @@ class CoffeeMap extends Component {
                     >                        
                         {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
                             let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, AlimentoEntregue} = dataItem;
-                            let googleDirection = `https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`;
                             
-                            let dateMarked;
-                            if(DateISO) dateMarked = timeAgo.format(Date.now() - (Date.now() - new Date(DateISO).getTime()) );
-                            if(Telefone){
-                                switch(Telefone.length){
-                                    case 8:
-                                        Telefone="contato:"+Telefone.replace(/(\d{4})(\d{4})/g, "$1-$2");
-                                        break;
-                                    case 9:
-                                        Telefone="contato:"+Telefone.replace(/(\d{5})(\d{4})/g, "$1-$2");
-                                        break;
-                                    default:
-                                        Telefone="contato:"+Telefone.replace(/(\d{2})(\d{5})(\d{4})/g, "($1) $2-$3");
-                                        break;
-                                }
-                            }
+                            let {googleDirection, dateMarked, Telefone: contato} = this.setupVariables(mapCoords,DateISO,Telefone);
+                            
                             //filtrar datas antigas
                             // if(
                             //     dateMarked.includes("semana") 
@@ -239,7 +315,76 @@ class CoffeeMap extends Component {
                                 case "Doador":
                                     precisandoMsg = "Recebendo alimento para distribuir"+URL;
                                     CurrentIcon = hubIcon;
+                                    break;                               
+                                
+                                default:
+                                    return (<div></div>);
                                     break;
+                            }
+                            
+                            return (
+                                <Marker
+                                    eventHandlers={{
+                                        click: (e) => { 
+                                            // alert(`Precisando de ${Roaster}`); 
+                                            console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); 
+                                            // window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) 
+                                        }
+                                    }}
+                                    icon= {CurrentIcon} 
+                                    key={k}
+                                    center={[mapCoords[0], mapCoords[1]]}
+                                    position={[mapCoords[0], mapCoords[1]]}
+                                >
+                                   {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster)}
+                                    
+                                    {/* <Popup>
+                                        <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino 
+                                        <img className="directionIcon" src="https://maps.gstatic.com/tactile/omnibox/directions-2x-20150909.png"></img></a>
+                                        <br/>
+                                        {precisandoMsg}
+                                        <br/>
+                                        {dateMarked} {contato} 
+                                        <br/>{"(Qtde entregue:"+AlimentoEntregue+")"}
+                                        <br/>
+                                        <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>deletar</button>
+                                        <span>    </span>
+                                        <button className='buttonsSidebySide floatRight' onClick={() => this.props.entregarAlimento([mapCoords[0], mapCoords[1]])}>entreguei</button>
+                                
+                                    </Popup> */}
+                                    {/* <Tooltip
+                                        // direction="auto"
+                                        // offset={[15, 0]}
+                                        // opacity={1}>
+                                        // <span><a href={URL}>Precisando de<br></br>{Roaster}</a></span>
+                                        // <span>{City}, BR</span>
+                                    </Tooltip> */}
+                                </Marker>);
+                        })}
+                    </MarkerClusterGroup>
+    }
+
+    renderDoadoresVerde(){
+        return <MarkerClusterGroup
+                    // grupo de onde pode ajudar
+                        spiderfyDistanceMultiplier={1}
+                        showCoverageOnHover={false}
+                        maxClusterRadius={35}
+                        iconCreateFunction={markerclusterOptionsAnjos}
+                    >                        
+                        {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
+                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, AlimentoEntregue} = dataItem;
+                            
+                            let {googleDirection, dateMarked, Telefone: contato} = this.setupVariables(mapCoords,DateISO,Telefone);
+                            
+                            //filtrar datas antigas
+                            // if(
+                            //     dateMarked.includes("semana") 
+                            // //&& Number(dateMarked.replace(/[^0-9]/g,'')) > 7
+                            // ) return (<div></div>);
+                            
+                            let precisandoMsg, CurrentIcon;
+                            switch(Roaster){
                                 case "PrecisandoBuscar":
                                     precisandoMsg = `Precisando de pessoas para buscar `+DiaSemana + " pela "+Horario;
                                     CurrentIcon = greenIcon;
@@ -264,102 +409,22 @@ class CoffeeMap extends Component {
                                     center={[mapCoords[0], mapCoords[1]]}
                                     position={[mapCoords[0], mapCoords[1]]}
                                 >
-                                    <Popup>
-                                        <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino</a>
+                                   {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster)}
+                                    
+                                    {/* <Popup>
+                                        <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino 
+                                        <img className="directionIcon" src="https://maps.gstatic.com/tactile/omnibox/directions-2x-20150909.png"></img></a>
                                         <br/>
                                         {precisandoMsg}
                                         <br/>
-                                        {dateMarked} {Telefone} 
+                                        {dateMarked} {contato} 
                                         <br/>{"(Qtde entregue:"+AlimentoEntregue+")"}
                                         <br/>
                                         <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>deletar</button>
                                         <span>    </span>
-                                            <button className='buttonsSidebySide floatRight' onClick={() => this.props.entregarAlimento([mapCoords[0], mapCoords[1]])}>entreguei</button>
-                                    </Popup>
-                                    {/* <Tooltip
-                                        // direction="auto"
-                                        // offset={[15, 0]}
-                                        // opacity={1}>
-                                        // <span><a href={URL}>Precisando de<br></br>{Roaster}</a></span>
-                                        // <span>{City}, BR</span>
-                                    </Tooltip> */}
-                                </Marker>);
-                        })}
-                    </MarkerClusterGroup>
-
-                    
-                    <MarkerClusterGroup
-                    // grupo dos que precisam
-                        spiderfyDistanceMultiplier={1}
-                        showCoverageOnHover={false}
-                        maxClusterRadius={35}
-                        iconCreateFunction={markerclusterOptionsPrecisando}
-                    >                        
-                        {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
-                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, AlimentoEntregue} = dataItem;
-                            let googleDirection = `https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`;
-                            
-                            let dateMarked;
-                            if(DateISO) dateMarked = timeAgo.format(Date.now() - (Date.now() - new Date(DateISO).getTime()) );
-                            if(Telefone){
-                                switch(Telefone.length){
-                                    case 8:
-                                        Telefone="contato:"+Telefone.replace(/(\d{4})(\d{4})/g, "$1-$2");
-                                        break;
-                                    case 9:
-                                        Telefone="contato:"+Telefone.replace(/(\d{5})(\d{4})/g, "$1-$2");
-                                        break;
-                                    default:
-                                        Telefone="contato:"+Telefone.replace(/(\d{2})(\d{5})(\d{4})/g, "($1) $2-$3");
-                                        break;
-                                }
-                            }//filtrar datas antigas
-                            // if(
-                            //     dateMarked.includes("semana") 
-                            // //&& Number(dateMarked.replace(/[^0-9]/g,'')) > 7
-                            // ) return (<div></div>);
-                            
-                            let precisandoMsg, CurrentIcon;
-                            switch(Roaster){                                
-                                case "Alimento de cesta básica":
-                                case "Alimento pronto":
-                                    precisandoMsg = `Precisando de ${Roaster}`+URL;
-                                    CurrentIcon = myIcon;
-                                    break;
+                                        <button className='buttonsSidebySide floatRight' onClick={() => this.props.entregarAlimento([mapCoords[0], mapCoords[1]])}>entreguei</button>
                                 
-                                default:
-                                    return (<div></div>);
-                                    break;
-                            }
-                            
-                            return (
-                                <Marker
-                                    eventHandlers={{
-                                        click: (e) => { 
-                                            // alert(`Precisando de ${Roaster}`); 
-                                            console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); 
-                                            // window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) 
-                                        }
-                                    }}
-                                    icon= {CurrentIcon} 
-                                    key={k}
-                                    center={[mapCoords[0], mapCoords[1]]}
-                                    position={[mapCoords[0], mapCoords[1]]}
-                                >
-                                    <Popup>
-                                        <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino</a>
-                                        <br/>
-                                        {precisandoMsg}
-                                        <br/>
-                                        {dateMarked} {Telefone} 
-                                        <br/>{" (Qtde entregue:"+AlimentoEntregue+")"}
-                                        <br/>
-                                        <div className='buttonsSidebySide'>
-                                            <button className='buttonsSidebySide' onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>deletar</button>
-                                            <span>    </span>
-                                            <button className='buttonsSidebySide floatRight' onClick={() => this.props.entregarAlimento([mapCoords[0], mapCoords[1]])}>entreguei</button>
-                                        </div>
-                                    </Popup>
+                                    </Popup> */}
                                     {/* <Tooltip
                                         // direction="auto"
                                         // offset={[15, 0]}
@@ -370,92 +435,181 @@ class CoffeeMap extends Component {
                                 </Marker>);
                         })}
                     </MarkerClusterGroup>
-
-                    <MarkerClusterGroup
-                    // grupo de entrega de alimentos prontos
-                        spiderfyDistanceMultiplier={1}
-                        showCoverageOnHover={false}
-                        maxClusterRadius={35}
-                        iconCreateFunction={markerclusterOptionsEntrega}
-                    >                        
-                        {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
-                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, AlimentoEntregue } = dataItem;
-                            let googleDirection = `https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`;
-                            
-                            let dateMarked;
-                            if(DateISO) dateMarked = timeAgo.format(Date.now() - (Date.now() - new Date(DateISO).getTime()) );
-                            if(Telefone){
-                                switch(Telefone.length){
-                                    case 8:
-                                        Telefone="contato:"+Telefone.replace(/(\d{4})(\d{4})/g, "$1-$2");
-                                        break;
-                                    case 9:
-                                        Telefone="contato:"+Telefone.replace(/(\d{5})(\d{4})/g, "$1-$2");
-                                        break;
-                                    default:
-                                        Telefone="contato:"+Telefone.replace(/(\d{2})(\d{5})(\d{4})/g, "($1) $2-$3");
-                                        break;
-                                }
-                            }//filtrar datas antigas
-                            // if(
-                            //     dateMarked.includes("semana") 
-                            // //&& Number(dateMarked.replace(/[^0-9]/g,'')) > 7
-                            // ) return (<div></div>);
-                            
-                            let precisandoMsg, CurrentIcon;
-                            switch(Roaster){
-                                case "EntregaAlimentoPronto":
-                                    precisandoMsg = `Entregando refeições prontas `+DiaSemana+" pela "+Horario;
-                                    CurrentIcon = redIcon;
-                                    break;
-                                
-                                default:
-                                    return (<div></div>);
-                                    break;
-                            }
-                            
-                            return (
-                                <Marker
-                                    eventHandlers={{
-                                        click: (e) => { 
-                                            // alert(`Precisando de ${Roaster}`); 
-                                            console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); 
-                                            // window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) 
-                                        }
-                                    }}
-                                    icon= {CurrentIcon} 
-                                    key={k}
-                                    center={[mapCoords[0], mapCoords[1]]}
-                                    position={[mapCoords[0], mapCoords[1]]}
-                                >
-                                    <Popup>
-                                        <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino</a>
-                                        <br/>
-                                        {precisandoMsg}
-                                        <br/>
-                                        {dateMarked} {Telefone} 
-                                        <br/>{" (Qtde entregue:"+AlimentoEntregue+")"}
-                                        <br/>
-                                        <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>deletar</button>
-                                        <span>    </span>
-                                            <button className='buttonsSidebySide floatRight' onClick={() => this.props.entregarAlimento([mapCoords[0], mapCoords[1]])}>entreguei</button>
-                                    </Popup>
-                                    {/* <Tooltip
-                                        // direction="auto"
-                                        // offset={[15, 0]}
-                                        // opacity={1}>
-                                        // <span><a href={URL}>Precisando de<br></br>{Roaster}</a></span>
-                                        // <span>{City}, BR</span>
-                                    </Tooltip> */}
-                                </Marker>);
-                        })}
-                    </MarkerClusterGroup>
-
-                    
-                </MapContainer>
-            </div>
-        );
     }
+
+    renderDoadoresVermelho(){
+        return <MarkerClusterGroup
+        // grupo de entrega de alimentos prontos
+            spiderfyDistanceMultiplier={1}
+            showCoverageOnHover={false}
+            maxClusterRadius={35}
+            iconCreateFunction={markerclusterOptionsEntrega}
+        >                        
+            {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
+                let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, AlimentoEntregue } = dataItem;
+                
+                let {googleDirection, dateMarked, Telefone: contato} = this.setupVariables(mapCoords,DateISO,Telefone);
+                //filtrar datas antigas
+                // if(
+                //     dateMarked.includes("semana") 
+                // //&& Number(dateMarked.replace(/[^0-9]/g,'')) > 7
+                // ) return (<div></div>);
+                
+                let precisandoMsg, CurrentIcon;
+                switch(Roaster){
+                    case "EntregaAlimentoPronto":
+                        precisandoMsg = `Entregando refeições prontas `+DiaSemana+" pela "+Horario;
+                        CurrentIcon = redIcon;
+                        break;
+                    
+                    default:
+                        return (<div></div>);
+                        break;
+                }
+                
+                return (
+                    <Marker
+                        eventHandlers={{
+                            click: (e) => { 
+                                // alert(`Precisando de ${Roaster}`); 
+                                console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); 
+                                // window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) 
+                            }
+                        }}
+                        icon= {CurrentIcon} 
+                        key={k}
+                        center={[mapCoords[0], mapCoords[1]]}
+                        position={[mapCoords[0], mapCoords[1]]}
+                    >
+                        {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster)}
+                                    
+                        {/* <Popup>
+                            <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino</a>
+                            <br/>
+                            {precisandoMsg}
+                            <br/>
+                            {dateMarked} {contato} 
+                            <br/>{" (Qtde entregue:"+AlimentoEntregue+")"}
+                            <br/>
+                            <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>deletar</button>
+                            <span>    </span>
+                            <button className='buttonsSidebySide floatRight' onClick={() => this.props.entregarAlimento([mapCoords[0], mapCoords[1]])}>entreguei</button>
+                        </Popup> */}
+                        {/* <Tooltip
+                            // direction="auto"
+                            // offset={[15, 0]}
+                            // opacity={1}>
+                            // <span><a href={URL}>Precisando de<br></br>{Roaster}</a></span>
+                            // <span>{City}, BR</span>
+                        </Tooltip> */}
+                    </Marker>);
+            })}
+        </MarkerClusterGroup>
+    }
+
+    renderNecessitados(){
+        return <MarkerClusterGroup
+        // grupo dos que precisam
+            spiderfyDistanceMultiplier={1}
+            showCoverageOnHover={false}
+            maxClusterRadius={35}
+            iconCreateFunction={markerclusterOptionsPrecisando}
+        >                        
+            {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
+                let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, AlimentoEntregue} = dataItem;
+                let {googleDirection, dateMarked, Telefone: contato} = this.setupVariables(mapCoords,DateISO,Telefone);
+        //filtrar datas antigas
+                // if(
+                //     dateMarked.includes("semana") 
+                // //&& Number(dateMarked.replace(/[^0-9]/g,'')) > 7
+                // ) return (<div></div>);
+                
+                let precisandoMsg, CurrentIcon;
+                switch(Roaster){                                
+                    case "Alimento de cesta básica":
+                    case "Alimento pronto":
+                        precisandoMsg = `Precisando de ${Roaster}`+URL;
+                        CurrentIcon = myIcon;
+                        break;
+                    
+                    default:
+                        return (<div></div>);
+                        break;
+                }
+                
+                return (
+                    <Marker
+                        eventHandlers={{
+                            click: (e) => { 
+                                // alert(`Precisando de ${Roaster}`); 
+                                console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); 
+                                // window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) 
+                            }
+                        }}
+                        icon= {CurrentIcon} 
+                        key={k}
+                        center={[mapCoords[0], mapCoords[1]]}
+                        position={[mapCoords[0], mapCoords[1]]}
+                    >
+                        {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster)}
+                                    
+                        {/* <Popup>
+                            <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino</a>
+                            <br/>
+                            {precisandoMsg}
+                            <br/>
+                            {dateMarked} {contato} 
+                            <br/>{" (Qtde entregue:"+AlimentoEntregue+")"}
+                            <br/>
+                            <div className='buttonsSidebySide'>
+                                <button className='buttonsSidebySide' onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>deletar</button>
+                                <span>    </span>
+                                <button className='buttonsSidebySide floatRight' onClick={() => this.props.entregarAlimento([mapCoords[0], mapCoords[1]])}>entreguei</button>
+                            </div>
+                        </Popup> */}
+                        {/* <Tooltip
+                            // direction="auto"
+                            // offset={[15, 0]}
+                            // opacity={1}>
+                            // <span><a href={URL}>Precisando de<br></br>{Roaster}</a></span>
+                            // <span>{City}, BR</span>
+                        </Tooltip> */}
+                    </Marker>);
+            })}
+        </MarkerClusterGroup>
+    }
+
+    renderSwitch(param){
+        switch(this.state.filtro) {
+            case "Todos":
+                return ([
+                    this.renderDoadoresAzul(),
+                    this.renderDoadoresVerde(),
+                    this.renderNecessitados(),
+                    this.renderDoadoresVermelho()]
+                )
+                break;
+            case "Necessitados":
+                return ([
+                    this.renderNecessitados()]
+                )
+                break;
+            case "Doadores":
+                return ([
+                    this.renderDoadoresAzul(),
+                    this.renderDoadoresVerde(),
+                    this.renderDoadoresVermelho()]
+                )
+                break;
+            case "Refeição Pronta":
+                return ([
+                    this.renderDoadoresVerde(),
+                    this.renderDoadoresVermelho()]
+                )
+                break;
+        }
+    }
+
 }
 
 export default CoffeeMap;

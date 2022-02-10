@@ -72,15 +72,19 @@ class App extends Component {
       telefoneEncryptado:'',
       diaSemana:'',
       horario:'',
+      filtro:"Todos"
 
     }
 
     this.dropDownMenuSemana = React.createRef();
     this.dropDownMenuHorario = React.createRef();
+    this.dropDownMenuFiltro = React.createRef();
+
     this.setTipoAlimento = this.setTipoAlimento.bind(this);
     this.handleChangeTelefone = this.handleChangeTelefone.bind(this);
     this.setDiaSemana = this.setDiaSemana.bind(this);
     this.setHorario = this.setHorario.bind(this);
+    this.setFiltro = this.setFiltro.bind(this);
     this.removerPonto = this.removerPonto.bind(this);
   }
 
@@ -129,10 +133,15 @@ class App extends Component {
           //row = { Name: "new name", Value: "new value" };
           
           const rows = await sheet.getRows();
-          let rowEncontrada = rows.filter((x) => { return x.Coordinates === JSON.stringify(coords); });
+          let rowEncontrada = rows.filter((x) => { 
+            //x.Coordinates
+            console.log(JSON.parse(x.Dados).Coordinates);
+            return JSON.parse(x.Dados).Coordinates === JSON.stringify(coords); });
           
           console.log(rowEncontrada[0].City);
-          rowEncontrada[0].AlimentoEntregue++;
+          let dadosNovos = JSON.parse(rowEncontrada[0].Dados);
+          dadosNovos.AlimentoEntregue++;
+          rowEncontrada[0].Dados = JSON.stringify(dadosNovos);
           await rowEncontrada[0].save();
           
           window.location.reload();
@@ -144,6 +153,11 @@ class App extends Component {
     })(coords);
   }
 
+  setFiltro(event){
+    this.setState({
+      filtro: event.target.value
+    });
+  }
   setTipoAlimento(event){
     this.setState({
       alimento: event.target.value
@@ -356,7 +370,14 @@ class App extends Component {
             <Paper id="CoffeeMap" className="fadeIn">
               {this.state.isLoading
                 ? <div className="flexLoading"><div className="loading">Carregando...</div></div>
-                : <CoffeeMap dataMapsProp={this.state.dataMaps} location={this.state.center} tileMapOption={this.state.tileMapOption} removerPonto={this.removerPonto} entregarAlimento={this.entregarAlimento}/>
+                : <CoffeeMap 
+                dataMapsProp={this.state.dataMaps} 
+                location={this.state.center} 
+                tileMapOption={this.state.tileMapOption} 
+                removerPonto={this.removerPonto} 
+                entregarAlimento={this.entregarAlimento}
+                filtro={this.state.filtro}
+                />
               }
             </Paper>
           </Grid>
@@ -368,58 +389,64 @@ class App extends Component {
               : 
               
     <div className='relativePosition'>
-                Mapeados: {this.state.rowCount}<br></br>No mapa clique na bolinha para saber como ajudar.<br></br> Você pode se incluir ou incluir outra pessoa, <br></br>selecione a situação e confirme o local (mais informações no final da página):
+                Mapeados: {this.state.rowCount} filtro: 
+                <select ref= {this.dropDownMenuFiltro} id="filtro" onChange={this.setFiltro}>
+                <option value="Todos">Todos</option>
+                <option value="Doadores">Doadores</option>
+                <option value="Necessitados">Necessitados</option>
+                <option value="Refeição Pronta">Refeição Pronta</option>
+              </select>
+              <br></br>No mapa clique na bolinha para saber como ajudar.<br></br> Você pode se incluir ou incluir outra pessoa, <br></br>selecione a situação e confirme o local (mais informações no final da página):
         {/* RADIO BUTTON */}
         <div className='relativePosition'>
           <ul>
             
           <li>
-              <label className='yellowHub'>
+              <label className='uxLi'>
                 <input
                   type="radio"
                   value="Alimento pronto"
                   checked={this.state.alimento === "Alimento pronto"}
                   onChange={this.setTipoAlimento}
                 />
-                Pessoa precisando de Alimento pronto <img width="30px" height="30px" src={coffeeBean}></img>
+                <span className='yellowHub'> Pessoa precisando de Alimento pronto <img width="30px" height="30px" src={coffeeBean}></img></span>
               </label>
             </li>
 
             <li>
-              <label className='yellowHub'>
+              <label className='uxLi'>
                 <input
                   type="radio"
                   value="Alimento de cesta básica"
                   checked={this.state.alimento === "Alimento de cesta básica"}
                   onChange={this.setTipoAlimento}
                 />
-                Preciso de Alimento de cesta básica <img width="30px" height="30px" src={coffeeBean}></img>
+                <span className='yellowHub'> Preciso de Alimento de cesta básica <img width="30px" height="30px" src={coffeeBean}></img></span>
               </label>
             </li>
                         
             <li>
-              <label className='blueHub'>
+              <label className='uxLi'>
                 <input
                   type="radio"
                   value="Doador"
                   checked={this.state.alimento === "Doador"}
                   onChange={this.setTipoAlimento}
                 />
-                Recebo para doar <img width="30px" height="30px" src={hub}></img>
+                <span className='blueHub'> Recebo para doar <img width="30px" height="30px" src={hub}></img></span>
               </label>
             </li>
 
             <li>
-            <label className='redHub'>
+            <label className='uxLi'>
                 <input
                   type="radio"
                   value="EntregaAlimentoPronto"
                   checked={this.state.alimento === "EntregaAlimentoPronto"}
                   onChange={this.setTipoAlimento}
                 />
-                Entrego refeições em ponto fixo <img width="30px" height="30px" src={red}></img>
+                <span className='redHub'> Entrego refeições em ponto fixo <img width="30px" height="30px" src={red}></img></span>
               </label>
-              <br></br>
               <select ref= {this.dropDownMenuSemana} id="dia" onChange={this.setDiaSemana}>
                 <option value="toda Segunda">toda Segunda</option>
                 <option value="toda Terça">toda Terça</option>
@@ -437,22 +464,19 @@ class App extends Component {
                 <option value="noite 18:30">noite 18:30</option>
                 <option value="noite 19:30">noite 19:30</option>
               </select>
-            </li>
               <br></br>
+            </li>
 
-
-            <br></br>
             <li>
-              <label className='greenHub'>
+              <label className='uxLi'>
                 <input
                   type="radio"
                   value="PrecisandoBuscar"
                   checked={this.state.alimento === "PrecisandoBuscar"}
                   onChange={this.setTipoAlimento}
                 />
-                Tenho alimento perto de se perder  <img width="30px" height="30px" src={green}></img>
+                <span className='greenHub'> Tenho alimento perto de se perder  <img width="30px" height="30px" src={green}></img></span>
               </label>
-              <br></br>
               <select ref= {this.dropDownMenuSemana} id="dia" onChange={this.setDiaSemana}>
                 <option value="Hoje">Hoje</option>
                 <option value="toda Segunda">toda Segunda</option>
@@ -479,7 +503,6 @@ class App extends Component {
           </ul>
     </div>
         {/* FIM RADIO BUTTON */}
-        <br></br>
         <br></br>
             <div className='relativePosition'>
                 <input className="TextField tfMarginUp" type="text" placeholder='Insira telefone se quiser' value={this.state.telefone} onChange={this.handleChangeTelefone} />
@@ -515,8 +538,10 @@ class App extends Component {
 <br></br>-mapear pessoas que estão com fome na rua ou em casa
 <br></br>-mapear iniciativas que recebem recursos para fazer doação
 <br></br>-mostrar no mapa onde e quando tem alimento sendo distribuído
-<br></br>-mostrar no mapa lugares comerciais que precisam de voluntários para buscar alimentos não consumidos ou não comercializados
-<br></br> é possível traçar uma rota ao destino ao clicar Ir para o destino, e ser redirecionado para o Google Maps            
+<br></br>-mostrar no mapa lugares comerciais ou residenciais que precisam de voluntários ou necessitados para buscar alimentos não consumidos ou não comercializados
+<br></br> é possível traçar uma rota ao destino ao clicar Ir para o destino, e ser redirecionado para o Google Maps
+<br></br>
+contato: <a target='_blank' rel="noreferrer" href="https://mail.google.com/mail/u/0/?fs=1&to=rslgp@cin.ufpe.br&tf=cm" >rslgp@cin.ufpe.br</a> <a target='_blank' rel="noreferrer"  href='https://wa.me/5583996157234'>(83) 9.9615-7234</a>           
 <Sugestao/>
               </div>
           </div>
