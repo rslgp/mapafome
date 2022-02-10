@@ -52,6 +52,10 @@ body, h1, h2, h3, h4, p {
 
 
 /* CUSTOM */
+.directionIcon{
+  width: 18px;
+  height: 18px;
+}
 .floatRight{
   float: right;
 }
@@ -76,19 +80,30 @@ button, .SubmitButton {
   color: #fff;
   font-weight: bold;
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 8px;
+}
+select{
+  border-radius: 4px;
+}
+.uxLi{  
+  display: block;
+  padding: 11px 0px;
 }
 .greenHub{
   background-color: #baffb8;
+  border-radius: 8px;
 }
 .blueHub{
   background-color: #cfd7fa;
+  border-radius: 8px;
 }
 .yellowHub{
   background-color: #ffdf9d;
+  border-radius: 8px;
 }
 .redHub{
   background-color: #fca099;
+  border-radius: 8px;
 }
 
 
@@ -113,7 +128,7 @@ input[type="text"] {
   padding: 8px 12px;
   border: 1px solid #dbdbdb;
   box-sizing: border-box;
-  border-radius: 3px;  
+  border-radius: 8px;  
   height: 44px;
 }
 
@@ -132,9 +147,8 @@ ul {
 }
 
 li {
-  margin: 0 0 20px;
-  margin-bottom:22px;
-  height: 32px;
+  margin: 0 0 8px;
+  /* margin-bottom:22px; */
 }
 
 img.telegram {
@@ -245,9 +259,9 @@ a.tgme_widget_share_btn {
 
 /* Leaflet styling */
 
-.leaflet-container a {
+/* .leaflet-container a {
   color: #8a4b38 !important;
-}
+} */
 
 .leaflet-tooltip span {
   display: block;
