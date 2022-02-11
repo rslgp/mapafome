@@ -4,6 +4,9 @@ const envVariables = {
         "chao":-14.09,
         "paredeEsquerda":-52.42,
         "paredeDireita":-34.32
+    },
+    "lastMarked":{
+        "latlng":[]
     }
 }
 
