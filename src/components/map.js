@@ -11,10 +11,15 @@ import red from '../images/red.svg';
 import CurrentLocationSVG from '../images/currentLocation.svg';
 import TimeAgo from 'javascript-time-ago';
 
+import envVariables from './variaveisAmbiente';
+
 import pt from 'javascript-time-ago/locale/pt.json';
 TimeAgo.addDefaultLocale(pt);
 
 const timeAgo = new TimeAgo();
+
+global.lastMarked = undefined;
+global.lastMarkedCoords = undefined;
 
 // Leaflet custom marker
 const myIcon = new L.Icon({
@@ -127,7 +132,20 @@ class CoffeeMap extends Component {
                     zoom={screensizeZoom}
                     maxZoom={18}
                     center={this.state.center}
-                    attributionControl={false}>
+                    attributionControl={false}
+                    whenReady={(map) => {
+                        console.log(map);
+                        map.target.on("click", function (e) {
+                          if(e.originalEvent.detail>=2)alert(e.originalEvent.detail);
+                          const { lat, lng } = e.latlng;
+                          envVariables.lastMarked.latlng = [lat,lng];
+                        //   console.log(this);
+                        //   this.props.onClickMap([lat,lng]);
+                          if(global.lastMarked) global.lastMarked.remove();
+                          global.lastMarked = L.marker([lat, lng], {icon:CurrentLocation}).addTo(map.target);
+                        });
+                      }}
+                    >
 
 
 {/* https://github.com/dhis2-club-tanzania/function-maintenance/blob/0dadaa96955156b6ddefc0fcf9dd54e45ffb9458/src/app/shared/modules/ngx-dhis2-visualization/modules/map/constants/tile-layer.constant.ts */}
@@ -284,7 +302,7 @@ class CoffeeMap extends Component {
             {dateMarked} {contato} 
             <br/>{"(Qtde entregue:"+AlimentoEntregue+")"}
             <br/>
-            <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>deletar</button>
+            <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>apagar</button>
             <span>    </span>
             <button className='buttonsSidebySide floatRight' onClick={() => this.props.entregarAlimento([mapCoords[0], mapCoords[1]])}>entreguei</button>
                                     
@@ -347,7 +365,7 @@ class CoffeeMap extends Component {
                                         {dateMarked} {contato} 
                                         <br/>{"(Qtde entregue:"+AlimentoEntregue+")"}
                                         <br/>
-                                        <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>deletar</button>
+                                        <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>apagar</button>
                                         <span>    </span>
                                         <button className='buttonsSidebySide floatRight' onClick={() => this.props.entregarAlimento([mapCoords[0], mapCoords[1]])}>entreguei</button>
                                 
@@ -420,7 +438,7 @@ class CoffeeMap extends Component {
                                         {dateMarked} {contato} 
                                         <br/>{"(Qtde entregue:"+AlimentoEntregue+")"}
                                         <br/>
-                                        <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>deletar</button>
+                                        <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>apagar</button>
                                         <span>    </span>
                                         <button className='buttonsSidebySide floatRight' onClick={() => this.props.entregarAlimento([mapCoords[0], mapCoords[1]])}>entreguei</button>
                                 
@@ -491,7 +509,7 @@ class CoffeeMap extends Component {
                             {dateMarked} {contato} 
                             <br/>{" (Qtde entregue:"+AlimentoEntregue+")"}
                             <br/>
-                            <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>deletar</button>
+                            <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>apagar</button>
                             <span>    </span>
                             <button className='buttonsSidebySide floatRight' onClick={() => this.props.entregarAlimento([mapCoords[0], mapCoords[1]])}>entreguei</button>
                         </Popup> */}
@@ -562,7 +580,7 @@ class CoffeeMap extends Component {
                             <br/>{" (Qtde entregue:"+AlimentoEntregue+")"}
                             <br/>
                             <div className='buttonsSidebySide'>
-                                <button className='buttonsSidebySide' onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>deletar</button>
+                                <button className='buttonsSidebySide' onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>apagar</button>
                                 <span>    </span>
                                 <button className='buttonsSidebySide floatRight' onClick={() => this.props.entregarAlimento([mapCoords[0], mapCoords[1]])}>entreguei</button>
                             </div>

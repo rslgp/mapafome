@@ -72,7 +72,8 @@ class App extends Component {
       telefoneEncryptado:'',
       diaSemana:'',
       horario:'',
-      filtro:"Todos"
+      filtro:"Todos",
+      lastMarkedCoords:[]
 
     }
 
@@ -86,6 +87,7 @@ class App extends Component {
     this.setHorario = this.setHorario.bind(this);
     this.setFiltro = this.setFiltro.bind(this);
     this.removerPonto = this.removerPonto.bind(this);
+    this.handleClickMap = this.handleClickMap.bind(this);
   }
 
   removerPonto(coords, categoriaPonto){
@@ -135,10 +137,10 @@ class App extends Component {
           const rows = await sheet.getRows();
           let rowEncontrada = rows.filter((x) => { 
             //x.Coordinates
-            console.log(JSON.parse(x.Dados).Coordinates);
+            //console.log(JSON.parse(x.Dados).Coordinates);
             return JSON.parse(x.Dados).Coordinates === JSON.stringify(coords); });
           
-          console.log(rowEncontrada[0].City);
+          //console.log(rowEncontrada[0].City);
           let dadosNovos = JSON.parse(rowEncontrada[0].Dados);
           dadosNovos.AlimentoEntregue++;
           rowEncontrada[0].Dados = JSON.stringify(dadosNovos);
@@ -207,6 +209,85 @@ class App extends Component {
     this.setState({telefone: telefoneValue});
   }
 
+  handleClickMap(){
+    // this.setState({lastMarkedCoords: coords});
+
+    (async function main(self) {
+      await doc.useServiceAccountAuth({
+          client_email: process.env.REACT_APP_GOOGLE_SERVICE_ACCOUNT_EMAIL,
+          private_key: process.env.REACT_APP_GOOGLE_PRIVATE_KEY,
+      });
+
+      await doc.loadInfo(); // Loads document properties and worksheets
+      
+      let regiao;
+      if(
+        //cima baixo
+        envVariables.lastMarked.latlng[0]< envVariables.mapArea.teto && envVariables.lastMarked.latlng[0] > envVariables.mapArea.chao
+        &&
+        //esquerda direita
+        envVariables.lastMarked.latlng[1]>envVariables.mapArea.paredeEsquerda && envVariables.lastMarked.latlng[1] < envVariables.mapArea.paredeDireita        
+        ){
+          //nordeste
+          regiao=0;
+        }
+        else
+        if(
+          //cima baixo
+          envVariables.lastMarked.latlng[0]<-14.18 && envVariables.lastMarked.latlng[0] > -32.66
+          &&
+          //esquerda direita
+          envVariables.lastMarked.latlng[1]>-55.55 && envVariables.lastMarked.latlng[1] < -38.06        
+          ){
+            //sudeste
+            regiao=0;
+          }
+          else{
+            alert("Região não suportada");
+            return;
+          }
+      const sheet = doc.sheetsByIndex[regiao];
+      // const rows = await sheet.getRows();
+      // Total row count
+
+      // if(this.state.numero !== ''){
+      //   this.state.numero = ", nº"+this.state.numero;
+      // }
+      
+      // const row = { 
+      //   Roaster: self.state.alimento, 
+      //   URL:self.state.numero, 
+      //   City: "", 
+      //   Coordinates:JSON.stringify([self.props.location[0], self.props.location[1]]), 
+      //   DateISO: new Date().toISOString(), 
+      //   Telefone: self.props.telefone, 
+      //   DiaSemana:self.props.diaSemana,
+      //   Horario:self.props.horario,
+      //   AlimentoEntregue:0,
+      // };
+      let row;
+      let dadosJSON = {
+        "Roaster": self.state.alimento, 
+        "Coordinates":JSON.stringify(envVariables.lastMarked.latlng), 
+        "DateISO": new Date().toISOString(), 
+        "Telefone": self.state.telefoneEncryptado, 
+        "AlimentoEntregue":0
+      };
+
+      if(self.state.alimento==='EntregaAlimentoPronto' || self.state.alimento==='PrecisandoBuscar')
+      {
+        dadosJSON.DiaSemana=self.dropDownMenuSemana.current.value;
+        dadosJSON.Horario=self.dropDownMenuHorario.current.value;
+        
+      }
+      row = { Dados: JSON.stringify(dadosJSON) };
+      
+      const result = await sheet.addRow(row);
+      // console.log(result);
+      window.location.reload();
+  })(this);
+  }
+
   componentDidMount() {
 
     // Google Sheets API
@@ -254,17 +335,17 @@ class App extends Component {
           //nordeste
           regiao=0;
         }
-        // else
-        // if(
-        //   //cima baixo
-        //   self.state.center[0]<-14.18 && self.state.center[0] > -32.66
-        //   &&
-        //   //esquerda direita
-        //   self.state.center[1]>-55.55 && self.state.center[1] < -38.06        
-        //   ){
-        //     //sudeste
-        //     regiao=3;
-        //   }
+        else
+        if(
+          //cima baixo
+          self.state.center[0]<-14.18 && self.state.center[0] > -32.66
+          &&
+          //esquerda direita
+          self.state.center[1]>-55.55 && self.state.center[1] < -38.06        
+          ){
+            //sudeste
+            regiao=0;
+          }
           else{
             alert("Região ainda não suportada");
             return;
@@ -357,6 +438,42 @@ class App extends Component {
       self.setState({ isLoading: false })
 
     })(self);
+
+    window.fixarPonto = function (endereco, coords){
+      (async function main(endereco, coords) {
+        try{
+          await doc.useServiceAccountAuth({
+            client_email: process.env.REACT_APP_GOOGLE_SERVICE_ACCOUNT_EMAIL,
+            private_key: process.env.REACT_APP_GOOGLE_PRIVATE_KEY,
+          });
+      
+          await doc.loadInfo(); // Loads document properties and worksheets
+      
+          const sheet = doc.sheetsByIndex[0];
+          
+          const rows = await sheet.getRows();
+
+          let rowEncontrada = rows.filter( (x) => 
+          {
+            return JSON.parse(x.Dados).City.includes(endereco);
+          }
+          );
+
+          rowEncontrada.forEach( (x) => 
+          {
+            let dadosNovos = JSON.parse(x.Dados);
+            dadosNovos.Coordinates = JSON.stringify(coords);
+            x.Dados = JSON.stringify(dadosNovos);
+          });
+
+          for(let x of rowEncontrada) await x.save();
+
+        }catch(e){
+          
+        }
+        
+      })(endereco, coords);
+    }
   }
 
   render() {
@@ -446,8 +563,9 @@ class App extends Component {
                   onChange={this.setTipoAlimento}
                 />
                 <span className='redHub'> Entrego refeições em ponto fixo <img width="30px" height="30px" src={red}></img></span>
-              </label>
-              <select ref= {this.dropDownMenuSemana} id="dia" onChange={this.setDiaSemana}>
+              
+                <br></br>
+                <select ref= {this.dropDownMenuSemana} id="dia" onChange={this.setDiaSemana}>
                 <option value="toda Segunda">toda Segunda</option>
                 <option value="toda Terça">toda Terça</option>
                 <option value="toda Quarta">toda Quarta</option>
@@ -464,7 +582,7 @@ class App extends Component {
                 <option value="noite 18:30">noite 18:30</option>
                 <option value="noite 19:30">noite 19:30</option>
               </select>
-              <br></br>
+              </label>
             </li>
 
             <li>
@@ -476,7 +594,8 @@ class App extends Component {
                   onChange={this.setTipoAlimento}
                 />
                 <span className='greenHub'> Tenho alimento perto de se perder  <img width="30px" height="30px" src={green}></img></span>
-              </label>
+              
+              <br></br>
               <select ref= {this.dropDownMenuSemana} id="dia" onChange={this.setDiaSemana}>
                 <option value="Hoje">Hoje</option>
                 <option value="toda Segunda">toda Segunda</option>
@@ -495,7 +614,7 @@ class App extends Component {
                 <option value="noite 18:30">noite 18:30</option>
                 <option value="noite 19:30">noite 19:30</option>
               </select>
-
+              </label>
               
             </li>
 
@@ -503,8 +622,9 @@ class App extends Component {
           </ul>
     </div>
         {/* FIM RADIO BUTTON */}
-        <br></br>
             <div className='relativePosition'>
+                <button onClick={this.handleClickMap}>marcar Local Tocado</button>
+                <br></br>
                 <input className="TextField tfMarginUp" type="text" placeholder='Insira telefone se quiser' value={this.state.telefone} onChange={this.handleChangeTelefone} />
                 <MyLocationButton 
                 location={this.state.center} 
@@ -519,6 +639,7 @@ class App extends Component {
                 diaSemana={this.state.diaSemana}
                 horario={this.state.horario}
                 /> 
+
 
                 <a className="wpbtn" title="share to whatsapp" href="whatsapp://send?text=Para marcar no mapa e alimentar quem tem fome, achei esse site: https://rslgp.github.io/mapafome"> <img className="wp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""/>
                 Compartilhar no Whatsapp</a>

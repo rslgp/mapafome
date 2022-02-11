@@ -90,7 +90,7 @@ class NameForm extends Component {
     handleSubmit(event) { 
         //navigator.geolocation.getCurrentPosition(function(position) {
         if(this.state.location[0]===-8.0671132 && this.state.location[1]===-34.8766719){
-          alert("Localização do celular está desativada, ative, recarregue a página e tente novamente com a localização ativa");
+          alert("Localização do celular está desativada, ative, recarregue a página e tente novamente com a localização ativa, se mesmo assim não conseguir insira o endereço completo e clique enviar endereço");
           event.preventDefault();
           return;
         }
@@ -114,17 +114,17 @@ class NameForm extends Component {
                     //nordeste
                     regiao=0;
                   }
-                  // else
-                  // if(
-                  //   //cima baixo
-                  //   self.state.location[0]<-14.18 && self.state.location[0] > -32.66
-                  //   &&
-                  //   //esquerda direita
-                  //   self.state.location[1]>-55.55 && self.state.location[1] < -38.06        
-                  //   ){
-                  //     //sudeste
-                  //     regiao=4;
-                  //   }
+                  else
+                  if(
+                    //cima baixo
+                    self.state.location[0]<-14.18 && self.state.location[0] > -32.66
+                    &&
+                    //esquerda direita
+                    self.state.location[1]>-55.55 && self.state.location[1] < -38.06        
+                    ){
+                      //sudeste
+                      regiao=0;
+                    }
                     else{
                       alert("Região não suportada");
                       return;

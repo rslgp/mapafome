@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
   <ellipse style="stroke: rgb(0, 0, 0); fill-rule: nonzero; fill: rgb(8, 0, 255);" cx="257.985" cy="259.065" rx="16.611" ry="16.611" bx:origin="-7.037957 -1.302234"/>
-  <path d="M 200.997 118.754 H 274.787 L 274.787 103.754 L 314.787 123.754 L 274.787 143.754 L 274.787 128.754 H 200.997 V 118.754 Z" style="stroke: rgb(0, 0, 0); fill: rgb(13, 0, 255);" transform="matrix(0.007299, 0.999973, -0.999973, 0.007299, 379.438995, -79.042435)" bx:shape="arrow 200.997 103.754 113.79 40 10 40 0 1@e8828465" bx:origin="0.654847 6.753674"/>
+  <path d="M 136.803 118.754 H 187.026 L 187.026 103.754 L 214.251 123.754 L 187.026 143.754 L 187.026 128.754 H 136.803 V 118.754 Z" style="stroke: rgb(0, 0, 0); fill: rgb(13, 0, 255);" transform="matrix(0.007299, 0.999973, -0.999973, 0.007299, 380.172791, 21.49106)" bx:shape="arrow 136.803 103.754 77.448 40 10 27.224 0 1@43cf613c" bx:origin="0.654847 6.753674"/>
+  <text style="white-space: pre; fill: rgb(8, 0, 255); stroke: rgb(0, 0, 0); font-size: 12.1px;" x="241.519" y="151.05"><tspan x="241.5189971923828" dy="1em">​</tspan></text>
+  <text style="fill: rgb(8, 0, 255); font-size: 58px; font-weight: 700; stroke: rgb(0, 0, 0); white-space: pre; text-anchor: middle;" transform="matrix(1, 0, 0, 1, 8.885299, 2)"><tspan x="248.788" y="154.281" style="text-decoration: underline solid rgba(0, 0, 0, 0.8);">VC</tspan><tspan x="248.788" dy="1em">​</tspan></text>
 </svg>

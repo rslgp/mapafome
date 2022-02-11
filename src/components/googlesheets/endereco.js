@@ -99,18 +99,19 @@ class NameForm extends Component {
         //   AlimentoEntregue:0,
         // };
 
+        let dadosJSON = { 
+          "Roaster":  self.state.alimento, 
+          "URL":numero, 
+          "City": self.state.value,
+          "DateISO": new Date().toISOString(), 
+          "Telefone": self.state.telefone, 
+          "DiaSemana": self.state.diaSemana, 
+          "Horario": self.state.horario,
+          "AlimentoEntregue":0,
+        };
         const row = {
           Dados: JSON.stringify(
-            { 
-              "Roaster":  self.state.alimento, 
-              "URL":numero, 
-              "City": self.state.value,
-              "DateISO": new Date().toISOString(), 
-              "Telefone": self.state.telefone, 
-              "DiaSemana": self.state.diaSemana, 
-              "Horario": self.state.horario,
-              "AlimentoEntregue":0,
-            }
+            dadosJSON
           )
         };
 
@@ -123,7 +124,8 @@ class NameForm extends Component {
   
               console.log(providerResult);
               let latlon = [providerResult[0].y, providerResult[0].x];
-              row.Coordinates = JSON.stringify(latlon); // Convert obj to string
+              dadosJSON.Coordinates = JSON.stringify(latlon);
+              row.Dados = JSON.stringify(dadosJSON); // Convert obj to string
               //needsUpdates[index].mapCoords = latlon;
           }else{
              throw new Error("endereco-nao-encontrado");

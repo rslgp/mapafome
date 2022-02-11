@@ -66,7 +66,7 @@ class Sugestoes extends Component {
         :
         <form onSubmit={this.handleSubmit}>
           <label>
-            <textarea className="TextField" type="text" placeholder='Insira sua sugestão' value={this.state.value} onChange={this.handleChange} />
+            <textarea className="TextField" type="text" placeholder='Insira sua sugestão, depoimento e contato em caso de dúvida' value={this.state.value} onChange={this.handleChange} />
           </label>
           <input className="SubmitButton" type="submit" value="Enviar sugestão" />
         </form>
