@@ -220,6 +220,8 @@ class App extends Component {
 
       await doc.loadInfo(); // Loads document properties and worksheets
       
+      let {lat, lng} = envVariables.lastMarked.getLatLng();
+      envVariables.lastMarked.latlng = [lat,lng];
       let regiao;
       if(
         //cima baixo

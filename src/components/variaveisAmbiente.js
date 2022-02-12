@@ -5,9 +5,7 @@ const envVariables = {
         "paredeEsquerda":-52.42,
         "paredeDireita":-34.32
     },
-    "lastMarked":{
-        "latlng":[]
-    }
+    "lastMarked":undefined
 }
 
 export default envVariables;

@@ -134,15 +134,15 @@ class CoffeeMap extends Component {
                     center={this.state.center}
                     attributionControl={false}
                     whenReady={(map) => {
-                        console.log(map);
+                        //console.log(map);
                         map.target.on("click", function (e) {
                           if(e.originalEvent.detail>=2)alert(e.originalEvent.detail);
                           const { lat, lng } = e.latlng;
-                          envVariables.lastMarked.latlng = [lat,lng];
+                          //envVariables.lastMarked.latlng = [lat,lng];
                         //   console.log(this);
                         //   this.props.onClickMap([lat,lng]);
-                          if(global.lastMarked) global.lastMarked.remove();
-                          global.lastMarked = L.marker([lat, lng], {icon:CurrentLocation}).addTo(map.target);
+                          if(envVariables.lastMarked) envVariables.lastMarked.remove();
+                          envVariables.lastMarked = L.marker([lat, lng], {icon:CurrentLocation, draggable: true}).addTo(map.target);
                         });
                       }}
                     >
