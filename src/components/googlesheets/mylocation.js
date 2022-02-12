@@ -17,16 +17,15 @@ class NameForm extends Component {
         value: '', 
         location: props.location, 
         alimento: props.alimento, 
-        isLoading:props.isLoading,
+        isLoading:false,
         telefone:props.telefone,
         diaSemana:props.diaSemana,
-        numero:'',
+        numero:props.numero,
       };
   
-      this.handleChange = this.handleChange.bind(this);
+      // this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
 
-      this.handleChangeNumero = this.handleChangeNumero.bind(this);
 
     }
 
@@ -73,19 +72,16 @@ class NameForm extends Component {
         if (nextProps.horario !== state.horario){ 
           state.horario=nextProps.horario;
         }
+        if (nextProps.numero !== state.numero){ 
+          state.numero=nextProps.numero;
+        }
       }
       return state;
     }
   
-    handleChange(event) {
-      this.setState({value: event.target.value});
-    }
-    
-    handleChangeNumero(event) {
-      if(event.target.value.length > 6) return;
-      let numero = event.target.value.replace(/[^0-9]/g,'');
-      this.setState({numero: numero});
-    }
+    // handleChange(event) {
+    //   this.setState({value: event.target.value});
+    // }
   
     handleSubmit(event) { 
         //navigator.geolocation.getCurrentPosition(function(position) {
@@ -104,31 +100,13 @@ class NameForm extends Component {
                 await doc.loadInfo(); // Loads document properties and worksheets
                 
                 let regiao;
-                if(
-                  //cima baixo
-                  self.state.location[0]< envVariables.mapArea.teto && self.state.location[0] > envVariables.mapArea.chao
-                  &&
-                  //esquerda direita
-                  self.state.location[1]>envVariables.mapArea.paredeEsquerda && self.state.location[1] < envVariables.mapArea.paredeDireita        
-                  ){
-                    //nordeste
-                    regiao=0;
-                  }
-                  else
-                  if(
-                    //cima baixo
-                    self.state.location[0]<-14.18 && self.state.location[0] > -32.66
-                    &&
-                    //esquerda direita
-                    self.state.location[1]>-55.55 && self.state.location[1] < -38.06        
-                    ){
-                      //sudeste
-                      regiao=0;
-                    }
-                    else{
-                      alert("Região não suportada");
-                      return;
-                    }
+                if(envVariables.dentroLimites(self.state.location)){
+                  regiao=0;
+                }
+                else{
+                  alert("Região não suportada");
+                  return;
+                }
                 const sheet = doc.sheetsByIndex[regiao];
                 // const rows = await sheet.getRows();
                 // Total row count
@@ -179,13 +157,10 @@ class NameForm extends Component {
       return (
           this.state.isLoading ?
           <div><CircularProgress /></div>
-          :
-          <div>
-            <input className='nLocal' type="text" placeholder='nº' value={this.state.numero} onChange={this.handleChangeNumero} />
-            <button className="SubmitButton" onClick={this.handleSubmit}>
+          : 
+            <button className="SubmitButton buttonsSidebySide" onClick={this.handleSubmit}>
               marcar Localização Atual
             </button>
-          </div>
         
       );
     }

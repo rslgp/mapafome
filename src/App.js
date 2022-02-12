@@ -73,13 +73,16 @@ class App extends Component {
       diaSemana:'',
       horario:'',
       filtro:"Todos",
-      lastMarkedCoords:[]
+      lastMarkedCoords:[],
 
     }
 
     this.dropDownMenuSemana = React.createRef();
     this.dropDownMenuHorario = React.createRef();
     this.dropDownMenuFiltro = React.createRef();
+  
+    
+    this.handleChangeNumero = this.handleChangeNumero.bind(this);
 
     this.setTipoAlimento = this.setTipoAlimento.bind(this);
     this.handleChangeTelefone = this.handleChangeTelefone.bind(this);
@@ -208,10 +211,17 @@ class App extends Component {
     }
     this.setState({telefone: telefoneValue});
   }
+  
+    
+  handleChangeNumero(event) {
+    if(event.target.value.length > 10) return;
+    let numero = event.target.value.replace(/[^0-9]/g,'');
+    this.setState({numero: numero});
+  }
 
   handleClickMap(){
     // this.setState({lastMarkedCoords: coords});
-
+    this.setState({isLoading: true});
     (async function main(self) {
       await doc.useServiceAccountAuth({
           client_email: process.env.REACT_APP_GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -219,35 +229,17 @@ class App extends Component {
       });
 
       await doc.loadInfo(); // Loads document properties and worksheets
-      
+      if(envVariables.lastMarked === undefined) return;
       let {lat, lng} = envVariables.lastMarked.getLatLng();
       envVariables.lastMarked.latlng = [lat,lng];
       let regiao;
-      if(
-        //cima baixo
-        envVariables.lastMarked.latlng[0]< envVariables.mapArea.teto && envVariables.lastMarked.latlng[0] > envVariables.mapArea.chao
-        &&
-        //esquerda direita
-        envVariables.lastMarked.latlng[1]>envVariables.mapArea.paredeEsquerda && envVariables.lastMarked.latlng[1] < envVariables.mapArea.paredeDireita        
-        ){
-          //nordeste
-          regiao=0;
-        }
-        else
-        if(
-          //cima baixo
-          envVariables.lastMarked.latlng[0]<-14.18 && envVariables.lastMarked.latlng[0] > -32.66
-          &&
-          //esquerda direita
-          envVariables.lastMarked.latlng[1]>-55.55 && envVariables.lastMarked.latlng[1] < -38.06        
-          ){
-            //sudeste
-            regiao=0;
-          }
-          else{
-            alert("Região não suportada");
-            return;
-          }
+      if(envVariables.dentroLimites(envVariables.lastMarked.latlng)){
+        regiao=0;
+      }
+      else{
+        alert("Região não suportada");
+        return;
+      }
       const sheet = doc.sheetsByIndex[regiao];
       // const rows = await sheet.getRows();
       // Total row count
@@ -268,12 +260,16 @@ class App extends Component {
       //   AlimentoEntregue:0,
       // };
       let row;
+      if(self.state.numero !== ''){
+        self.state.numero = ", nº"+self.state.numero;
+      }
       let dadosJSON = {
         "Roaster": self.state.alimento, 
         "Coordinates":JSON.stringify(envVariables.lastMarked.latlng), 
         "DateISO": new Date().toISOString(), 
         "Telefone": self.state.telefoneEncryptado, 
-        "AlimentoEntregue":0
+        "AlimentoEntregue":0,
+        "URL":self.state.numero
       };
 
       if(self.state.alimento==='EntregaAlimentoPronto' || self.state.alimento==='PrecisandoBuscar')
@@ -327,31 +323,13 @@ class App extends Component {
       */
      //limitar regiao
       let regiao;
-      if(
-        //cima baixo
-        self.state.center[0]< envVariables.mapArea.teto && self.state.center[0] > envVariables.mapArea.chao
-        &&
-        //esquerda direita
-        self.state.center[1]>envVariables.mapArea.paredeEsquerda && self.state.center[1] < envVariables.mapArea.paredeDireita       
-        ){
-          //nordeste
-          regiao=0;
-        }
-        else
-        if(
-          //cima baixo
-          self.state.center[0]<-14.18 && self.state.center[0] > -32.66
-          &&
-          //esquerda direita
-          self.state.center[1]>-55.55 && self.state.center[1] < -38.06        
-          ){
-            //sudeste
-            regiao=0;
-          }
-          else{
-            alert("Região ainda não suportada");
-            return;
-          }
+      if(envVariables.dentroLimites(self.state.center)){
+        regiao=0;
+      }     
+      else{
+        alert("Região ainda não suportada");
+        return;
+      }
       const sheet = doc.sheetsByIndex[regiao];
       const rows = await sheet.getRows();
       // Total row count
@@ -625,16 +603,25 @@ class App extends Component {
     </div>
         {/* FIM RADIO BUTTON */}
             <div className='relativePosition'>
-                <button onClick={this.handleClickMap}>marcar Local Tocado</button>
-                <br></br>
+                
                 <input className="TextField tfMarginUp" type="text" placeholder='Insira telefone se quiser' value={this.state.telefone} onChange={this.handleChangeTelefone} />
-                <MyLocationButton 
+                <input className='nLocal' type="text" placeholder='nº' value={this.state.numero} onChange={this.handleChangeNumero} />
+                <br></br>
+                <div className='buttonsSidebySide'>
+                <MyLocationButton
                 location={this.state.center} 
                 alimento={this.state.alimento} 
                 telefone={this.state.telefoneEncryptado}
                 diaSemana={this.state.diaSemana}
                 horario={this.state.horario}
+                numero={this.state.numero}
                 /> 
+
+                {this.state.isLoading?
+                <CircularProgress/>
+                :<button className="SubmitButton buttonsSidebySide" onClick={this.handleClickMap}>marcar Local Tocado</button>}
+                </div>
+                
                 <InserirEndereco 
                 alimento={this.state.alimento} 
                 telefone={this.state.telefoneEncryptado}
