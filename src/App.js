@@ -608,18 +608,18 @@ class App extends Component {
                 <input className='nLocal' type="text" placeholder='nº' value={this.state.numero} onChange={this.handleChangeNumero} />
                 <br></br>
                 <div className='buttonsSidebySide'>
-                <MyLocationButton
-                location={this.state.center} 
-                alimento={this.state.alimento} 
-                telefone={this.state.telefoneEncryptado}
-                diaSemana={this.state.diaSemana}
-                horario={this.state.horario}
-                numero={this.state.numero}
-                /> 
+                  <MyLocationButton
+                  location={this.state.center} 
+                  alimento={this.state.alimento} 
+                  telefone={this.state.telefoneEncryptado}
+                  diaSemana={this.state.diaSemana}
+                  horario={this.state.horario}
+                  numero={this.state.numero}
+                  /> 
 
-                {this.state.isLoading?
-                <CircularProgress/>
-                :<button className="SubmitButton buttonsSidebySide" onClick={this.handleClickMap}>marcar Local Tocado</button>}
+                  {this.state.isLoading?
+                  <CircularProgress/>
+                  :<button className="SubmitButton buttonsSidebySide" onClick={this.handleClickMap}>marcar Local Tocado</button>}
                 </div>
                 
                 <InserirEndereco 

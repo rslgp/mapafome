@@ -136,7 +136,7 @@ class CoffeeMap extends Component {
                     whenReady={(map) => {
                         //console.log(map);
                         map.target.on("click", function (e) {
-                          if(e.originalEvent.detail>=2)alert(e.originalEvent.detail);
+                          //if(e.originalEvent.detail>=2)alert(e.originalEvent.detail);
                           const { lat, lng } = e.latlng;
                           //envVariables.lastMarked.latlng = [lat,lng];
                         //   console.log(this);
