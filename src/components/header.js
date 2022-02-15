@@ -19,7 +19,7 @@ class Header extends Component {
                 <AppBar position="static">
                     <Toolbar>
                         <Typography variant="h6" id="logo">
-                            <Twemoji emoji="☕" /> MAPA da FOME <span className="beta">(beta) site:</span> www.mapafome.ml 
+                            <Twemoji emoji="☕" /> MAPA da FOME <span className="beta">(beta) site:</span> www.mapafome.com.br 
                         </Typography>
                         {/* <TableCount rowCountProp={rowCountProp} /> */}
                         {/* <a href="https://docs.google.com/spreadsheets/d/1u7jiqY1qM0jYWugn1dFiW3plQrvWysJqm8xXhO35zuU/edit?usp=sharing" target="_blank" rel="noopener noreferrer">

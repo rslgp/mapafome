@@ -22,7 +22,8 @@ const envVariables = {
               localizacao[1]>-55.55 && localizacao[1] < -38.06        
             );
         return permissao;
-    }
+    },
+    "telefoneFilter":false
 }
 
 export default envVariables;

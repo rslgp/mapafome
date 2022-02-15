@@ -52,6 +52,10 @@ body, h1, h2, h3, h4, p {
 
 
 /* CUSTOM */
+.ods{
+  width: 100px;
+  height: 100px;
+}
 .directionIcon{
   width: 18px;
   height: 18px;
