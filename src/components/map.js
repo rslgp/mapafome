@@ -56,6 +56,14 @@ const CurrentLocation = new L.Icon({
     interactive: false
 });
 
+const TestIcon = new L.Icon({
+    iconUrl: 'https://maps.gstatic.com/tactile/reveal/close_1x_16dp.png',
+    iconSize: new L.Point(10, 10),
+    className: 'leaflet-bean-icon',
+    interactive: false
+});
+
+
 const markerclusterOptionsPrecisando = function (cluster) {
         var childCount = cluster.getChildCount();
         var c = ' marker-cluster-';
@@ -142,12 +150,12 @@ class CoffeeMap extends Component {
                         //   console.log(this);
                         //   this.props.onClickMap([lat,lng]);
                           if(envVariables.lastMarked) envVariables.lastMarked.remove();
-                          envVariables.lastMarked = L.marker([lat, lng], {icon:CurrentLocation, draggable: true}).addTo(map.target);
+                          envVariables.lastMarked = L.marker([lat, lng], {icon:CurrentLocation, draggable: false}).addTo(map.target);
                         });
                       }}
                     >
 
-
+{/* https://leaflet-extras.github.io/leaflet-providers/preview/ */}
 {/* https://github.com/dhis2-club-tanzania/function-maintenance/blob/0dadaa96955156b6ddefc0fcf9dd54e45ffb9458/src/app/shared/modules/ngx-dhis2-visualization/modules/map/constants/tile-layer.constant.ts */}
 {/* https://www.arcgis.com/apps/mapviewer/index.html */}
                     {/* <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -181,9 +189,45 @@ class CoffeeMap extends Component {
                         attribution=" &copy; <a href='http://openstreetmap.org' target='_blank' rel='noreferrer'>OpenStreetMap</a>"
                     />  */}
                     <LayersControl position="bottomleft">
+                    
+                    {/* <LayersControl.BaseLayer checked name="Esri">
+                    <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
+                        attribution='Tiles &copy; Esri'
+                    />
+                    </LayersControl.BaseLayer>
+                    <LayersControl.BaseLayer checked name="Stamen-lite">
+                    <TileLayer url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
+                        attribution='Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    />
+                    </LayersControl.BaseLayer>
+                    <LayersControl.BaseLayer checked name="Stamen-terrain">
+                    <TileLayer url="https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}{r}.png"
+                        attribution='Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    />
+                    </LayersControl.BaseLayer>
+                    <LayersControl.BaseLayer checked name="4">
+                    <TileLayer url="https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png"
+                        attribution=" &copy; <a href='https://www.waze.com/pt-BR/live-map' target='_blank' rel='noreferrer'>Waze</a>"
+                    />
+                    </LayersControl.BaseLayer>
+                    <LayersControl.BaseLayer checked name="3">
+                    <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
+                        attribution=" &copy; <a href='https://www.waze.com/pt-BR/live-map' target='_blank' rel='noreferrer'>Waze</a>"
+                    />
+                    </LayersControl.BaseLayer>
+                    <LayersControl.BaseLayer checked name="2">
+                    <TileLayer url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+                        attribution=" &copy; <a href='https://www.waze.com/pt-BR/live-map' target='_blank' rel='noreferrer'>Waze</a>"
+                    />
+                    </LayersControl.BaseLayer>
+                    <LayersControl.BaseLayer checked name="1">
+                    <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
+                        attribution=" &copy; <a href='https://www.waze.com/pt-BR/live-map' target='_blank' rel='noreferrer'>Waze</a>"
+                    />
+                    </LayersControl.BaseLayer> */}
                     <LayersControl.BaseLayer checked name="Waze">
                     <TileLayer url="https://worldtiles1.waze.com/tiles/{z}/{x}/{y}.png"
-                        attribution=" &copy; <a href='www.waze.com/pt-BR/live-map' target='_blank' rel='noreferrer'>Waze</a>"
+                        attribution=" &copy; <a href='https://www.waze.com/pt-BR/live-map' target='_blank' rel='noreferrer'>Waze</a>"
                     />
                     </LayersControl.BaseLayer>
                     <LayersControl.BaseLayer  name="Mapa">
@@ -262,6 +306,7 @@ class CoffeeMap extends Component {
                             }
                         })()} */}
                         {this.renderSwitch(this.state.filtro)}
+                        {this.renderTestes()}
 
                     
                 </MapContainer>
@@ -275,6 +320,8 @@ class CoffeeMap extends Component {
                             
         let dateMarked = timeAgo.format(Date.now() - (Date.now() - new Date(DateISO).getTime()) );
          //if(DateISO) dateMarked
+         let urlTelefone = `whatsapp://send?phone=55${Telefone}`;
+         let legivelTelefone = Telefone.replace(/(\d{2})(\d{5})(\d{4})/g, "($1) $2-$3");
         if(Telefone){
             switch(Telefone.length){
                 case 8:
@@ -284,10 +331,14 @@ class CoffeeMap extends Component {
                     Telefone="contato:"+Telefone.replace(/(\d{5})(\d{4})/g, "$1-$2");
                     break;
                 default:
-                    Telefone="contato:"+Telefone.replace(/(\d{2})(\d{5})(\d{4})/g, "($1) $2-$3");
+                    Telefone=<a href={urlTelefone} target='_blank' rel='noreferrer'>{legivelTelefone}</a>;
                     break;
             }
         }
+
+        // if(redesocial){
+        //     redesocial = <span> <a href={redesocial} target='_blank' rel='noreferrer'> RedeSocial</a></span>;
+        // }
         return {googleDirection, dateMarked, Telefone};
     }
 
@@ -299,7 +350,8 @@ class CoffeeMap extends Component {
             <br/>
             {precisandoMsg}
             <br/>
-            {dateMarked} {contato} 
+            {dateMarked} contato:{contato} 
+            {/* {redesocial} */}
             <br/>{"(Qtde entregue:"+AlimentoEntregue+")"}
             <br/>
             <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>apagar</button>
@@ -322,6 +374,7 @@ class CoffeeMap extends Component {
                             
                             let {googleDirection, dateMarked, Telefone: contato} = this.setupVariables(mapCoords,DateISO,Telefone);
                             
+                            if(envVariables.telefoneFilter && contato==="") return (<div></div>);
                             //filtrar datas antigas
                             // if(
                             //     dateMarked.includes("semana") 
@@ -395,6 +448,7 @@ class CoffeeMap extends Component {
                             
                             let {googleDirection, dateMarked, Telefone: contato} = this.setupVariables(mapCoords,DateISO,Telefone);
                             
+                            if(envVariables.telefoneFilter && contato==="") return (<div></div>);
                             //filtrar datas antigas
                             // if(
                             //     dateMarked.includes("semana") 
@@ -466,7 +520,9 @@ class CoffeeMap extends Component {
             {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
                 let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, AlimentoEntregue } = dataItem;
                 
-                let {googleDirection, dateMarked, Telefone: contato} = this.setupVariables(mapCoords,DateISO,Telefone);
+                let {googleDirection, dateMarked, Telefone: contato, redesocial} = this.setupVariables(mapCoords,DateISO,Telefone);
+                
+                if(envVariables.telefoneFilter && contato==="") return (<div></div>);
                 //filtrar datas antigas
                 // if(
                 //     dateMarked.includes("semana") 
@@ -536,7 +592,9 @@ class CoffeeMap extends Component {
             {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
                 let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, AlimentoEntregue} = dataItem;
                 let {googleDirection, dateMarked, Telefone: contato} = this.setupVariables(mapCoords,DateISO,Telefone);
-        //filtrar datas antigas
+        
+                if(envVariables.telefoneFilter && contato==="") return (<div></div>);
+                //filtrar datas antigas
                 // if(
                 //     dateMarked.includes("semana") 
                 // //&& Number(dateMarked.replace(/[^0-9]/g,'')) > 7
@@ -570,6 +628,80 @@ class CoffeeMap extends Component {
                         position={[mapCoords[0], mapCoords[1]]}
                     >
                         {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster)}
+                                    
+                        {/* <Popup>
+                            <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino</a>
+                            <br/>
+                            {precisandoMsg}
+                            <br/>
+                            {dateMarked} {contato} 
+                            <br/>{" (Qtde entregue:"+AlimentoEntregue+")"}
+                            <br/>
+                            <div className='buttonsSidebySide'>
+                                <button className='buttonsSidebySide' onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>apagar</button>
+                                <span>    </span>
+                                <button className='buttonsSidebySide floatRight' onClick={() => this.props.entregarAlimento([mapCoords[0], mapCoords[1]])}>entreguei</button>
+                            </div>
+                        </Popup> */}
+                        {/* <Tooltip
+                            // direction="auto"
+                            // offset={[15, 0]}
+                            // opacity={1}>
+                            // <span><a href={URL}>Precisando de<br></br>{Roaster}</a></span>
+                            // <span>{City}, BR</span>
+                        </Tooltip> */}
+                    </Marker>);
+            })}
+        </MarkerClusterGroup>
+    }
+
+    renderTestes(){
+        return <MarkerClusterGroup
+        // grupo dos que precisam
+            spiderfyDistanceMultiplier={1}
+            showCoverageOnHover={false}
+            maxClusterRadius={35}
+            iconCreateFunction={markerclusterOptionsPrecisando}
+        >                        
+            {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
+                let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, AlimentoEntregue} = dataItem;
+                let {googleDirection, dateMarked, Telefone: contato} = this.setupVariables(mapCoords,DateISO,Telefone);
+        //filtrar datas antigas
+
+                var msec = Date.now() - (new Date(DateISO)).getTime();
+                var mins = Math.floor(msec / 60000);
+                var hrs = Math.floor(mins / 60);
+                if(
+                    hrs > 3
+                ) return (<div></div>);
+                
+                
+                let precisandoMsg, CurrentIcon;
+                switch(Roaster){                                
+                    case "Teste":
+                        CurrentIcon = TestIcon;
+                        break;
+                    
+                    default:
+                        return (<div></div>);
+                        break;
+                }
+                
+                return (
+                    <Marker
+                        eventHandlers={{
+                            click: (e) => { 
+                                // alert(`Precisando de ${Roaster}`); 
+                                console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); 
+                                // window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) 
+                            }
+                        }}
+                        icon= {CurrentIcon} 
+                        key={k}
+                        center={[mapCoords[0], mapCoords[1]]}
+                        position={[mapCoords[0], mapCoords[1]]}
+                    >
+                        {/* {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster)} */}
                                     
                         {/* <Popup>
                             <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino</a>

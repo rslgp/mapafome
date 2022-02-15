@@ -11,6 +11,7 @@ import CoffeeMap from './components/map.js';
 // import CoffeeTable from './components/table';
 import ReactGA from 'react-ga';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { Checkbox } from '@material-ui/core';
 
 
 import envVariables from './components/variaveisAmbiente';
@@ -55,6 +56,9 @@ const doc = new GoogleSpreadsheet(process.env.REACT_APP_GOOGLESHEETID);
 const provider = new OpenStreetMapProvider();
 //limit osm https://operations.osmfoundation.org/policies/nominatim/
 
+
+
+
 class App extends Component {
 
   // Initial state
@@ -74,6 +78,9 @@ class App extends Component {
       horario:'',
       filtro:"Todos",
       lastMarkedCoords:[],
+      numero:'',
+      telefoneFilterLocal:false,
+      // site:''
 
     }
 
@@ -91,6 +98,14 @@ class App extends Component {
     this.setFiltro = this.setFiltro.bind(this);
     this.removerPonto = this.removerPonto.bind(this);
     this.handleClickMap = this.handleClickMap.bind(this);
+    this.telefoneFilterChange = this.telefoneFilterChange.bind(this);
+  }
+
+  telefoneFilterChange(event){
+    envVariables.telefoneFilter = !envVariables.telefoneFilter;
+    this.setState({
+      telefoneFilterLocal: envVariables.telefoneFilter
+    });
   }
 
   removerPonto(coords, categoriaPonto){
@@ -221,6 +236,7 @@ class App extends Component {
 
   handleClickMap(){
     // this.setState({lastMarkedCoords: coords});
+    if(envVariables.lastMarked === undefined) return;
     this.setState({isLoading: true});
     (async function main(self) {
       await doc.useServiceAccountAuth({
@@ -229,7 +245,6 @@ class App extends Component {
       });
 
       await doc.loadInfo(); // Loads document properties and worksheets
-      if(envVariables.lastMarked === undefined) return;
       let {lat, lng} = envVariables.lastMarked.getLatLng();
       envVariables.lastMarked.latlng = [lat,lng];
       let regiao;
@@ -274,8 +289,8 @@ class App extends Component {
 
       if(self.state.alimento==='EntregaAlimentoPronto' || self.state.alimento==='PrecisandoBuscar')
       {
-        dadosJSON.DiaSemana=self.dropDownMenuSemana.current.value;
-        dadosJSON.Horario=self.dropDownMenuHorario.current.value;
+        dadosJSON.DiaSemana=self.state.diaSemana;
+        dadosJSON.Horario=self.state.horario;
         
       }
       row = { Dados: JSON.stringify(dadosJSON) };
@@ -366,6 +381,7 @@ class App extends Component {
         x.DiaSemana = dados.DiaSemana;
         x.Horario = dados.Horario;
         x.AlimentoEntregue = dados.AlimentoEntregue;
+        x.RedeSocial = dados.RedeSocial;
         
         if (dados.Coordinates) { x.mapCoords = JSON.parse(x.Coordinates); 
           if(dados.Telefone) {
@@ -487,17 +503,33 @@ class App extends Component {
               
     <div className='relativePosition'>
                 Mapeados: {this.state.rowCount} filtro: 
-                <select ref= {this.dropDownMenuFiltro} id="filtro" onChange={this.setFiltro}>
+              <select ref= {this.dropDownMenuFiltro} id="filtro" onChange={this.setFiltro}>
                 <option value="Todos">Todos</option>
                 <option value="Doadores">Doadores</option>
                 <option value="Necessitados">Necessitados</option>
                 <option value="Refeição Pronta">Refeição Pronta</option>
               </select>
-              <br></br>No mapa clique na bolinha para saber como ajudar.<br></br> Você pode se incluir ou incluir outra pessoa, <br></br>selecione a situação e confirme o local (mais informações no final da página):
+              <Checkbox
+                checked={this.state.telefoneFilterLocal}
+                onChange={this.telefoneFilterChange}
+                inputProps={{ 'aria-label': 'controlled' }}
+              /> Telefone
+              <br></br>No mapa clique na bolinha para saber como ajudar.<br></br> Você pode se incluir ou incluir outra pessoa, <br></br>selecione a situação e confirme o local (mais informações no final da página ou <a target='_blank' rel="noreferrer" href="https://g1.globo.com/pe/pernambuco/noticia/2022/02/10/site-criado-por-estudante-da-ufpe-aproxima-pessoas-que-estao-passando-fome-e-doadores-de-comida.ghtml">na matéria da Globo</a>):
         {/* RADIO BUTTON */}
         <div className='relativePosition'>
           <ul>
             
+          <li>
+              <label className='uxLi'>
+                <input
+                  type="radio"
+                  value="Teste"
+                  checked={this.state.alimento === "Teste"}
+                  onChange={this.setTipoAlimento}
+                />
+                <span> Opção para testar a ferramenta </span>
+              </label>
+            </li>
           <li>
               <label className='uxLi'>
                 <input
@@ -629,6 +661,9 @@ class App extends Component {
                 horario={this.state.horario}
                 /> 
 
+                {/* <input className="TextField" type="text" placeholder='Insira o site do projeto' value={this.state.site} onChange={this.handleChangeSite} />
+                <br></br> */}
+                
 
                 <a className="wpbtn" title="share to whatsapp" href="whatsapp://send?text=Para marcar no mapa e alimentar quem tem fome, achei esse site: https://rslgp.github.io/mapafome"> <img className="wp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""/>
                 Compartilhar no Whatsapp</a>
@@ -636,7 +671,7 @@ class App extends Component {
 
                 {/* <img src={qr} alt=""/> */}
                 {/* <CleanOld></CleanOld> */}
-                No Mapa da Fome você pode encontrar a quem ajudar e fazer novas marcações, caso uma opção represente você ou outra pessoa, selecione, coloque número para contato se quiser, e confirme com localização atual ou endereço e número
+                <img className="ods" alt="" src="https://brasil.un.org/profiles/undg_country/themes/custom/undg/images/SDGs/pt-br/SDG-2.svg"></img> No Mapa da Fome você pode encontrar a quem ajudar e fazer novas marcações, caso uma opção represente você ou outra pessoa, selecione, coloque número para contato se quiser, e confirme com localização atual ou endereço e número
                 <br></br><span className="yellowHub">  em amarelo são pessoas <img width="30px" height="30px" src={coffeeBean}></img></span>em vulnerabilidade social e insegurança alimentar que estão com fome em casa ou na rua, --precisam de alimento
                 <br></br><span className="blueHub">  em azul são pessoas <img width="30px" height="30px" src={hub}></img></span>que recebem alimentos ou recursos para distribuir alimento ou refeições na comunidade (exemplo: sopão solidário, ongs, voluntários) --precisam de doações
                 <br></br><span className="redHub">  em vermelho são pessoas <img width="30px" height="30px" src={red}></img></span>que entregam refeição em ponto fixo na rua em certo dia na semana. --ponto de entrega de alimento pronto

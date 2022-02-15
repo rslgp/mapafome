@@ -133,7 +133,7 @@ class NameForm extends Component {
         }catch(e){
             console.log("ERRO");
             console.log(e);
-            alert("Houve um problema ao cadastrar endereço, porfavor use o botão Marcar Localização Atual");
+            alert("Houve um problema ao cadastrar endereço, porfavor clique no mapa e depois confirme o no botão marcar Local tocado.\nou use o botão marcar Localização Atual");
         }
         await sheet.addRow(row);
        
