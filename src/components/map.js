@@ -613,9 +613,83 @@ class CoffeeMap extends Component {
                 // ) return (<div></div>);
                 
                 let precisandoMsg, CurrentIcon;
+                switch(Roaster){                    
+                    case "Alimento pronto":
+                        precisandoMsg = `Precisando de ${Roaster}`+URL;
+                        CurrentIcon = myIcon;
+                        break;
+                    
+                    default:
+                        return (<div></div>);
+                        break;
+                }
+                
+                return (
+                    <Marker
+                        eventHandlers={{
+                            click: (e) => { 
+                                // alert(`Precisando de ${Roaster}`); 
+                                console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); 
+                                // window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) 
+                            }
+                        }}
+                        icon= {CurrentIcon} 
+                        key={k}
+                        center={[mapCoords[0], mapCoords[1]]}
+                        position={[mapCoords[0], mapCoords[1]]}
+                    >
+                        {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster)}
+                                    
+                        {/* <Popup>
+                            <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino</a>
+                            <br/>
+                            {precisandoMsg}
+                            <br/>
+                            {dateMarked} {contato} 
+                            <br/>{" (Qtde entregue:"+AlimentoEntregue+")"}
+                            <br/>
+                            <div className='buttonsSidebySide'>
+                                <button className='buttonsSidebySide' onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>apagar</button>
+                                <span>    </span>
+                                <button className='buttonsSidebySide floatRight' onClick={() => this.props.entregarAlimento([mapCoords[0], mapCoords[1]])}>entreguei</button>
+                            </div>
+                        </Popup> */}
+                        {/* <Tooltip
+                            // direction="auto"
+                            // offset={[15, 0]}
+                            // opacity={1}>
+                            // <span><a href={URL}>Precisando de<br></br>{Roaster}</a></span>
+                            // <span>{City}, BR</span>
+                        </Tooltip> */}
+                    </Marker>);
+            })}
+        </MarkerClusterGroup>
+    }
+
+    renderCestaBasica(){
+        return <MarkerClusterGroup
+        // grupo dos que precisam
+            spiderfyDistanceMultiplier={1}
+            showCoverageOnHover={false}
+            maxClusterRadius={35}
+            iconCreateFunction={markerclusterOptionsPrecisando}
+        >                        
+            {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
+                let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, AlimentoEntregue} = dataItem;
+                let {googleDirection, dateMarked, Telefone: contato} = this.setupVariables(mapCoords,DateISO,Telefone);
+        
+                //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
+                            
+                if(envVariables.telefoneFilter && contato==="") return (<div></div>);
+                //filtrar datas antigas
+                // if(
+                //     dateMarked.includes("semana") 
+                // //&& Number(dateMarked.replace(/[^0-9]/g,'')) > 7
+                // ) return (<div></div>);
+                
+                let precisandoMsg, CurrentIcon;
                 switch(Roaster){                                
                     case "Alimento de cesta básica":
-                    case "Alimento pronto":
                         precisandoMsg = `Precisando de ${Roaster}`+URL;
                         CurrentIcon = myIcon;
                         break;
@@ -748,10 +822,16 @@ class CoffeeMap extends Component {
                     this.renderDoadoresAzul(),
                     this.renderDoadoresVerde(),
                     this.renderNecessitados(),
+                    this.renderCestaBasica(),
                     this.renderDoadoresVermelho()]
                 )
                 break;
-            case "Necessitados":
+            case "CestaBasica":
+                return ([
+                    this.renderCestaBasica()]
+                )
+                break;
+            case "MoradorRua":
                 return ([
                     this.renderNecessitados()]
                 )
