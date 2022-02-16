@@ -310,6 +310,7 @@ class App extends Component {
 
     //current location    
     navigator.geolocation.getCurrentPosition(function(position) {
+      envVariables.currentLocation = [position.coords.latitude, position.coords.longitude];
       self.setState({center: [position.coords.latitude, position.coords.longitude]}) 
     });
 

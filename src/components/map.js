@@ -322,8 +322,12 @@ class CoffeeMap extends Component {
          //if(DateISO) dateMarked
          let urlTelefone = `whatsapp://send?phone=55${Telefone}`;
          let legivelTelefone = Telefone.replace(/(\d{2})(\d{5})(\d{4})/g, "($1) $2-$3");
+         let contato="contato:";
         if(Telefone){
             switch(Telefone.length){
+                case 0:
+                    Telefone="";
+                    break;
                 case 8:
                     Telefone="contato:"+Telefone.replace(/(\d{4})(\d{4})/g, "$1-$2");
                     break;
@@ -331,7 +335,7 @@ class CoffeeMap extends Component {
                     Telefone="contato:"+Telefone.replace(/(\d{5})(\d{4})/g, "$1-$2");
                     break;
                 default:
-                    Telefone=<a href={urlTelefone} target='_blank' rel='noreferrer'>{legivelTelefone}</a>;
+                    Telefone=<span>{contato}<a href={urlTelefone} target='_blank' rel='noreferrer'>{legivelTelefone}</a></span>;
                     break;
             }
         }
@@ -350,7 +354,7 @@ class CoffeeMap extends Component {
             <br/>
             {precisandoMsg}
             <br/>
-            {dateMarked} contato:{contato} 
+            {dateMarked} {contato} 
             {/* {redesocial} */}
             <br/>{"(Qtde entregue:"+AlimentoEntregue+")"}
             <br/>
@@ -373,6 +377,8 @@ class CoffeeMap extends Component {
                             let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, AlimentoEntregue} = dataItem;
                             
                             let {googleDirection, dateMarked, Telefone: contato} = this.setupVariables(mapCoords,DateISO,Telefone);
+                            
+                            //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
                             if(envVariables.telefoneFilter && contato==="") return (<div></div>);
                             //filtrar datas antigas
@@ -448,6 +454,8 @@ class CoffeeMap extends Component {
                             
                             let {googleDirection, dateMarked, Telefone: contato} = this.setupVariables(mapCoords,DateISO,Telefone);
                             
+                            //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
+                            
                             if(envVariables.telefoneFilter && contato==="") return (<div></div>);
                             //filtrar datas antigas
                             // if(
@@ -522,6 +530,8 @@ class CoffeeMap extends Component {
                 
                 let {googleDirection, dateMarked, Telefone: contato, redesocial} = this.setupVariables(mapCoords,DateISO,Telefone);
                 
+                //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
+                            
                 if(envVariables.telefoneFilter && contato==="") return (<div></div>);
                 //filtrar datas antigas
                 // if(
@@ -593,6 +603,8 @@ class CoffeeMap extends Component {
                 let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, AlimentoEntregue} = dataItem;
                 let {googleDirection, dateMarked, Telefone: contato} = this.setupVariables(mapCoords,DateISO,Telefone);
         
+                //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
+                            
                 if(envVariables.telefoneFilter && contato==="") return (<div></div>);
                 //filtrar datas antigas
                 // if(
