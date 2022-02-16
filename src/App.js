@@ -495,19 +495,22 @@ class App extends Component {
               }
             </Paper>
           </Grid>
+          
           <Grid item xs={12} sm={4}>
-            <Paper id="CoffeeTable"  className="toolPanel">
+          {/* https://smartdevpreneur.com/setting-material-ui-grid-item-height/ */}
+            <Paper id="CoffeeTable" style={{height:'100%'}} className="toolPanel2">
               {this.state.isLoading
                 ? <div className="flexLoading"><div className="loading"><CircularProgress /></div></div>
                 // : <CoffeeTable dataMapsProp={this.state.dataMaps} dataHeaderProp={this.state.dataHeader} />
               : 
               
     <div className='relativePosition'>
-                Mapeados: {this.state.rowCount} filtro: 
+      ver  
               <select ref= {this.dropDownMenuFiltro} id="filtro" onChange={this.setFiltro}>
                 <option value="Todos">Todos</option>
                 <option value="Doadores">Doadores</option>
-                <option value="Necessitados">Necessitados</option>
+                <option value="CestaBasica">Cesta básica</option>
+                <option value="MoradorRua">Situação de rua</option>
                 <option value="Refeição Pronta">Refeição Pronta</option>
               </select>
               <Checkbox
@@ -515,8 +518,7 @@ class App extends Component {
                 onChange={this.telefoneFilterChange}
                 inputProps={{ 'aria-label': 'controlled' }}
               /> Telefone
-              <br></br>No mapa clique na bolinha para saber como ajudar.<br></br> Você pode se incluir ou incluir outra pessoa, <br></br>selecione a situação e confirme o local (mais informações no final da página ou <a target='_blank' rel="noreferrer" href="https://g1.globo.com/pe/pernambuco/noticia/2022/02/10/site-criado-por-estudante-da-ufpe-aproxima-pessoas-que-estao-passando-fome-e-doadores-de-comida.ghtml">na matéria da Globo</a>):
-        {/* RADIO BUTTON */}
+                {/* RADIO BUTTON */}
         <div className='relativePosition'>
           <ul>
             
@@ -606,7 +608,7 @@ class App extends Component {
                   checked={this.state.alimento === "PrecisandoBuscar"}
                   onChange={this.setTipoAlimento}
                 />
-                <span className='greenHub'> Tenho alimento perto de se perder  <img width="30px" height="30px" src={green}></img></span>
+                <span className='greenHub'> Tenho alimento perto de se perder <a target='_blank' rel="noreferrer" href="https://www.camara.leg.br/noticias/670937-nova-lei-incentiva-empresas-a-doarem-alimentos-e-refeicoes-para-pessoas-vulneraveis/">(lei)</a>  <img width="30px" height="30px" src={green}></img></span>
               
               <br></br>
               <select ref= {this.dropDownMenuSemana} id="dia" onChange={this.setDiaSemana}>
@@ -666,17 +668,36 @@ class App extends Component {
                 <br></br> */}
                 
 
-                <a className="wpbtn" title="share to whatsapp" href="whatsapp://send?text=Para marcar no mapa e alimentar quem tem fome, achei esse site: https://rslgp.github.io/mapafome"> <img className="wp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""/>
-                Compartilhar no Whatsapp</a>
-                <a target='_blank' rel="noreferrer" href="https://t.me/share?url=https%3A%2F%2Frslgp.github.io%2Fmapafome&amp;text=Para%20marcar%20no%20mapa%20e%20alimentar%20quem%20tem%20fome%2C%20achei%20esse%20site%3A" className="tgme_widget_share_btn"><img className="telegram" src="https://telegram.org/img/WidgetButton_LogoSmall.png" alt=""></img></a>
+               
+              </div>
+          </div>
+               
+              
+              }
+            </Paper>
+          </Grid>
 
+
+          <Grid item xs={12} sm={12}>
+            <Paper id="MoreInfo" style={{height:'100%'}} >
+              
+            <a className="wpbtn" title="share to whatsapp" href="whatsapp://send?text=Para marcar no mapa e alimentar quem tem fome, achei esse site: www.mapafome.com.br"> <img className="wp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""/>
+                Compartilhar no Whatsapp</a>
+                <a style={{float:'right'}} target='_blank' rel="noreferrer" href="https://t.me/share?url=www.mapafome.com.br&amp;text=Para%20marcar%20no%20mapa%20e%20alimentar%20quem%20tem%20fome%2C%20achei%20esse%20site%3A" className="tgme_widget_share_btn"><img className="telegram" src="https://telegram.org/img/WidgetButton_LogoSmall.png" alt=""></img></a>
+
+                <br></br>
+              Mapeados: {this.state.rowCount} 
+              <br></br>No mapa clique na bolinha para saber como ajudar.<br></br> Você pode se incluir ou incluir outra pessoa, <br></br>selecione a situação e confirme o local (mais informações <a target='_blank' rel="noreferrer" href="https://g1.globo.com/pe/pernambuco/noticia/2022/02/10/site-criado-por-estudante-da-ufpe-aproxima-pessoas-que-estao-passando-fome-e-doadores-de-comida.ghtml">na matéria da Globo</a>):
+              
+              <br></br>
+              
                 {/* <img src={qr} alt=""/> */}
                 {/* <CleanOld></CleanOld> */}
                 <img className="ods" alt="" src="https://brasil.un.org/profiles/undg_country/themes/custom/undg/images/SDGs/pt-br/SDG-2.svg"></img> No Mapa da Fome você pode encontrar a quem ajudar e fazer novas marcações, caso uma opção represente você ou outra pessoa, selecione, coloque número para contato se quiser, e confirme com localização atual ou endereço e número
                 <br></br><span className="yellowHub">  em amarelo são pessoas <img width="30px" height="30px" src={coffeeBean}></img></span>em vulnerabilidade social e insegurança alimentar que estão com fome em casa ou na rua, --precisam de alimento
                 <br></br><span className="blueHub">  em azul são pessoas <img width="30px" height="30px" src={hub}></img></span>que recebem alimentos ou recursos para distribuir alimento ou refeições na comunidade (exemplo: sopão solidário, ongs, voluntários) --precisam de doações
                 <br></br><span className="redHub">  em vermelho são pessoas <img width="30px" height="30px" src={red}></img></span>que entregam refeição em ponto fixo na rua em certo dia na semana. --ponto de entrega de alimento pronto
-                <br></br><span className="greenHub">  em verde são pessoas <img width="30px" height="30px" src={green}></img></span>que trabalham com alimentos e precisam destinar os alimentos não comercializados ou não consumidos e não tem pessoas para buscar esses alimentos --precisam de voluntários para buscar 
+                <br></br><span className="greenHub">  em verde são pessoas <img width="30px" height="30px" src={green}></img></span>que trabalham com alimentos e precisam destinar os alimentos não comercializados ou não consumidos e não tem pessoas para buscar esses alimentos (exemplo: restaurante, hotel, lanchonete, feira livre, supermercados) --precisam de voluntários para buscar 
               
                 
                 <br></br><br></br>serve para 
@@ -689,14 +710,12 @@ class App extends Component {
 <br></br>
 contato: <a target='_blank' rel="noreferrer" href="https://mail.google.com/mail/u/0/?fs=1&to=rslgp@cin.ufpe.br&tf=cm" >rslgp@cin.ufpe.br</a> <a target='_blank' rel="noreferrer"  href='https://wa.me/5583996157234'>(83) 9.9615-7234</a>           
 <Sugestao/>
-              </div>
-          </div>
-               
-              
-              }
-            </Paper>
+        
+        </Paper>
           </Grid>
+
         </Grid>
+
       </div>
     );
   }
