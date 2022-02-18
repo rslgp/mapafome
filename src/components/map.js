@@ -10,6 +10,7 @@ import green from '../images/green.svg';
 import red from '../images/red.svg';
 import CurrentLocationSVG from '../images/currentLocation.svg';
 import TimeAgo from 'javascript-time-ago';
+import Rating from '@mui/material/Rating';
 
 import envVariables from './variaveisAmbiente';
 
@@ -315,15 +316,15 @@ class CoffeeMap extends Component {
     }
 
     
-    setupVariables(mapCoords,DateISO,Telefone){
+    setupVariables(mapCoords,DateISO,Telefone,Avaliacao){
         let googleDirection = `https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`;
                             
         let dateMarked = timeAgo.format(Date.now() - (Date.now() - new Date(DateISO).getTime()) );
          //if(DateISO) dateMarked
-         let urlTelefone = `whatsapp://send?phone=55${Telefone}`;
-         let legivelTelefone = Telefone.replace(/(\d{2})(\d{5})(\d{4})/g, "($1) $2-$3");
-         let contato="contato:";
         if(Telefone){
+            let urlTelefone = `whatsapp://send?phone=55${Telefone}`;
+            let legivelTelefone = Telefone.replace(/(\d{2})(\d{5})(\d{4})/g, "($1) $2-$3");
+            let contato="contato:";
             switch(Telefone.length){
                 case 0:
                     Telefone="";
@@ -340,14 +341,27 @@ class CoffeeMap extends Component {
             }
         }
 
-        // if(redesocial){
-        //     redesocial = <span> <a href={redesocial} target='_blank' rel='noreferrer'> RedeSocial</a></span>;
-        // }
-        return {googleDirection, dateMarked, Telefone};
+        if(Avaliacao){
+            let totalClicks = (Avaliacao["5"]+Avaliacao["4"]+Avaliacao["3"]+Avaliacao["2"]+Avaliacao["1"]);
+            if( totalClicks === 0 ){
+                Avaliacao="Nenhuma";
+            }else{
+                Avaliacao = (Avaliacao["5"]*5 +
+                Avaliacao["4"]*4 +
+                Avaliacao["3"]*3 +
+                Avaliacao["2"]*2 +
+                Avaliacao["1"]*1)
+                /            
+                (Avaliacao["5"]+Avaliacao["4"]+Avaliacao["3"]+Avaliacao["2"]+Avaliacao["1"]);
+
+            }
+        }
+    
+        return {googleDirection, dateMarked, Telefone, Avaliacao};
     }
 
     configPopup(googleDirection, precisandoMsg, dateMarked, contato, 
-        AlimentoEntregue, mapCoords, Roaster){
+        AlimentoEntregue, mapCoords, Roaster, Avaliacao, redesocial){
         return <Popup>
             <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino 
             <img className="directionIcon" src="https://maps.gstatic.com/tactile/omnibox/directions-2x-20150909.png"></img></a>
@@ -355,7 +369,21 @@ class CoffeeMap extends Component {
             {precisandoMsg}
             <br/>
             {dateMarked} {contato} 
-            {/* {redesocial} */}
+            {redesocial ? 
+                <span> <a href={redesocial} target='_blank' rel='noreferrer'> RedeSocial</a></span>
+            : <span></span>
+            }
+            <br/>
+            <Rating
+                name="simple-controlled"
+                value={0}
+                onChange={(event, newValue) => {
+                    this.props.avaliar([mapCoords[0], mapCoords[1]], newValue);
+                }}
+            /> 
+            (<svg width="12" height="12" viewBox="0 0 24 24" focusable="false" class="RbX5Oe koGmBf NMm5M"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"></path></svg>
+            {Avaliacao})
+            
             <br/>{"(Qtde entregue:"+AlimentoEntregue+")"}
             <br/>
             <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>apagar</button>
@@ -372,11 +400,14 @@ class CoffeeMap extends Component {
                         showCoverageOnHover={false}
                         maxClusterRadius={35}
                         iconCreateFunction={markerclusterOptionsAnjos}
-                    >                        
-                        {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
-                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, AlimentoEntregue} = dataItem;
+                    >                  
+                    {/* .filter(x => { return x.Coordinates; })       */}
+                        {this.props.dataMapsProp.filter(x => {return x.Roaster==="Doador" }).map((dataItem, k) => {
+                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, AlimentoEntregue, Avaliacao, RedeSocial} = dataItem;
                             
-                            let {googleDirection, dateMarked, Telefone: contato} = this.setupVariables(mapCoords,DateISO,Telefone);
+                            if(mapCoords === undefined) return; if(URL===undefined) URL = ""; if(RedeSocial===undefined) RedeSocial="";
+                            
+                            let {googleDirection, dateMarked, Telefone: contato, Avaliacao: nota} = this.setupVariables(mapCoords,DateISO,Telefone, Avaliacao);
                             
                             //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
@@ -388,16 +419,16 @@ class CoffeeMap extends Component {
                             // ) return (<div></div>);
                             
                             let precisandoMsg, CurrentIcon;
-                            switch(Roaster){
-                                case "Doador":
+                            // switch(Roaster){
+                            //     case "Doador":
                                     precisandoMsg = "Recebendo alimento para distribuir"+URL;
                                     CurrentIcon = hubIcon;
-                                    break;                               
+                            //         break;                               
                                 
-                                default:
-                                    return (<div></div>);
-                                    break;
-                            }
+                            //     default:
+                            //         return (<div></div>);
+                            //         break;
+                            // }
                             
                             return (
                                 <Marker
@@ -413,7 +444,7 @@ class CoffeeMap extends Component {
                                     center={[mapCoords[0], mapCoords[1]]}
                                     position={[mapCoords[0], mapCoords[1]]}
                                 >
-                                   {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster)}
+                                   {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster,nota,RedeSocial)}
                                     
                                     {/* <Popup>
                                         <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino 
@@ -449,10 +480,12 @@ class CoffeeMap extends Component {
                         maxClusterRadius={35}
                         iconCreateFunction={markerclusterOptionsAnjos}
                     >                        
-                        {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
-                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, AlimentoEntregue} = dataItem;
+                        {this.props.dataMapsProp.filter(x => {return x.Roaster==="PrecisandoBuscar" }).map((dataItem, k) => {
+                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, AlimentoEntregue, Avaliacao} = dataItem;
                             
-                            let {googleDirection, dateMarked, Telefone: contato} = this.setupVariables(mapCoords,DateISO,Telefone);
+                            if(mapCoords === undefined) return; if(URL===undefined) URL = "";
+
+                            let {googleDirection, dateMarked, Telefone: contato, Avaliacao: nota} = this.setupVariables(mapCoords,DateISO,Telefone,Avaliacao);
                             
                             //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
@@ -464,16 +497,16 @@ class CoffeeMap extends Component {
                             // ) return (<div></div>);
                             
                             let precisandoMsg, CurrentIcon;
-                            switch(Roaster){
-                                case "PrecisandoBuscar":
+                            // switch(Roaster){
+                            //     case "PrecisandoBuscar":
                                     precisandoMsg = `Precisando de pessoas para buscar `+DiaSemana + " pela "+Horario;
                                     CurrentIcon = greenIcon;
-                                    break;                                
+                            //         break;                                
                                 
-                                default:
-                                    return (<div></div>);
-                                    break;
-                            }
+                            //     default:
+                            //         return (<div></div>);
+                            //         break;
+                            // }
                             
                             return (
                                 <Marker
@@ -489,7 +522,7 @@ class CoffeeMap extends Component {
                                     center={[mapCoords[0], mapCoords[1]]}
                                     position={[mapCoords[0], mapCoords[1]]}
                                 >
-                                   {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster)}
+                                   {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster,nota)}
                                     
                                     {/* <Popup>
                                         <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino 
@@ -525,10 +558,12 @@ class CoffeeMap extends Component {
             maxClusterRadius={35}
             iconCreateFunction={markerclusterOptionsEntrega}
         >                        
-            {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
-                let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, AlimentoEntregue } = dataItem;
+            {this.props.dataMapsProp.filter(x => {return x.Roaster==="EntregaAlimentoPronto" }).map((dataItem, k) => {
+                let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, AlimentoEntregue, Avaliacao } = dataItem;
                 
-                let {googleDirection, dateMarked, Telefone: contato, redesocial} = this.setupVariables(mapCoords,DateISO,Telefone);
+                if(mapCoords === undefined) return; if(URL===undefined) URL = "";
+
+                let {googleDirection, dateMarked, Telefone: contato, redesocial, Avaliacao: nota} = this.setupVariables(mapCoords,DateISO,Telefone, Avaliacao);
                 
                 //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
@@ -540,16 +575,16 @@ class CoffeeMap extends Component {
                 // ) return (<div></div>);
                 
                 let precisandoMsg, CurrentIcon;
-                switch(Roaster){
-                    case "EntregaAlimentoPronto":
+                // switch(Roaster){
+                //     case "EntregaAlimentoPronto":
                         precisandoMsg = `Entregando refeições prontas `+DiaSemana+" pela "+Horario;
                         CurrentIcon = redIcon;
-                        break;
+                //         break;
                     
-                    default:
-                        return (<div></div>);
-                        break;
-                }
+                //     default:
+                //         return (<div></div>);
+                //         break;
+                // }
                 
                 return (
                     <Marker
@@ -565,7 +600,7 @@ class CoffeeMap extends Component {
                         center={[mapCoords[0], mapCoords[1]]}
                         position={[mapCoords[0], mapCoords[1]]}
                     >
-                        {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster)}
+                        {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster,nota)}
                                     
                         {/* <Popup>
                             <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino</a>
@@ -599,9 +634,12 @@ class CoffeeMap extends Component {
             maxClusterRadius={35}
             iconCreateFunction={markerclusterOptionsPrecisando}
         >                        
-            {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
-                let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, AlimentoEntregue} = dataItem;
-                let {googleDirection, dateMarked, Telefone: contato} = this.setupVariables(mapCoords,DateISO,Telefone);
+            {this.props.dataMapsProp.filter(x => {return x.Roaster==="Alimento pronto" }).map((dataItem, k) => {
+                let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, AlimentoEntregue, Avaliacao} = dataItem;
+                
+                if(mapCoords === undefined) return; if(URL===undefined) URL = "";
+                
+                let {googleDirection, dateMarked, Telefone: contato, Avaliacao: nota} = this.setupVariables(mapCoords,DateISO,Telefone);
         
                 //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
@@ -613,16 +651,16 @@ class CoffeeMap extends Component {
                 // ) return (<div></div>);
                 
                 let precisandoMsg, CurrentIcon;
-                switch(Roaster){                    
-                    case "Alimento pronto":
+                // switch(Roaster){                    
+                //     case "Alimento pronto":
                         precisandoMsg = `Precisando de ${Roaster}`+URL;
                         CurrentIcon = myIcon;
-                        break;
+                //         break;
                     
-                    default:
-                        return (<div></div>);
-                        break;
-                }
+                //     default:
+                //         return (<div></div>);
+                //         break;
+                // }
                 
                 return (
                     <Marker
@@ -674,9 +712,12 @@ class CoffeeMap extends Component {
             maxClusterRadius={35}
             iconCreateFunction={markerclusterOptionsPrecisando}
         >                        
-            {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
-                let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, AlimentoEntregue} = dataItem;
-                let {googleDirection, dateMarked, Telefone: contato} = this.setupVariables(mapCoords,DateISO,Telefone);
+            {this.props.dataMapsProp.filter(x => {return x.Roaster==="Alimento de cesta básica" }).map((dataItem, k) => {
+                let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, AlimentoEntregue, Avaliacao} = dataItem;
+                
+                if(mapCoords === undefined) return; if(URL===undefined) URL = "";
+                
+                let {googleDirection, dateMarked, Telefone: contato, Avaliacao: nota} = this.setupVariables(mapCoords,DateISO,Telefone);
         
                 //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
@@ -688,16 +729,16 @@ class CoffeeMap extends Component {
                 // ) return (<div></div>);
                 
                 let precisandoMsg, CurrentIcon;
-                switch(Roaster){                                
-                    case "Alimento de cesta básica":
+                // switch(Roaster){                                
+                //     case "Alimento de cesta básica":
                         precisandoMsg = `Precisando de ${Roaster}`+URL;
                         CurrentIcon = myIcon;
-                        break;
+                //         break;
                     
-                    default:
-                        return (<div></div>);
-                        break;
-                }
+                //     default:
+                //         return (<div></div>);
+                //         break;
+                // }
                 
                 return (
                     <Marker
@@ -749,9 +790,12 @@ class CoffeeMap extends Component {
             maxClusterRadius={35}
             iconCreateFunction={markerclusterOptionsPrecisando}
         >                        
-            {this.props.dataMapsProp.filter(x => { return x.Coordinates; }).map((dataItem, k) => {
-                let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, AlimentoEntregue} = dataItem;
-                let {googleDirection, dateMarked, Telefone: contato} = this.setupVariables(mapCoords,DateISO,Telefone);
+            {this.props.dataMapsProp.filter(x => {return x.Roaster==="Teste" }).map((dataItem, k) => {
+                let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, AlimentoEntregue, Avaliacao} = dataItem;
+                
+                if(mapCoords === undefined) return; if(URL===undefined) URL = "";
+                
+                let {googleDirection, dateMarked, Telefone: contato, Avaliacao: nota} = this.setupVariables(mapCoords,DateISO,Telefone);
         //filtrar datas antigas
 
                 var msec = Date.now() - (new Date(DateISO)).getTime();
@@ -763,15 +807,15 @@ class CoffeeMap extends Component {
                 
                 
                 let precisandoMsg, CurrentIcon;
-                switch(Roaster){                                
-                    case "Teste":
+                // switch(Roaster){                                
+                //     case "Teste":
                         CurrentIcon = TestIcon;
-                        break;
+                //         break;
                     
-                    default:
-                        return (<div></div>);
-                        break;
-                }
+                //     default:
+                //         return (<div></div>);
+                //         break;
+                // }
                 
                 return (
                     <Marker

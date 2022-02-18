@@ -5,7 +5,8 @@ import {
   // BingProvider 
 } from 'leaflet-geosearch';
 
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from '@mui/material/CircularProgress';
+import envVariables from '../variaveisAmbiente';
 
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
@@ -31,6 +32,7 @@ class NameForm extends Component {
         telefone:props.telefone,
         diaSemana:props.diaSemana,
         horario:props.horario,
+        redesocial:props.redesocial
       };
   
       this.handleChange = this.handleChange.bind(this);
@@ -51,6 +53,9 @@ class NameForm extends Component {
         }
         if (nextProps.horario !== state.horario){ 
           state.horario=nextProps.horario;
+        }
+        if (nextProps.redesocial !== state.redesocial){ 
+          state.redesocial=nextProps.redesocial;
         }
       }
       return state;
@@ -80,9 +85,7 @@ class NameForm extends Component {
         
         // Total row count
         let numero = self.state.value.replace(/[^0-9]/g,'');
-        if(numero !== ''){
-          numero = ", nº"+numero;
-        }else{
+        if(numero === ''){
           alert("faltou colocar o número");
           
           event.preventDefault();
@@ -99,22 +102,36 @@ class NameForm extends Component {
         //   AlimentoEntregue:0,
         // };
 
-        let dadosJSON = { 
-          "Roaster":  self.state.alimento, 
-          "URL":numero, 
-          "City": self.state.value,
-          "DateISO": new Date().toISOString(), 
-          "Telefone": self.state.telefone, 
-          "DiaSemana": self.state.diaSemana, 
-          "Horario": self.state.horario,
-          "AlimentoEntregue":0,
-        };
-        const row = {
-          Dados: JSON.stringify(
-            dadosJSON
-          )
-        };
+        const row = envVariables.criarRow(
+          self.state.alimento,
+          numero,
+          self.state.value,
+          "",
+          self.state.telefone,
+          self.state.diaSemana,
+          self.state.horario,
+          self.state.redesocial
+        );
+        // let dadosJSON = { 
+        //   "Roaster":  self.state.alimento, 
+        //   "URL":numero, 
+        //   "City": self.state.value,
+        //   "DateISO": new Date().toISOString(), 
+        //   "Telefone": self.state.telefone, 
+        //   "DiaSemana": self.state.diaSemana, 
+        //   "Horario": self.state.horario,
+        //   "AlimentoEntregue":0,
+        //   "RedeSocial":"",
+        //   "Avaliacao": {
+        //     "1":0,
+        //     "2":0,
+        //     "3":0,
+        //     "4":0,
+        //     "5":0
+        //   },
+        // };
 
+        let dadosJSON = JSON.parse(row);
         
         try{
           let providerResult = await provider.search({ query: self.state.value.replace('-',",") + ', Brazil' });
@@ -123,8 +140,8 @@ class NameForm extends Component {
               // throw new Error("endereco-nao-encontrado");
   
               console.log(providerResult);
-              let latlon = [providerResult[0].y, providerResult[0].x];
-              dadosJSON.Coordinates = JSON.stringify(latlon);
+              let latlon = [providerResult[0].y,providerResult[0].x];
+              dadosJSON.Coordinates = JSON.stringify(latlon).replace(" ","");
               row.Dados = JSON.stringify(dadosJSON); // Convert obj to string
               //needsUpdates[index].mapCoords = latlon;
           }else{

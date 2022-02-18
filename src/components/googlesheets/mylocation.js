@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import envVariables from '../variaveisAmbiente';
 
@@ -21,6 +21,7 @@ class NameForm extends Component {
         telefone:props.telefone,
         diaSemana:props.diaSemana,
         numero:props.numero,
+        redesocial:props.redesocial,
       };
   
       // this.handleChange = this.handleChange.bind(this);
@@ -75,6 +76,9 @@ class NameForm extends Component {
         if (nextProps.numero !== state.numero){ 
           state.numero=nextProps.numero;
         }
+        if (nextProps.redesocial !== state.redesocial){ 
+          state.redesocial=nextProps.redesocial;
+        }
       }
       return state;
     }
@@ -111,10 +115,6 @@ class NameForm extends Component {
                 // const rows = await sheet.getRows();
                 // Total row count
 
-                if(self.state.numero !== ''){
-                  self.state.numero = ", nº"+self.state.numero;
-                }
-                
                 // const row = { 
                 //   Roaster: self.state.alimento, 
                 //   URL:self.state.numero, 
@@ -128,25 +128,45 @@ class NameForm extends Component {
                 // };
 
                 
-            const row = {
-              Dados: JSON.stringify(
-                { 
-                  "Roaster": self.state.alimento, 
-                  "URL":self.state.numero, 
-                  "City": "", 
-                  "Coordinates":JSON.stringify([self.props.location[0], self.props.location[1]]), 
-                  "DateISO": new Date().toISOString(), 
-                  "Telefone": self.props.telefone, 
-                  "DiaSemana":self.props.diaSemana,
-                  "Horario":self.props.horario,
-                  "AlimentoEntregue":0
-                }
+              const row = envVariables.criarRow(
+                self.state.alimento,
+                self.state.numero,
+                "",
+                self.props.location,
+                self.props.telefone,
+                self.props.diaSemana,
+                self.props.horario,
+                self.state.redesocial
+                );
 
-              )
-            };
+                
+            // {
+            //   Dados: JSON.stringify(
+            //     { 
+            //       "Roaster": self.state.alimento, 
+            //       "URL":self.state.numero, 
+            //       "City": "", 
+            //       "Coordinates":JSON.stringify([self.props.location[0], self.props.location[1]]), 
+            //       "DateISO": new Date().toISOString(), 
+            //       "Telefone": self.props.telefone, 
+            //       "DiaSemana":self.props.diaSemana,
+            //       "Horario":self.props.horario,
+            //       "AlimentoEntregue":0,
+            //       "RedeSocial":self.state.redesocial.replace('@',''),
+            //       "Avaliacao": {
+            //         "1":0,
+            //         "2":0,
+            //         "3":0,
+            //         "4":0,
+            //         "5":0
+            //       },
+            //     }
+
+            //   )
+            // };
                 
                 const result = await sheet.addRow(row);
-                console.log(result);
+                //console.log(result);
                 window.location.reload();
             })(this);
         //});

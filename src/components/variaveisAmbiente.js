@@ -39,7 +39,39 @@ const envVariables = {
 
         return earthRadiusKm * c;
     },
-    "currentLocation": []
+    "currentLocation": [],
+    "criarRow": (alimento, numero, endereco, coords, telefone, diaSemana, horario, redesocial) => {
+
+        if(numero !== ''){
+            numero = ", nº"+numero;
+        }
+        
+        
+        let dadosJSON = {
+            "Roaster": alimento, 
+            "DateISO": new Date().toISOString(),
+            "AlimentoEntregue":0,
+            "Avaliacao": {
+                "1":0,
+                "2":0,
+                "3":0,
+                "4":0,
+                "5":0
+            },
+
+        };
+        if(numero!=="") dadosJSON.URL = numero;
+        if(coords!=="") dadosJSON.Coordinates = JSON.stringify(coords);
+        if(telefone!=="") dadosJSON.Telefone = telefone;
+        if(diaSemana!=="") {dadosJSON.DiaSemana = diaSemana; dadosJSON.Horario = horario}
+        if(redesocial!=="") dadosJSON.RedeSocial = redesocial;
+        const row = {
+            Dados: JSON.stringify(dadosJSON)
+        };
+
+        return row;
+
+    }
 }
 
 export default envVariables;
