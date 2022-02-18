@@ -9,6 +9,7 @@ import hub from '../images/hub.svg';
 import green from '../images/green.svg';
 import red from '../images/red.svg';
 import CurrentLocationSVG from '../images/currentLocation.svg';
+import CurrentLocationSmallSVG from '../images/currentLocationSmall.svg';
 import TimeAgo from 'javascript-time-ago';
 import Rating from '@mui/material/Rating';
 
@@ -53,6 +54,12 @@ const redIcon = new L.Icon({
 const CurrentLocation = new L.Icon({
     iconUrl: CurrentLocationSVG,
     iconSize: new L.Point(150, 150),
+    className: 'leaflet-bean-icon',
+    interactive: false
+});
+const CurrentLocationSmall = new L.Icon({
+    iconUrl: CurrentLocationSmallSVG,
+    iconSize: new L.Point(20, 20),
     className: 'leaflet-bean-icon',
     interactive: false
 });
@@ -151,7 +158,7 @@ class CoffeeMap extends Component {
                         //   console.log(this);
                         //   this.props.onClickMap([lat,lng]);
                           if(envVariables.lastMarked) envVariables.lastMarked.remove();
-                          envVariables.lastMarked = L.marker([lat, lng], {icon:CurrentLocation, draggable: false}).addTo(map.target);
+                          envVariables.lastMarked = L.marker([lat, lng], {icon:CurrentLocationSmall, draggable: false}).addTo(map.target);
                         });
                       }}
                     >
@@ -370,7 +377,7 @@ class CoffeeMap extends Component {
             <br/>
             {dateMarked} {contato} 
             {redesocial ? 
-                <span> <a href={redesocial} target='_blank' rel='noreferrer'> RedeSocial</a></span>
+                <span><br></br><a href={"https://"+redesocial} target='_blank' rel='noreferrer'> RedeSocial</a></span>
             : <span></span>
             }
             <br/>
@@ -559,7 +566,7 @@ class CoffeeMap extends Component {
             iconCreateFunction={markerclusterOptionsEntrega}
         >                        
             {this.props.dataMapsProp.filter(x => {return x.Roaster==="EntregaAlimentoPronto" }).map((dataItem, k) => {
-                let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, AlimentoEntregue, Avaliacao } = dataItem;
+                let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, AlimentoEntregue, Avaliacao, RedeSocial } = dataItem;
                 
                 if(mapCoords === undefined) return; if(URL===undefined) URL = "";
 
@@ -600,7 +607,7 @@ class CoffeeMap extends Component {
                         center={[mapCoords[0], mapCoords[1]]}
                         position={[mapCoords[0], mapCoords[1]]}
                     >
-                        {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster,nota)}
+                        {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster,nota,RedeSocial)}
                                     
                         {/* <Popup>
                             <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino</a>
