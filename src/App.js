@@ -225,9 +225,11 @@ class App extends Component {
           
           let cookieName='pontosAvaliados';
           let pontos = cookies.get(cookieName) || "";
+          coords = JSON.parse(coords);
+          let coordsString = coords[0]+""+coords[1];
           //let pontosEntregues = JSON.parse(pontosEntreguesData);
-          if(pontos.includes(coords)) return;
-          pontos+=coords;
+          if(pontos.includes(coordsString)) return;
+          pontos+=coordsString;
 
           const cookieExpireDate = new Date();
           cookieExpireDate.setDate(cookieExpireDate.getDate() + EXPIRE_DAY);

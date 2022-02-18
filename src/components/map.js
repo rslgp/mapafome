@@ -361,6 +361,8 @@ class CoffeeMap extends Component {
                 /            
                 (Avaliacao["5"]+Avaliacao["4"]+Avaliacao["3"]+Avaliacao["2"]+Avaliacao["1"]);
 
+                Avaliacao = Math.round(Avaliacao * 100)/100;
+
             }
         }
     
