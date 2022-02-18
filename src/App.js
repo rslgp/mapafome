@@ -10,17 +10,16 @@ import Sugestao from './components/googlesheets/sugestao';
 import CoffeeMap from './components/map.js';
 // import CoffeeTable from './components/table';
 import ReactGA from 'react-ga';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { Checkbox } from '@material-ui/core';
-
+import CircularProgress from '@mui/material/CircularProgress';
+import { Checkbox } from '@mui/material';
 
 import envVariables from './components/variaveisAmbiente';
 
 import qr from './images/qr.svg';
 
 // Material-UI
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
 
 import CleanOld from './components/googlesheets/cleanold';
 
@@ -31,6 +30,11 @@ import green from './images/green.svg';
 import red from './images/red.svg';
 
 import AesEncryption from "aes-encryption";
+
+import Cookies from 'universal-cookie';
+ 
+const cookies = new Cookies();
+const EXPIRE_DAY = 7;
 
 const aes = new AesEncryption();
 
@@ -80,13 +84,18 @@ class App extends Component {
       lastMarkedCoords:[],
       numero:'',
       telefoneFilterLocal:false,
-      // site:''
+      site:'',
+      redesocial:''
 
     }
 
-    this.dropDownMenuSemana = React.createRef();
-    this.dropDownMenuHorario = React.createRef();
+    this.dropDownMenuSemanaEntregaAlimentoPronto = React.createRef();
+    this.dropDownMenuHorarioEntregaAlimentoPronto = React.createRef();
+    this.dropDownMenuSemanaPrecisandoBuscar = React.createRef();
+    this.dropDownMenuHorarioPrecisandoBuscar = React.createRef();
     this.dropDownMenuFiltro = React.createRef();
+    this.redesocialRef = React.createRef();
+    this.dropDownMenuRedeSocial = React.createRef();
   
     
     this.handleChangeNumero = this.handleChangeNumero.bind(this);
@@ -99,6 +108,7 @@ class App extends Component {
     this.removerPonto = this.removerPonto.bind(this);
     this.handleClickMap = this.handleClickMap.bind(this);
     this.telefoneFilterChange = this.telefoneFilterChange.bind(this);
+    this.handleChangeRedeSocial = this.handleChangeRedeSocial.bind(this);
   }
 
   telefoneFilterChange(event){
@@ -126,7 +136,8 @@ class App extends Component {
             
             const row = { Motivo: motivo, Ponto: JSON.stringify(coords), DateISO: new Date().toISOString(), CategoriaPonto:categoriaPonto};
             
-            await sheet.addRow(row);
+            let r = await sheet.addRow(row);
+            console.log(r);
           
             alert("pedido de deletar enviado com sucesso");
         }catch(e){
@@ -153,10 +164,11 @@ class App extends Component {
           //row = { Name: "new name", Value: "new value" };
           
           const rows = await sheet.getRows();
+          coords = JSON.stringify(coords);
           let rowEncontrada = rows.filter((x) => { 
             //x.Coordinates
             //console.log(JSON.parse(x.Dados).Coordinates);
-            return JSON.parse(x.Dados).Coordinates === JSON.stringify(coords); });
+            return JSON.parse(x.Dados).Coordinates === coords; });
           
           //console.log(rowEncontrada[0].City);
           let dadosNovos = JSON.parse(rowEncontrada[0].Dados);
@@ -173,6 +185,64 @@ class App extends Component {
     })(coords);
   }
 
+  avaliar(coords, avaliacao){
+    
+    (async function main(coords, avaliacao) {
+      try{
+        await doc.useServiceAccountAuth({
+          client_email: process.env.REACT_APP_GOOGLE_SERVICE_ACCOUNT_EMAIL,
+          private_key: process.env.REACT_APP_GOOGLE_PRIVATE_KEY,
+          });
+
+          await doc.loadInfo(); // Loads document properties and worksheets
+
+          const sheet = doc.sheetsByIndex[0];
+          //row = { Name: "new name", Value: "new value" };
+          
+          const rows = await sheet.getRows();
+          coords = JSON.stringify(coords);
+          let rowEncontrada = rows.filter((x) => { 
+            //x.Coordinates
+            //console.log(JSON.parse(x.Dados).Coordinates);
+            return JSON.parse(x.Dados).Coordinates === coords; });
+          console.log(rowEncontrada);
+          
+          //console.log(rowEncontrada[0].City);
+          let dadosNovos = JSON.parse(rowEncontrada[0].Dados);
+          if(dadosNovos.Avaliacao == undefined){
+            dadosNovos.Avaliacao = {
+              "1":0,
+              "2":0,
+              "3":0,
+              "4":0,
+              "5":0
+            }
+          }
+          dadosNovos.Avaliacao[avaliacao]++;
+          rowEncontrada[0].Dados = JSON.stringify(dadosNovos);
+          await rowEncontrada[0].save();
+
+          
+          let cookieName='pontosAvaliados';
+          let pontos = cookies.get(cookieName) || "";
+          //let pontosEntregues = JSON.parse(pontosEntreguesData);
+          if(pontos.includes(coords)) return;
+          pontos+=coords;
+
+          const cookieExpireDate = new Date();
+          cookieExpireDate.setDate(cookieExpireDate.getDate() + EXPIRE_DAY);
+
+          cookies.set(cookieName, pontos, { path: '/', expires: cookieExpireDate });
+          
+          window.location.reload();
+      }catch(e){
+        //console.log(e);
+
+      }
+      
+    })(coords, avaliacao);
+  }
+
   setFiltro(event){
     this.setState({
       filtro: event.target.value
@@ -182,19 +252,49 @@ class App extends Component {
     this.setState({
       alimento: event.target.value
     });
+    
+    let isPrecisandoBuscar = event.target.value === 'PrecisandoBuscar',
+    isEntregaAlimentoPronto = event.target.value === 'EntregaAlimentoPronto',
+    isDoador = event.target.value === 'Doador';
 
-    if(event.target.value === 'PrecisandoBuscar' || event.target.value === 'EntregaAlimentoPronto'){
+    this.dropDownMenuSemanaPrecisandoBuscar.current.style.display="none";
+    this.dropDownMenuHorarioPrecisandoBuscar.current.style.display="none";
+    this.dropDownMenuSemanaEntregaAlimentoPronto.current.style.display="none";
+    this.dropDownMenuHorarioEntregaAlimentoPronto.current.style.display="none";
+
+    if( isPrecisandoBuscar ){
+      this.dropDownMenuSemanaPrecisandoBuscar.current.style.display="";
+      this.dropDownMenuHorarioPrecisandoBuscar.current.style.display="";
       this.setState({
-        diaSemana: this.dropDownMenuSemana.current.value,
-        horario: this.dropDownMenuHorario.current.value
+        diaSemana: this.dropDownMenuSemanaPrecisandoBuscar.current.value,
+        horario: this.dropDownMenuHorarioPrecisandoBuscar.current.value
       });
 
-    }else{
+    }else    
+    if( isEntregaAlimentoPronto ){
+      this.dropDownMenuSemanaEntregaAlimentoPronto.current.style.display="";
+      this.dropDownMenuHorarioEntregaAlimentoPronto.current.style.display="";
+      
+      this.setState({
+        diaSemana: this.dropDownMenuSemanaEntregaAlimentoPronto.current.value,
+        horario: this.dropDownMenuHorarioEntregaAlimentoPronto.current.value
+      });
+
+    }
+    else {
       this.setState({
         diaSemana: '',
         horario: ''
       });
 
+    }
+
+    if(isPrecisandoBuscar || isEntregaAlimentoPronto || isDoador){
+      this.redesocialRef.current.style.display="";
+      this.dropDownMenuRedeSocial.current.style.display="";
+    }else{
+      this.redesocialRef.current.style.display="none";
+      this.dropDownMenuRedeSocial.current.style.display="none";
     }
 
   }
@@ -225,6 +325,13 @@ class App extends Component {
       this.setState({telefoneEncryptado: aes.encrypt(telefoneValue)});
     }
     this.setState({telefone: telefoneValue});
+  }
+
+  handleChangeRedeSocial(event){
+    let site = event.target.value;
+    if(site.length>30) return;
+    this.setState({site: site, redesocial:this.dropDownMenuRedeSocial.current.value+site});
+
   }
   
     
@@ -274,26 +381,35 @@ class App extends Component {
       //   Horario:self.props.horario,
       //   AlimentoEntregue:0,
       // };
-      let row;
-      if(self.state.numero !== ''){
-        self.state.numero = ", nº"+self.state.numero;
-      }
-      let dadosJSON = {
-        "Roaster": self.state.alimento, 
-        "Coordinates":JSON.stringify(envVariables.lastMarked.latlng), 
-        "DateISO": new Date().toISOString(), 
-        "Telefone": self.state.telefoneEncryptado, 
-        "AlimentoEntregue":0,
-        "URL":self.state.numero
-      };
+      let row = envVariables.criarRow(
+        self.state.alimento,
+        "",
+        "",
+        envVariables.lastMarked.latlng,
+        self.state.telefoneEncryptado,
+        self.state.diaSemana,
+        self.state.horario,
+        self.state.redesocial
+      )
+      // if(self.state.numero !== ''){
+      //   self.state.numero = ", nº"+self.state.numero;
+      // }
+      // let dadosJSON = {
+      //   "Roaster": self.state.alimento, 
+      //   "Coordinates":JSON.stringify(envVariables.lastMarked.latlng), 
+      //   "DateISO": new Date().toISOString(), 
+      //   "Telefone": self.state.telefoneEncryptado, 
+      //   "AlimentoEntregue":0,
+      //   "URL":self.state.numero
+      // };
 
-      if(self.state.alimento==='EntregaAlimentoPronto' || self.state.alimento==='PrecisandoBuscar')
-      {
-        dadosJSON.DiaSemana=self.state.diaSemana;
-        dadosJSON.Horario=self.state.horario;
+      // if(self.state.alimento==='EntregaAlimentoPronto' || self.state.alimento==='PrecisandoBuscar')
+      // {
+      //   dadosJSON.DiaSemana=self.state.diaSemana;
+      //   dadosJSON.Horario=self.state.horario;
         
-      }
-      row = { Dados: JSON.stringify(dadosJSON) };
+      // }
+      // row = { Dados: JSON.stringify(dadosJSON) };
       
       const result = await sheet.addRow(row);
       // console.log(result);
@@ -383,6 +499,7 @@ class App extends Component {
         x.Horario = dados.Horario;
         x.AlimentoEntregue = dados.AlimentoEntregue;
         x.RedeSocial = dados.RedeSocial;
+        x.Avaliacao = dados.Avaliacao;
         
         if (dados.Coordinates) { x.mapCoords = JSON.parse(x.Coordinates); 
           if(dados.Telefone) {
@@ -490,6 +607,7 @@ class App extends Component {
                 tileMapOption={this.state.tileMapOption} 
                 removerPonto={this.removerPonto} 
                 entregarAlimento={this.entregarAlimento}
+                avaliar={this.avaliar}
                 filtro={this.state.filtro}
                 />
               }
@@ -580,7 +698,7 @@ class App extends Component {
                 <span className='redHub'> Entrego refeições em ponto fixo <img width="30px" height="30px" src={red}></img></span>
               
                 <br></br>
-                <select ref= {this.dropDownMenuSemana} id="dia" onChange={this.setDiaSemana}>
+                <select ref= {this.dropDownMenuSemanaEntregaAlimentoPronto} style={{"display":"none"}} id="dia" onChange={this.setDiaSemana}>
                 <option value="toda Segunda">toda Segunda</option>
                 <option value="toda Terça">toda Terça</option>
                 <option value="toda Quarta">toda Quarta</option>
@@ -589,7 +707,7 @@ class App extends Component {
                 <option value="todo Sábado">todo Sábado</option>
                 <option value="todo Domingo">todo Domingo</option>
               </select>
-              <select ref= {this.dropDownMenuHorario} id="horario" onChange={this.setHorario}>
+              <select ref= {this.dropDownMenuHorarioEntregaAlimentoPronto} style={{"display":"none"}} id="horario" onChange={this.setHorario}>
                 <option value="manhã 05:30">manhã 05:30</option>
                 <option value="manhã 06:30">manhã 06:30</option>
                 <option value="tarde 13:30">tarde 13:30</option>
@@ -611,7 +729,7 @@ class App extends Component {
                 <span className='greenHub'> Tenho alimento perto de se perder <a target='_blank' rel="noreferrer" href="https://www.camara.leg.br/noticias/670937-nova-lei-incentiva-empresas-a-doarem-alimentos-e-refeicoes-para-pessoas-vulneraveis/">(lei)</a>  <img width="30px" height="30px" src={green}></img></span>
               
               <br></br>
-              <select ref= {this.dropDownMenuSemana} id="dia" onChange={this.setDiaSemana}>
+              <select ref= {this.dropDownMenuSemanaPrecisandoBuscar} style={{"display":"none"}} id="dia" onChange={this.setDiaSemana}>
                 <option value="Hoje">Hoje</option>
                 <option value="toda Segunda">toda Segunda</option>
                 <option value="toda Terça">toda Terça</option>
@@ -621,7 +739,7 @@ class App extends Component {
                 <option value="todo Sábado">todo Sábado</option>
                 <option value="todo Domingo">todo Domingo</option>
               </select>
-              <select ref= {this.dropDownMenuHorario} id="horario" onChange={this.setHorario}>
+              <select ref= {this.dropDownMenuHorarioPrecisandoBuscar} style={{"display":"none"}} id="horario" onChange={this.setHorario}>
                 <option value="manhã 05:30">manhã 05:30</option>
                 <option value="manhã 06:30">manhã 06:30</option>
                 <option value="tarde 13:30">tarde 13:30</option>
@@ -641,6 +759,14 @@ class App extends Component {
                 
                 <input className="TextField tfMarginUp" type="text" placeholder='Insira telefone se quiser' value={this.state.telefone} onChange={this.handleChangeTelefone} />
                 <input className='nLocal' type="text" placeholder='nº' value={this.state.numero} onChange={this.handleChangeNumero} />
+                
+                <br/>
+                <select style={{"display":"none"}} ref= {this.dropDownMenuRedeSocial}>
+                  <option value="instagram.com/">Insta</option>
+                  <option value="facebook.com/">Face</option>
+                </select>
+                <input ref= {this.redesocialRef} style={{"display":"none"}} className="TextField" type="text" placeholder='@' value={this.state.site} onChange={this.handleChangeRedeSocial} />
+                
                 <br></br>
                 <div className='buttonsSidebySide'>
                   <MyLocationButton
@@ -650,6 +776,7 @@ class App extends Component {
                   diaSemana={this.state.diaSemana}
                   horario={this.state.horario}
                   numero={this.state.numero}
+                  redesocial={this.state.redesocial}
                   /> 
 
                   {this.state.isLoading?
@@ -662,6 +789,7 @@ class App extends Component {
                 telefone={this.state.telefoneEncryptado}
                 diaSemana={this.state.diaSemana}
                 horario={this.state.horario}
+                redesocial={this.state.redesocial}
                 /> 
 
                 {/* <input className="TextField" type="text" placeholder='Insira o site do projeto' value={this.state.site} onChange={this.handleChangeSite} />
