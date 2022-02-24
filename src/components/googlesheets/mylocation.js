@@ -131,17 +131,18 @@ class NameForm extends Component {
                 //   AlimentoEntregue:0,
                 // };
 
-              const row = envVariables.criarRow(
-                self.state.alimento,
-                self.state.numero,
-                "",
-                self.props.location,
-                self.props.telefone,
-                self.props.diaSemana,
-                self.props.horario,
-                self.props.mes,
-                self.props.redesocial,
-                );
+                let dadosRow = {};
+                dadosRow.alimento = self.state.alimento;
+                dadosRow.numero = self.state.numero;
+                dadosRow.endereco = "";
+                dadosRow.coords = self.state.location;
+                dadosRow.telefone = self.state.telefone;
+                dadosRow.diaSemana = self.state.diaSemana;
+                dadosRow.horario = self.state.horario;
+                dadosRow.mes = self.state.mes;
+                dadosRow.redesocial = self.state.redesocial;
+
+              const row = envVariables.criarRow(dadosRow);
 
                 
             // {

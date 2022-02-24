@@ -40,15 +40,15 @@ const envVariables = {
         return earthRadiusKm * c;
     },
     "currentLocation": [],
-    "criarRow": (alimento, numero, endereco, coords, telefone, diaSemana, horario, mes, redesocial) => {
+    "criarRow": (dadosRow) => {
 
-        if(numero !== ''){
-            numero = ", nº"+numero;
+        if(dadosRow.numero !== ''){
+            dadosRow.numero = ", nº"+dadosRow.numero;
         }
         
         
         let dadosJSON = {
-            "Roaster": alimento, 
+            "Roaster": dadosRow.alimento, 
             "DateISO": new Date().toISOString(),
             "AlimentoEntregue":0,
             "Avaliacao": {
@@ -60,12 +60,12 @@ const envVariables = {
             },
 
         };
-        if(numero!=="") dadosJSON.URL = numero;
-        if(coords!=="") dadosJSON.Coordinates = JSON.stringify(coords);
-        if(telefone!=="") dadosJSON.Telefone = telefone;
-        if(diaSemana!=="") {dadosJSON.DiaSemana = diaSemana; dadosJSON.Horario = horario}
-        if(redesocial!=="") {redesocial=redesocial.replace("@","");dadosJSON.RedeSocial = redesocial;}
-        if(mes!=="") dadosJSON.Mes = mes;
+        if(dadosRow.numero!=="") dadosJSON.URL = dadosRow.numero;
+        if(dadosRow.coords!=="") dadosJSON.Coordinates = JSON.stringify(dadosRow.coords);
+        if(dadosRow.telefone!=="") dadosJSON.Telefone = dadosRow.telefone;
+        if(dadosRow.diaSemana!=="") {dadosJSON.DiaSemana = dadosRow.diaSemana; dadosJSON.Horario = dadosRow.horario}
+        if(dadosRow.redesocial!=="") {dadosRow.redesocial=dadosRow.redesocial.replace("@","");dadosJSON.RedeSocial = dadosRow.redesocial;}
+        if(dadosRow.mes!=="") dadosJSON.Mes = dadosRow.mes;
         const row = {
             Dados: JSON.stringify(dadosJSON)
         };
