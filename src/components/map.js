@@ -196,7 +196,7 @@ class CoffeeMap extends Component {
                     {/* <TileLayer url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
                         attribution=" &copy; <a href='http://openstreetmap.org' target='_blank' rel='noreferrer'>OpenStreetMap</a>"
                     />  */}
-                    <LayersControl position="bottomleft">
+                    <LayersControl style={{opacity:'0.5'}} position="bottomleft">
                     
                     {/* <LayersControl.BaseLayer checked name="Esri">
                     <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
@@ -392,7 +392,7 @@ class CoffeeMap extends Component {
             {Avaliacao.nota})
             <Rating
                 name="simple-controlled"
-                value={0}
+                value={Avaliacao.nota}
                 onChange={(event, newValue) => {
                     this.props.avaliar([mapCoords[0], mapCoords[1]], newValue);
                 }}
@@ -422,7 +422,7 @@ class CoffeeMap extends Component {
                             
                             if(mapCoords === undefined) return; if(URL===undefined) URL = ""; if(RedeSocial===undefined) RedeSocial="";
                             
-                            let {googleDirection, dateMarked, Telefone: contato, Avaliacao: nota} = this.setupVariables(mapCoords,DateISO,Telefone, Avaliacao);
+                            let {googleDirection, dateMarked, Telefone: contato, AvaliacaoData: nota} = this.setupVariables(mapCoords,DateISO,Telefone, Avaliacao);
                             
                             //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
@@ -498,9 +498,9 @@ class CoffeeMap extends Component {
                         {this.props.dataMapsProp.filter(x => {return x.Roaster==="PrecisandoBuscar" }).map((dataItem, k) => {
                             let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, Mes, AlimentoEntregue, Avaliacao} = dataItem;
                             
-                            if(mapCoords === undefined) return; if(URL===undefined) URL = "";
+                            if(mapCoords === undefined) return; if(URL===undefined) URL = ""; if(Mes===undefined) Mes="";
 
-                            let {googleDirection, dateMarked, Telefone: contato, Avaliacao: nota} = this.setupVariables(mapCoords,DateISO,Telefone,Avaliacao);
+                            let {googleDirection, dateMarked, Telefone: contato, AvaliacaoData: nota} = this.setupVariables(mapCoords,DateISO,Telefone,Avaliacao);
                             
                             //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
@@ -576,9 +576,9 @@ class CoffeeMap extends Component {
             {this.props.dataMapsProp.filter(x => {return x.Roaster==="EntregaAlimentoPronto" }).map((dataItem, k) => {
                 let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, Mes, AlimentoEntregue, Avaliacao, RedeSocial } = dataItem;
                 
-                if(mapCoords === undefined) return; if(URL===undefined) URL = "";
+                if(mapCoords === undefined) return; if(URL===undefined) URL = ""; if(Mes===undefined) Mes="";
 
-                let {googleDirection, dateMarked, Telefone: contato, redesocial, Avaliacao: nota} = this.setupVariables(mapCoords,DateISO,Telefone, Avaliacao);
+                let {googleDirection, dateMarked, Telefone: contato, redesocial, AvaliacaoData: nota} = this.setupVariables(mapCoords,DateISO,Telefone, Avaliacao);
                 
                 //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
@@ -654,7 +654,7 @@ class CoffeeMap extends Component {
                 
                 if(mapCoords === undefined) return; if(URL===undefined) URL = "";
                 
-                let {googleDirection, dateMarked, Telefone: contato, Avaliacao: nota} = this.setupVariables(mapCoords,DateISO,Telefone);
+                let {googleDirection, dateMarked, Telefone: contato, AvaliacaoData: nota} = this.setupVariables(mapCoords,DateISO,Telefone);
         
                 //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
@@ -691,7 +691,7 @@ class CoffeeMap extends Component {
                         center={[mapCoords[0], mapCoords[1]]}
                         position={[mapCoords[0], mapCoords[1]]}
                     >
-                        {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster)}
+                        {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster, nota)}
                                     
                         {/* <Popup>
                             <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino</a>
@@ -732,7 +732,7 @@ class CoffeeMap extends Component {
                 
                 if(mapCoords === undefined) return; if(URL===undefined) URL = "";
                 
-                let {googleDirection, dateMarked, Telefone: contato, Avaliacao: nota} = this.setupVariables(mapCoords,DateISO,Telefone);
+                let {googleDirection, dateMarked, Telefone: contato, AvaliacaoData: nota} = this.setupVariables(mapCoords,DateISO,Telefone);
         
                 //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
@@ -769,7 +769,7 @@ class CoffeeMap extends Component {
                         center={[mapCoords[0], mapCoords[1]]}
                         position={[mapCoords[0], mapCoords[1]]}
                     >
-                        {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster)}
+                        {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster,nota)}
                                     
                         {/* <Popup>
                             <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino</a>
@@ -810,7 +810,7 @@ class CoffeeMap extends Component {
                 
                 if(mapCoords === undefined) return; if(URL===undefined) URL = "";
                 
-                let {googleDirection, dateMarked, Telefone: contato, Avaliacao: nota} = this.setupVariables(mapCoords,DateISO,Telefone);
+                let {googleDirection, dateMarked, Telefone: contato, AvaliacaoData: nota} = this.setupVariables(mapCoords,DateISO,Telefone);
         //filtrar datas antigas
 
                 var msec = Date.now() - (new Date(DateISO)).getTime();

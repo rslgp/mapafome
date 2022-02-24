@@ -731,10 +731,12 @@ class App extends Component {
                 <option value="nas Sextas">nas Sextas</option>
                 <option value="nos Sábados">nos Sábados</option>
                 <option value="nos Domingos">nos Domingos</option>
+                <option value="todo dia">todo dia</option>
               </select>
               <select ref= {this.dropDownMenuHorarioEntregaAlimentoPronto} style={{"display":"none"}} id="horario" onChange={this.setHorario}>
                 <option value="manhã 05:30">manhã 05:30</option>
                 <option value="manhã 06:30">manhã 06:30</option>
+                <option value="manhã 09:30">manhã 09:30</option>
                 <option value="tarde 13:30">tarde 13:30</option>
                 <option value="tarde 16:30">tarde 16:30</option>
                 <option value="noite 18:30">noite 18:30</option>
@@ -775,6 +777,7 @@ class App extends Component {
               <select ref= {this.dropDownMenuHorarioPrecisandoBuscar} style={{"display":"none"}} id="horario2" onChange={this.setHorario}>
                 <option value="manhã 05:30">manhã 05:30</option>
                 <option value="manhã 06:30">manhã 06:30</option>
+                <option value="manhã 09:30">manhã 09:30</option>
                 <option value="tarde 13:30">tarde 13:30</option>
                 <option value="tarde 16:30">tarde 16:30</option>
                 <option value="noite 18:30">noite 18:30</option>
