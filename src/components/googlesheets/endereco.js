@@ -106,17 +106,17 @@ class NameForm extends Component {
         //   AlimentoEntregue:0,
         // };
 
-        const row = envVariables.criarRow(
-          self.state.alimento,
-          numero,
-          self.state.value,
-          "",
-          self.state.telefone,
-          self.state.diaSemana,
-          self.state.horario,
-          self.state.mes,
-          self.state.redesocial
-        );
+        let dadosRow = {};
+        dadosRow.alimento = self.state.alimento;
+        dadosRow.numero = numero;
+        dadosRow.endereco = self.state.value;
+        dadosRow.coords = "";
+        dadosRow.telefone = self.state.telefone;
+        dadosRow.diaSemana = self.state.diaSemana;
+        dadosRow.horario = self.state.horario;
+        dadosRow.mes = self.state.mes;
+        dadosRow.redesocial = self.state.redesocial;
+        const row = envVariables.criarRow(dadosRow);
         // let dadosJSON = { 
         //   "Roaster":  self.state.alimento, 
         //   "URL":numero, 

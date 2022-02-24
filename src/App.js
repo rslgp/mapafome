@@ -404,17 +404,19 @@ class App extends Component {
       //   Horario:self.props.horario,
       //   AlimentoEntregue:0,
       // };
-      let row = envVariables.criarRow(
-        self.state.alimento,
-        "",
-        "",
-        envVariables.lastMarked.latlng,
-        self.state.telefoneEncryptado,
-        self.state.diaSemana,
-        self.state.horario,
-        self.state.mes,
-        self.state.redesocial,
-      )
+
+      let dadosRow = {};
+      dadosRow.alimento = self.state.alimento;
+      dadosRow.numero = "";
+      dadosRow.endereco = "";
+      dadosRow.coords = envVariables.lastMarked.latlng;
+      dadosRow.telefone = self.state.telefoneEncryptado;
+      dadosRow.diaSemana = self.state.diaSemana;
+      dadosRow.horario = self.state.horario;
+      dadosRow.mes = self.state.mes;
+      dadosRow.redesocial = self.state.redesocial;
+
+      let row = envVariables.criarRow(dadosRow);
       // if(self.state.numero !== ''){
       //   self.state.numero = ", nº"+self.state.numero;
       // }
