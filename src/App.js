@@ -28,6 +28,7 @@ import coffeeBean from './images/bean.svg';
 import hub from './images/hub.svg';
 import green from './images/green.svg';
 import red from './images/red.svg';
+import insta from './images/insta.svg';
 
 import AesEncryption from "aes-encryption";
 
@@ -80,12 +81,13 @@ class App extends Component {
       telefoneEncryptado:'',
       diaSemana:'',
       horario:'',
+      mes:'',
       filtro:"Todos",
       lastMarkedCoords:[],
       numero:'',
       telefoneFilterLocal:false,
       site:'',
-      redesocial:''
+      redesocial:'',
 
     }
 
@@ -96,6 +98,8 @@ class App extends Component {
     this.dropDownMenuFiltro = React.createRef();
     this.redesocialRef = React.createRef();
     this.dropDownMenuRedeSocial = React.createRef();
+    this.dropDownMenuMesPrecisandoBuscar = React.createRef();
+    this.dropDownMenuMesEntregaAlimentoPronto = React.createRef();
   
     
     this.handleChangeNumero = this.handleChangeNumero.bind(this);
@@ -104,6 +108,7 @@ class App extends Component {
     this.handleChangeTelefone = this.handleChangeTelefone.bind(this);
     this.setDiaSemana = this.setDiaSemana.bind(this);
     this.setHorario = this.setHorario.bind(this);
+    this.setMes = this.setMes.bind(this);
     this.setFiltro = this.setFiltro.bind(this);
     this.removerPonto = this.removerPonto.bind(this);
     this.handleClickMap = this.handleClickMap.bind(this);
@@ -261,32 +266,39 @@ class App extends Component {
 
     this.dropDownMenuSemanaPrecisandoBuscar.current.style.display="none";
     this.dropDownMenuHorarioPrecisandoBuscar.current.style.display="none";
+    this.dropDownMenuMesPrecisandoBuscar.current.style.display="none";
     this.dropDownMenuSemanaEntregaAlimentoPronto.current.style.display="none";
     this.dropDownMenuHorarioEntregaAlimentoPronto.current.style.display="none";
+    this.dropDownMenuMesEntregaAlimentoPronto.current.style.display="none";
 
     if( isPrecisandoBuscar ){
       this.dropDownMenuSemanaPrecisandoBuscar.current.style.display="";
       this.dropDownMenuHorarioPrecisandoBuscar.current.style.display="";
+      this.dropDownMenuMesPrecisandoBuscar.current.style.display="";
       this.setState({
         diaSemana: this.dropDownMenuSemanaPrecisandoBuscar.current.value,
-        horario: this.dropDownMenuHorarioPrecisandoBuscar.current.value
+        horario: this.dropDownMenuHorarioPrecisandoBuscar.current.value,
+        mes: this.dropDownMenuMesPrecisandoBuscar.current.value
       });
 
     }else    
     if( isEntregaAlimentoPronto ){
       this.dropDownMenuSemanaEntregaAlimentoPronto.current.style.display="";
       this.dropDownMenuHorarioEntregaAlimentoPronto.current.style.display="";
+      this.dropDownMenuMesEntregaAlimentoPronto.current.style.display="";
       
       this.setState({
         diaSemana: this.dropDownMenuSemanaEntregaAlimentoPronto.current.value,
-        horario: this.dropDownMenuHorarioEntregaAlimentoPronto.current.value
+        horario: this.dropDownMenuHorarioEntregaAlimentoPronto.current.value,
+        mes: this.dropDownMenuMesEntregaAlimentoPronto.current.value
       });
 
     }
     else {
       this.setState({
         diaSemana: '',
-        horario: ''
+        horario: '',
+        mes: ''
       });
 
     }
@@ -314,6 +326,15 @@ class App extends Component {
   setHorario(event){
     this.setState({
       horario: event.target.selectedOptions[0].value
+    });
+    // console.log(this.dropDownMenuSemana.current.value);
+    // console.log(event.target.selectedOptions[0].value);
+    // console.log(this.state.diaSemana);
+  }
+
+  setMes(event){
+    this.setState({
+      mes: event.target.selectedOptions[0].value
     });
     // console.log(this.dropDownMenuSemana.current.value);
     // console.log(event.target.selectedOptions[0].value);
@@ -391,7 +412,8 @@ class App extends Component {
         self.state.telefoneEncryptado,
         self.state.diaSemana,
         self.state.horario,
-        self.state.redesocial
+        self.state.mes,
+        self.state.redesocial,
       )
       // if(self.state.numero !== ''){
       //   self.state.numero = ", nº"+self.state.numero;
@@ -499,6 +521,7 @@ class App extends Component {
         x.Telefone = dados.Telefone;
         x.DiaSemana = dados.DiaSemana;
         x.Horario = dados.Horario;
+        x.Mes = dados.Mes;
         x.AlimentoEntregue = dados.AlimentoEntregue;
         x.RedeSocial = dados.RedeSocial;
         x.Avaliacao = dados.Avaliacao;
@@ -701,13 +724,13 @@ class App extends Component {
               
                 <br></br>
                 <select ref= {this.dropDownMenuSemanaEntregaAlimentoPronto} style={{"display":"none"}} id="dia" onChange={this.setDiaSemana}>
-                <option value="toda Segunda">toda Segunda</option>
-                <option value="toda Terça">toda Terça</option>
-                <option value="toda Quarta">toda Quarta</option>
-                <option value="toda Quinta">toda Quinta</option>
-                <option value="toda Sexta">toda Sexta</option>
-                <option value="todo Sábado">todo Sábado</option>
-                <option value="todo Domingo">todo Domingo</option>
+                <option value="nas Segundas">nas Segundas</option>
+                <option value="nas Terças">nas Terças</option>
+                <option value="nas Quartas">nas Quartas</option>
+                <option value="nas Quintas">nas Quintas</option>
+                <option value="nas Sextas">nas Sextas</option>
+                <option value="nos Sábados">nos Sábados</option>
+                <option value="nos Domingos">nos Domingos</option>
               </select>
               <select ref= {this.dropDownMenuHorarioEntregaAlimentoPronto} style={{"display":"none"}} id="horario" onChange={this.setHorario}>
                 <option value="manhã 05:30">manhã 05:30</option>
@@ -716,6 +739,14 @@ class App extends Component {
                 <option value="tarde 16:30">tarde 16:30</option>
                 <option value="noite 18:30">noite 18:30</option>
                 <option value="noite 19:30">noite 19:30</option>
+              </select>
+
+              
+              <select ref= {this.dropDownMenuMesEntregaAlimentoPronto} style={{"display":"none"}} id="mes2" onChange={this.setMes}>
+                <option value="x4 por mês">x4 por mês</option>
+                <option value="x3 por mês">x3 por mês</option>
+                <option value="x2 por mês">x2 por mês</option>
+                <option value="x1 por mês">x1 por mês</option>
               </select>
               </label>
             </li>
@@ -731,23 +762,30 @@ class App extends Component {
                 <span className='greenHub'> Tenho alimento perto de se perder <a target='_blank' rel="noreferrer" href="https://www.camara.leg.br/noticias/670937-nova-lei-incentiva-empresas-a-doarem-alimentos-e-refeicoes-para-pessoas-vulneraveis/">(lei)</a>  <img width="30px" height="30px" src={green}></img></span>
               
               <br></br>
-              <select ref= {this.dropDownMenuSemanaPrecisandoBuscar} style={{"display":"none"}} id="dia" onChange={this.setDiaSemana}>
+              <select ref= {this.dropDownMenuSemanaPrecisandoBuscar} style={{"display":"none"}} id="dia2" onChange={this.setDiaSemana}>
                 <option value="Hoje">Hoje</option>
-                <option value="toda Segunda">toda Segunda</option>
-                <option value="toda Terça">toda Terça</option>
-                <option value="toda Quarta">toda Quarta</option>
-                <option value="toda Quinta">toda Quinta</option>
-                <option value="toda Sexta">toda Sexta</option>
-                <option value="todo Sábado">todo Sábado</option>
-                <option value="todo Domingo">todo Domingo</option>
+                <option value="nas Segundas">nas Segundas</option>
+                <option value="nas Terças">nas Terças</option>
+                <option value="nas Quartas">nas Quartas</option>
+                <option value="nas Quintas">nas Quintas</option>
+                <option value="nas Sextas">nas Sextas</option>
+                <option value="nos Sábados">nos Sábados</option>
+                <option value="nos Domingos">nos Domingos</option>
               </select>
-              <select ref= {this.dropDownMenuHorarioPrecisandoBuscar} style={{"display":"none"}} id="horario" onChange={this.setHorario}>
+              <select ref= {this.dropDownMenuHorarioPrecisandoBuscar} style={{"display":"none"}} id="horario2" onChange={this.setHorario}>
                 <option value="manhã 05:30">manhã 05:30</option>
                 <option value="manhã 06:30">manhã 06:30</option>
                 <option value="tarde 13:30">tarde 13:30</option>
                 <option value="tarde 16:30">tarde 16:30</option>
                 <option value="noite 18:30">noite 18:30</option>
                 <option value="noite 19:30">noite 19:30</option>
+              </select>
+              
+              <select ref= {this.dropDownMenuMesPrecisandoBuscar} style={{"display":"none"}} id="mes2" onChange={this.setMes}>
+                <option value="x4 por mês">x4 por mês</option>
+                <option value="x3 por mês">x3 por mês</option>
+                <option value="x2 por mês">x2 por mês</option>
+                <option value="x1 por mês">x1 por mês</option>
               </select>
               </label>
               
@@ -779,6 +817,7 @@ class App extends Component {
                   horario={this.state.horario}
                   numero={this.state.numero}
                   redesocial={this.state.redesocial}
+                  mes={this.state.mes}
                   /> 
 
                   {this.state.isLoading?
@@ -792,6 +831,7 @@ class App extends Component {
                 diaSemana={this.state.diaSemana}
                 horario={this.state.horario}
                 redesocial={this.state.redesocial}
+                mes={this.state.mes}
                 /> 
 
                 {/* <input className="TextField" type="text" placeholder='Insira o site do projeto' value={this.state.site} onChange={this.handleChangeSite} />
@@ -810,7 +850,7 @@ class App extends Component {
 
           <Grid item xs={12} sm={12}>
             <Paper id="MoreInfo" style={{height:'100%'}} >
-              
+            <a target='_blank' rel="noreferrer" href="https://instagram.com/mapafome"><img style={{height:'25px'}}src={insta}/></a>
             <a className="wpbtn" title="share to whatsapp" href="whatsapp://send?text=Para marcar no mapa e alimentar quem tem fome, achei esse site: www.mapafome.com.br"> <img className="wp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""/>
                 Compartilhar no Whatsapp</a>
                 <a style={{float:'right'}} target='_blank' rel="noreferrer" href="https://t.me/share?url=www.mapafome.com.br&amp;text=Para%20marcar%20no%20mapa%20e%20alimentar%20quem%20tem%20fome%2C%20achei%20esse%20site%3A" className="tgme_widget_share_btn"><img className="telegram" src="https://telegram.org/img/WidgetButton_LogoSmall.png" alt=""></img></a>

@@ -20,6 +20,7 @@ class NameForm extends Component {
         isLoading:false,
         telefone:props.telefone,
         diaSemana:props.diaSemana,
+        mes:props.mes,
         numero:props.numero,
         redesocial:props.redesocial,
       };
@@ -72,6 +73,9 @@ class NameForm extends Component {
         }
         if (nextProps.horario !== state.horario){ 
           state.horario=nextProps.horario;
+        }        
+        if (nextProps.mes !== state.mes){ 
+          state.mes=nextProps.mes;
         }
         if (nextProps.numero !== state.numero){ 
           state.numero=nextProps.numero;

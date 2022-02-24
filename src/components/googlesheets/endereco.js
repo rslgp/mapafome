@@ -32,6 +32,7 @@ class NameForm extends Component {
         telefone:props.telefone,
         diaSemana:props.diaSemana,
         horario:props.horario,
+        mes:props.mes,
         redesocial:props.redesocial
       };
   
@@ -53,6 +54,9 @@ class NameForm extends Component {
         }
         if (nextProps.horario !== state.horario){ 
           state.horario=nextProps.horario;
+        }
+        if (nextProps.mes !== state.mes){ 
+          state.mes=nextProps.mes;
         }
         if (nextProps.redesocial !== state.redesocial){ 
           state.redesocial=nextProps.redesocial;
@@ -110,6 +114,7 @@ class NameForm extends Component {
           self.state.telefone,
           self.state.diaSemana,
           self.state.horario,
+          self.state.mes,
           self.state.redesocial
         );
         // let dadosJSON = { 
@@ -131,15 +136,15 @@ class NameForm extends Component {
         //   },
         // };
 
-        let dadosJSON = JSON.parse(row);
         
         try{
+          let dadosJSON = JSON.parse(row.Dados);
           let providerResult = await provider.search({ query: self.state.value.replace('-',",") + ', Brazil' });
   
           if(providerResult.length !== 0 ){
               // throw new Error("endereco-nao-encontrado");
   
-              console.log(providerResult);
+              // console.log(providerResult);
               let latlon = [providerResult[0].y,providerResult[0].x];
               dadosJSON.Coordinates = JSON.stringify(latlon).replace(" ","");
               row.Dados = JSON.stringify(dadosJSON); // Convert obj to string

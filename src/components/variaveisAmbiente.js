@@ -40,7 +40,7 @@ const envVariables = {
         return earthRadiusKm * c;
     },
     "currentLocation": [],
-    "criarRow": (alimento, numero, endereco, coords, telefone, diaSemana, horario, redesocial) => {
+    "criarRow": (alimento, numero, endereco, coords, telefone, diaSemana, horario, mes, redesocial) => {
 
         if(numero !== ''){
             numero = ", nº"+numero;
@@ -64,7 +64,8 @@ const envVariables = {
         if(coords!=="") dadosJSON.Coordinates = JSON.stringify(coords);
         if(telefone!=="") dadosJSON.Telefone = telefone;
         if(diaSemana!=="") {dadosJSON.DiaSemana = diaSemana; dadosJSON.Horario = horario}
-        if(redesocial!=="") dadosJSON.RedeSocial = redesocial;
+        if(redesocial!=="") {redesocial=redesocial.replace("@","");dadosJSON.RedeSocial = redesocial;}
+        if(mes!=="") dadosJSON.Mes = mes;
         const row = {
             Dados: JSON.stringify(dadosJSON)
         };
