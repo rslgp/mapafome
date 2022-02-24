@@ -348,9 +348,10 @@ class CoffeeMap extends Component {
             }
         }
 
+        let AvaliacaoData = {nota:0, totalClicks:0};
         if(Avaliacao){
-            let totalClicks = (Avaliacao["5"]+Avaliacao["4"]+Avaliacao["3"]+Avaliacao["2"]+Avaliacao["1"]);
-            if( totalClicks === 0 ){
+            AvaliacaoData.totalClicks = (Avaliacao["5"]+Avaliacao["4"]+Avaliacao["3"]+Avaliacao["2"]+Avaliacao["1"]);
+            if( AvaliacaoData.totalClicks === 0 ){
                 Avaliacao="Nenhuma";
             }else{
                 Avaliacao = (Avaliacao["5"]*5 +
@@ -359,39 +360,44 @@ class CoffeeMap extends Component {
                 Avaliacao["2"]*2 +
                 Avaliacao["1"]*1)
                 /            
-                (Avaliacao["5"]+Avaliacao["4"]+Avaliacao["3"]+Avaliacao["2"]+Avaliacao["1"]);
+                (AvaliacaoData.totalClicks);
 
                 Avaliacao = Math.round(Avaliacao * 100)/100;
 
             }
         }
+
+        AvaliacaoData.nota = Avaliacao;
+
     
-        return {googleDirection, dateMarked, Telefone, Avaliacao};
+        return {googleDirection, dateMarked, Telefone, AvaliacaoData};
     }
 
     configPopup(googleDirection, precisandoMsg, dateMarked, contato, 
         AlimentoEntregue, mapCoords, Roaster, Avaliacao, redesocial){
+        if(Avaliacao===undefined) Avaliacao = {nota:"Nenhuma",totalClicks:0};
         return <Popup>
             <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino 
             <img className="directionIcon" src="https://maps.gstatic.com/tactile/omnibox/directions-2x-20150909.png"></img></a>
             <br/>
-            {precisandoMsg}
+            <div style={{width:'80%'}}> {precisandoMsg} </div>
             <br/>
             {dateMarked} {contato} 
             {redesocial ? 
                 <span><br></br><a href={"https://"+redesocial} target='_blank' rel='noreferrer'> RedeSocial</a></span>
             : <span></span>
             }
-            <br/>
+            <br/> 
+            (<svg width="12" height="12" viewBox="0 0 24 24" focusable="false" class="RbX5Oe koGmBf NMm5M"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"></path></svg>
+            {Avaliacao.nota})
             <Rating
                 name="simple-controlled"
                 value={0}
                 onChange={(event, newValue) => {
                     this.props.avaliar([mapCoords[0], mapCoords[1]], newValue);
                 }}
-            /> 
-            (<svg width="12" height="12" viewBox="0 0 24 24" focusable="false" class="RbX5Oe koGmBf NMm5M"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"></path></svg>
-            {Avaliacao})
+            />
+            ({Avaliacao.totalClicks})
             
             <br/>{"(Qtde entregue:"+AlimentoEntregue+")"}
             <br/>
@@ -490,7 +496,7 @@ class CoffeeMap extends Component {
                         iconCreateFunction={markerclusterOptionsAnjos}
                     >                        
                         {this.props.dataMapsProp.filter(x => {return x.Roaster==="PrecisandoBuscar" }).map((dataItem, k) => {
-                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, AlimentoEntregue, Avaliacao} = dataItem;
+                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, Mes, AlimentoEntregue, Avaliacao} = dataItem;
                             
                             if(mapCoords === undefined) return; if(URL===undefined) URL = "";
 
@@ -508,7 +514,7 @@ class CoffeeMap extends Component {
                             let precisandoMsg, CurrentIcon;
                             // switch(Roaster){
                             //     case "PrecisandoBuscar":
-                                    precisandoMsg = `Precisando de pessoas para buscar `+DiaSemana + " pela "+Horario;
+                                    precisandoMsg = `Precisando de pessoas para buscar `+DiaSemana + " pela "+Horario+" "+Mes;
                                     CurrentIcon = greenIcon;
                             //         break;                                
                                 
@@ -568,7 +574,7 @@ class CoffeeMap extends Component {
             iconCreateFunction={markerclusterOptionsEntrega}
         >                        
             {this.props.dataMapsProp.filter(x => {return x.Roaster==="EntregaAlimentoPronto" }).map((dataItem, k) => {
-                let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, AlimentoEntregue, Avaliacao, RedeSocial } = dataItem;
+                let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, Mes, AlimentoEntregue, Avaliacao, RedeSocial } = dataItem;
                 
                 if(mapCoords === undefined) return; if(URL===undefined) URL = "";
 
@@ -586,7 +592,7 @@ class CoffeeMap extends Component {
                 let precisandoMsg, CurrentIcon;
                 // switch(Roaster){
                 //     case "EntregaAlimentoPronto":
-                        precisandoMsg = `Entregando refeições prontas `+DiaSemana+" pela "+Horario;
+                        precisandoMsg = `Entregando refeições prontas `+DiaSemana+" pela "+Horario+" "+Mes;
                         CurrentIcon = redIcon;
                 //         break;
                     
