@@ -131,7 +131,6 @@ class NameForm extends Component {
                 //   AlimentoEntregue:0,
                 // };
 
-                
               const row = envVariables.criarRow(
                 self.state.alimento,
                 self.state.numero,
@@ -140,7 +139,8 @@ class NameForm extends Component {
                 self.props.telefone,
                 self.props.diaSemana,
                 self.props.horario,
-                self.state.redesocial
+                self.props.mes,
+                self.props.redesocial,
                 );
 
                 
