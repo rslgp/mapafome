@@ -156,7 +156,7 @@ class App extends Component {
   }
 
   verificarPonto(coords, categoriaPonto){
-    let motivo = prompt("Insira o CNPJ da entidade, nome do responsável, email, telefone e se é credenciada para receber recurso do governo");
+    let motivo = prompt("Insira o CNPJ da entidade, nome da entidade, nome do responsável, email, telefone");
     if(motivo !== null){
       (async function main(self) {
         try{
