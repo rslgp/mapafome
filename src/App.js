@@ -156,8 +156,7 @@ class App extends Component {
   }
 
   verificarPonto(coords, categoriaPonto,contato){
-    console.log("remover "+coords);
-    let motivo = prompt("Insira o CNPJ da entidade");
+    let motivo = prompt("Insira o CNPJ da entidade, nome do responsável, email, telefone e se é credenciada para receber recurso do governo");
     if(motivo !== null){
       (async function main(self) {
         try{
