@@ -155,7 +155,7 @@ class App extends Component {
     }
   }
 
-  verificarPonto(coords, categoriaPonto,contato){
+  verificarPonto(coords, categoriaPonto){
     let motivo = prompt("Insira o CNPJ da entidade, nome do responsável, email, telefone e se é credenciada para receber recurso do governo");
     if(motivo !== null){
       (async function main(self) {
@@ -170,15 +170,15 @@ class App extends Component {
             const sheet = doc.sheetsByIndex[3];
             //row = { Name: "new name", Value: "new value" };
             
-            const row = { Motivo: motivo, Ponto: JSON.stringify(coords), DateISO: new Date().toISOString(), CategoriaPonto:categoriaPonto, Telefone:contato};
+            const row = { Motivo: motivo, Ponto: JSON.stringify(coords), DateISO: new Date().toISOString(), CategoriaPonto:categoriaPonto};
             
             let r = await sheet.addRow(row);
             console.log(r);
           
-            alert("pedido de deletar enviado com sucesso");
+            alert("pedido de cnpj enviado com sucesso");
         }catch(e){
           alert("ERRO, tente novamente");
-          //console.log(e);
+          console.log(e);
 
         }
         
@@ -691,7 +691,7 @@ class App extends Component {
                 <option value="MoradorRua">Situação de rua</option>
                 <option value="Refeição Pronta">Refeição Pronta</option>
                 <option value="RedeSocial">Rede Social</option>
-                <option value="Verificados">Verificados</option>
+                <option value="Verificados">possui CNPJ</option>
                 <option value="Nenhum">Nenhum</option>
               </select>
               <Checkbox
