@@ -155,6 +155,38 @@ class App extends Component {
     }
   }
 
+  verificarPonto(coords, categoriaPonto,contato){
+    console.log("remover "+coords);
+    let motivo = prompt("Insira o CNPJ da entidade");
+    if(motivo !== null){
+      (async function main(self) {
+        try{
+          await doc.useServiceAccountAuth({
+            client_email: process.env.REACT_APP_GOOGLE_SERVICE_ACCOUNT_EMAIL,
+            private_key: process.env.REACT_APP_GOOGLE_PRIVATE_KEY,
+            });
+
+            await doc.loadInfo(); // Loads document properties and worksheets
+
+            const sheet = doc.sheetsByIndex[3];
+            //row = { Name: "new name", Value: "new value" };
+            
+            const row = { Motivo: motivo, Ponto: JSON.stringify(coords), DateISO: new Date().toISOString(), CategoriaPonto:categoriaPonto, Telefone:contato};
+            
+            let r = await sheet.addRow(row);
+            console.log(r);
+          
+            alert("pedido de deletar enviado com sucesso");
+        }catch(e){
+          alert("ERRO, tente novamente");
+          //console.log(e);
+
+        }
+        
+      })(motivo, coords);
+    }
+  }
+
   entregarAlimento(coords){
     (async function main(self) {
       try{
@@ -515,18 +547,19 @@ class App extends Component {
       // })
       rows.forEach((x) => {
         let dados = JSON.parse(x.Dados);
-        x.Roaster = dados.Roaster;
-        x.URL = dados.URL;
-        x.City = dados.City;
-        x.Coordinates = dados.Coordinates;
-        x.DateISO = dados.DateISO;
-        x.Telefone = dados.Telefone;
-        x.DiaSemana = dados.DiaSemana;
-        x.Horario = dados.Horario;
-        x.Mes = dados.Mes;
-        x.AlimentoEntregue = dados.AlimentoEntregue;
-        x.RedeSocial = dados.RedeSocial;
-        x.Avaliacao = dados.Avaliacao;
+        for(let key in dados){
+          x[key] = dados[key];
+        }
+        // x.Roaster = dados.Roaster;
+        // x.URL = dados.URL;
+        // x.City = dados.City;
+        // x.DateISO = dados.DateISO;
+        // x.DiaSemana = dados.DiaSemana;
+        // x.Horario = dados.Horario;
+        // x.Mes = dados.Mes;
+        // x.AlimentoEntregue = dados.AlimentoEntregue;
+        // x.RedeSocial = dados.RedeSocial;
+        // x.Avaliacao = dados.Avaliacao;
         
         if (dados.Coordinates) { x.mapCoords = JSON.parse(x.Coordinates); 
           if(dados.Telefone) {
@@ -633,6 +666,7 @@ class App extends Component {
                 location={this.state.center} 
                 tileMapOption={this.state.tileMapOption} 
                 removerPonto={this.removerPonto} 
+                verificarPonto={this.verificarPonto} 
                 entregarAlimento={this.entregarAlimento}
                 avaliar={this.avaliar}
                 filtro={this.state.filtro}
@@ -657,6 +691,9 @@ class App extends Component {
                 <option value="CestaBasica">Cesta básica</option>
                 <option value="MoradorRua">Situação de rua</option>
                 <option value="Refeição Pronta">Refeição Pronta</option>
+                <option value="RedeSocial">Rede Social</option>
+                <option value="Verificados">Verificados</option>
+                <option value="Nenhum">Nenhum</option>
               </select>
               <Checkbox
                 checked={this.state.telefoneFilterLocal}
