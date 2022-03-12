@@ -54,6 +54,7 @@ src/
 ```
 
 ### How to Deploy on GitHub Pages using Yarn and gh-pages:
+git init && git remote add origin <url>
 Assuming you have an existing working GitHub repository, and your local code is checked-in.
 
 1. Run `yarn add -D gh-pages` to install gh-pages as a dev dependency
