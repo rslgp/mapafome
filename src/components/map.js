@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { MapContainer, Marker, TileLayer, Tooltip, AttributionControl, Popup, LayersControl } from "react-leaflet";
-import L from 'leaflet';
+import L, {LatLng} from 'leaflet';
 import "leaflet/dist/leaflet.css";
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import "react-leaflet-markercluster/dist/styles.min.css";
+import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+import { useMap } from 'react-leaflet';
 import coffeeBean from '../images/bean.svg';
 import hub from '../images/hub.svg';
 import green from '../images/green.svg';
@@ -22,6 +24,41 @@ const timeAgo = new TimeAgo();
 
 global.lastMarked = undefined;
 global.lastMarkedCoords = undefined;
+
+const SearchField = ({ apiKey }) => {
+    
+    const provider = new OpenStreetMapProvider(
+    {
+        providerOptions:{
+            searchBounds: [
+            new LatLng(0.275901, -59.178876),
+            new LatLng(-35.558031, -28.944502)
+            ],
+            region: "br"
+        }
+    });
+  
+    // @ts-ignore
+    const searchControl = new GeoSearchControl({
+      provider: provider,
+      marker: {
+        // optional: L.Marker    - default L.Icon.Default
+        icon: CurrentLocation,
+        draggable: false,
+      },
+      autoClose:true,
+    }
+      
+    );
+  
+    const map = useMap();
+    useEffect(() => {
+      map.addControl(searchControl);
+      return () => map.removeControl(searchControl);
+    }, []);
+  
+    return null;
+  };
 
 // Leaflet custom marker
 const myIcon = new L.Icon({
@@ -253,7 +290,16 @@ class CoffeeMap extends Component {
                     
                     </LayersControl>
 
-
+                    <SearchField 
+                        closeResultsOnClick={true}
+                        providerOptions={{
+                            searchBounds: [
+                            new LatLng(0.275901, -59.178876),
+                            new LatLng(-35.558031, -28.944502)
+                            ],
+                            region: "br"
+                        }}
+                    />
 
                     <AttributionControl
                         position="bottomleft"
