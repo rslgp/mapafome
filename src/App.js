@@ -156,7 +156,7 @@ class App extends Component {
   }
 
   verificarPonto(coords, categoriaPonto){
-    let motivo = prompt("Insira o CNPJ da entidade, nome da entidade, nome do responsável, email, telefone");
+    let motivo = prompt("Insira o CNPJ da entidade, nome da entidade, nome do responsável, email, telefone e se é credenciada para receber recurso do governo");
     if(motivo !== null){
       (async function main(self) {
         try{
@@ -891,13 +891,15 @@ class App extends Component {
 
           <Grid item xs={12} sm={12}>
             <Paper id="MoreInfo" style={{height:'100%'}} >
-            <a target='_blank' rel="noreferrer" href="https://instagram.com/mapafome"><img style={{height:'25px'}}src={insta}/></a>
             <a className="wpbtn" title="share to whatsapp" href="whatsapp://send?text=Para marcar no mapa e alimentar quem tem fome, achei esse site: www.mapafome.com.br"> <img className="wp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""/>
                 Compartilhar no Whatsapp</a>
                 <a style={{float:'right'}} target='_blank' rel="noreferrer" href="https://t.me/share?url=www.mapafome.com.br&amp;text=Para%20marcar%20no%20mapa%20e%20alimentar%20quem%20tem%20fome%2C%20achei%20esse%20site%3A" className="tgme_widget_share_btn"><img className="telegram" src="https://telegram.org/img/WidgetButton_LogoSmall.png" alt=""></img></a>
 
                 <br></br>
               Mapeados: {this.state.rowCount} 
+              <a href='https://mapafome.com.br/MapaFome.apk'><img style={{height:'55px'}} alt='Disponível no Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/pt_badge_web_generic.png'/></a>
+              <a target='_blank' rel="noreferrer" href="https://instagram.com/mapafome"><img style={{height:'55px'}}src={insta}/></a>
+            
               <br></br>No mapa clique na bolinha para saber como ajudar.<br></br> Você pode se incluir ou incluir outra pessoa, <br></br>selecione a situação e confirme o local (mais informações <a target='_blank' rel="noreferrer" href="https://g1.globo.com/pe/pernambuco/noticia/2022/02/10/site-criado-por-estudante-da-ufpe-aproxima-pessoas-que-estao-passando-fome-e-doadores-de-comida.ghtml">na matéria da Globo</a>):
               
               <br></br>
