@@ -461,6 +461,8 @@ class CoffeeMap extends Component {
                         showCoverageOnHover={false}
                         maxClusterRadius={35}
                         iconCreateFunction={markerclusterOptionsAnjos}
+        
+                        removeOutsideVisibleBounds={false}
                     >                  
                     {/* .filter(x => { return x.Coordinates; })       */}
                         {this.props.dataMapsProp.filter(x => {return x.Roaster==="Doador" }).map((dataItem, k) => {
@@ -618,6 +620,8 @@ class CoffeeMap extends Component {
             showCoverageOnHover={false}
             maxClusterRadius={35}
             iconCreateFunction={markerclusterOptionsEntrega}
+        
+            removeOutsideVisibleBounds={false}
         >                        
             {this.props.dataMapsProp.filter(x => {return x.Roaster==="EntregaAlimentoPronto" }).map((dataItem, k) => {
                 let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Horario, Mes, AlimentoEntregue, Avaliacao, RedeSocial } = dataItem;
