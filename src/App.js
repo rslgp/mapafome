@@ -683,7 +683,7 @@ class App extends Component {
               : 
               
     <div className='relativePosition'>
-      ver  
+      filtro atual:  
               <select ref= {this.dropDownMenuFiltro} id="filtro" onChange={this.setFiltro}>
                 <option value="Todos">Todos</option>
                 <option value="Doadores">Doadores</option>
