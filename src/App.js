@@ -924,6 +924,10 @@ class App extends Component {
 contato: <a target='_blank' rel="noreferrer" href="https://mail.google.com/mail/u/0/?fs=1&to=rslgp@cin.ufpe.br&tf=cm" >rslgp@cin.ufpe.br</a> <a target='_blank' rel="noreferrer"  href='https://wa.me/5583996157234'>(83) 9.9615-7234</a>           
 <Sugestao/>
         
+        <a target='_blank' rel="noreferrer" href="./privacy.html">Privacy Policy</a>
+        <span> - </span>
+        <a target='_blank' rel="noreferrer" href="./terms.html">Terms</a>
+        
         </Paper>
           </Grid>
 
