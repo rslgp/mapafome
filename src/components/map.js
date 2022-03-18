@@ -419,8 +419,10 @@ class CoffeeMap extends Component {
         return {googleDirection, dateMarked, Telefone, AvaliacaoData};
     }
 
-    configPopup(googleDirection, precisandoMsg, dateMarked, contato, 
-        AlimentoEntregue, mapCoords, Roaster, Avaliacao, redesocial){
+    configPopup(dadosPopup){	
+        let {googleDirection, precisandoMsg, dateMarked, contato, 	
+            AlimentoEntregue, mapCoords, Roaster, Avaliacao, redesocial} = dadosPopup;	
+        
         if(Avaliacao===undefined) Avaliacao = {nota:"Nenhuma",totalClicks:0};
         return <Popup>
             <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino 
@@ -434,7 +436,7 @@ class CoffeeMap extends Component {
             : <span></span>
             }
             <br/> 
-            (<svg width="12" height="12" viewBox="0 0 24 24" focusable="false" class="RbX5Oe koGmBf NMm5M"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"></path></svg>
+            (<svg width="12" height="12" viewBox="0 0 24 24" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"></path></svg>
             {Avaliacao.nota})
             <Rating
                 name="simple-controlled"
@@ -446,12 +448,195 @@ class CoffeeMap extends Component {
             ({Avaliacao.totalClicks})
             
             <br/>{"(Qtde entregue:"+AlimentoEntregue+")"}
+            { (Roaster === "Doador" || Roaster === "EntregaAlimentoPronto") ? (dadosPopup.verificado===1 ? <img src="https://static.xx.fbcdn.net/assets/?revision=1174640696642832&amp;name=ig-verifiedbadge-shared&amp;density=1"></img> : <button onClick={()=>this.props.verificarPonto([mapCoords[0], mapCoords[1]], Roaster)}>cnpj</button>) : <span></span>}
             <br/>
             <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>apagar</button>
             <span>    </span>
             <button className='buttonsSidebySide floatRight' onClick={() => this.props.entregarAlimento([mapCoords[0], mapCoords[1]])}>entreguei</button>
                                     
         </Popup>
+    }
+    
+    renderRedeSocial(){
+        return <MarkerClusterGroup
+                    // grupo de onde pode ajudar
+                        spiderfyDistanceMultiplier={1}
+                        showCoverageOnHover={false}
+                        maxClusterRadius={35}
+                        iconCreateFunction={markerclusterOptionsAnjos}
+                    >                  
+                    {/* .filter(x => { return x.Coordinates; })       */}
+                        {this.props.dataMapsProp.filter(x => {
+                            return x.RedeSocial 
+                        }).map((dataItem, k) => {
+                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Mes, Horario, AlimentoEntregue, Avaliacao, RedeSocial} = dataItem;
+                            
+                            if(mapCoords === undefined) return; if(URL===undefined) URL = ""; if(RedeSocial===undefined) RedeSocial="";
+                            
+                            let {googleDirection, dateMarked, Telefone: contato, AvaliacaoData: nota} = this.setupVariables(mapCoords,DateISO,Telefone, Avaliacao);
+                            
+                            //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
+                            
+                            if(envVariables.telefoneFilter && contato==="") return (<div></div>);
+                            //filtrar datas antigas
+                            // if(
+                            //     dateMarked.includes("semana") 
+                            // //&& Number(dateMarked.replace(/[^0-9]/g,'')) > 7
+                            // ) return (<div></div>);
+                            
+                            let precisandoMsg, CurrentIcon;
+                            switch(Roaster){
+                                case "Doador":
+                                    precisandoMsg = "Recebendo alimento para distribuir"+URL;
+                                    CurrentIcon = hubIcon;
+                                    break;                               
+                                
+                                case "EntregaAlimentoPronto":
+                                    precisandoMsg = `Entregando refeições prontas `+DiaSemana+" pela "+Horario+" "+Mes;
+                                    CurrentIcon = redIcon;
+                                    break;
+                                default:
+                                    return (<div></div>);
+                                    break;
+                            }
+                            
+                            let dadosPopup = {...dataItem};
+                            dadosPopup.precisandoMsg = precisandoMsg;
+                            dadosPopup.googleDirection = googleDirection;
+                            dadosPopup.dateMarked = dateMarked;
+                            dadosPopup.contato = contato;
+                            dadosPopup.Avaliacao = nota;
+
+                            return (
+                                <Marker
+                                    eventHandlers={{
+                                        click: (e) => { 
+                                            // alert(`Precisando de ${Roaster}`); 
+                                            console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); 
+                                            // window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) 
+                                        }
+                                    }}
+                                    icon= {CurrentIcon} 
+                                    key={k}
+                                    center={[mapCoords[0], mapCoords[1]]}
+                                    position={[mapCoords[0], mapCoords[1]]}
+                                >
+                                   {this.configPopup(dadosPopup)}
+                                    
+                                    {/* <Popup>
+                                        <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino 
+                                        <img className="directionIcon" src="https://maps.gstatic.com/tactile/omnibox/directions-2x-20150909.png"></img></a>
+                                        <br/>
+                                        {precisandoMsg}
+                                        <br/>
+                                        {dateMarked} {contato} 
+                                        <br/>{"(Qtde entregue:"+AlimentoEntregue+")"}
+                                        <br/>
+                                        <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>apagar</button>
+                                        <span>    </span>
+                                        <button className='buttonsSidebySide floatRight' onClick={() => this.props.entregarAlimento([mapCoords[0], mapCoords[1]])}>entreguei</button>
+                                
+                                    </Popup> */}
+                                    {/* <Tooltip
+                                        // direction="auto"
+                                        // offset={[15, 0]}
+                                        // opacity={1}>
+                                        // <span><a href={URL}>Precisando de<br></br>{Roaster}</a></span>
+                                        // <span>{City}, BR</span>
+                                    </Tooltip> */}
+                                </Marker>);
+                        })}
+                    </MarkerClusterGroup>
+    }
+
+    renderVerificados(){
+        return <MarkerClusterGroup
+                    // grupo de onde pode ajudar
+                        spiderfyDistanceMultiplier={1}
+                        showCoverageOnHover={false}
+                        maxClusterRadius={35}
+                        iconCreateFunction={markerclusterOptionsAnjos}
+                    >                  
+                    {/* .filter(x => { return x.Coordinates; })       */}
+                        {this.props.dataMapsProp.filter(x => {return x.RedeSocial }).map((dataItem, k) => {
+                            let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Mes, Horario, AlimentoEntregue, Avaliacao, RedeSocial} = dataItem;
+                            
+                            if(mapCoords === undefined) return; if(URL===undefined) URL = ""; if(RedeSocial===undefined) RedeSocial="";
+                            
+                            let {googleDirection, dateMarked, Telefone: contato, AvaliacaoData: nota} = this.setupVariables(mapCoords,DateISO,Telefone, Avaliacao);
+                            
+                            //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
+                            if(dataItem.verificado !== 1) return (<div></div>);
+                            if(envVariables.telefoneFilter && contato==="") return (<div></div>);
+                            //filtrar datas antigas
+                            // if(
+                            //     dateMarked.includes("semana") 
+                            // //&& Number(dateMarked.replace(/[^0-9]/g,'')) > 7
+                            // ) return (<div></div>);
+                            
+                            let precisandoMsg, CurrentIcon;
+                            switch(Roaster){
+                                case "Doador":
+                                    precisandoMsg = "Recebendo alimento para distribuir"+URL;
+                                    CurrentIcon = hubIcon;
+                                    break;                               
+                                
+                                case "EntregaAlimentoPronto":
+                                    precisandoMsg = `Entregando refeições prontas `+DiaSemana+" pela "+Horario+" "+Mes;
+                                    CurrentIcon = redIcon;
+                                    break;
+                                default:
+                                    return (<div></div>);
+                                    break;
+                            }
+                            
+                            let dadosPopup = {...dataItem};
+                            dadosPopup.precisandoMsg = precisandoMsg;
+                            dadosPopup.googleDirection = googleDirection;
+                            dadosPopup.dateMarked = dateMarked;
+                            dadosPopup.contato = contato;
+                            dadosPopup.Avaliacao = nota;
+
+                            return (
+                                <Marker
+                                    eventHandlers={{
+                                        click: (e) => { 
+                                            // alert(`Precisando de ${Roaster}`); 
+                                            console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); 
+                                            // window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) 
+                                        }
+                                    }}
+                                    icon= {CurrentIcon} 
+                                    key={k}
+                                    center={[mapCoords[0], mapCoords[1]]}
+                                    position={[mapCoords[0], mapCoords[1]]}
+                                >
+                                   {this.configPopup(dadosPopup)}
+                                    
+                                    {/* <Popup>
+                                        <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino 
+                                        <img className="directionIcon" src="https://maps.gstatic.com/tactile/omnibox/directions-2x-20150909.png"></img></a>
+                                        <br/>
+                                        {precisandoMsg}
+                                        <br/>
+                                        {dateMarked} {contato} 
+                                        <br/>{"(Qtde entregue:"+AlimentoEntregue+")"}
+                                        <br/>
+                                        <button onClick={() => this.props.removerPonto([mapCoords[0], mapCoords[1]], Roaster)}>apagar</button>
+                                        <span>    </span>
+                                        <button className='buttonsSidebySide floatRight' onClick={() => this.props.entregarAlimento([mapCoords[0], mapCoords[1]])}>entreguei</button>
+                                
+                                    </Popup> */}
+                                    {/* <Tooltip
+                                        // direction="auto"
+                                        // offset={[15, 0]}
+                                        // opacity={1}>
+                                        // <span><a href={URL}>Precisando de<br></br>{Roaster}</a></span>
+                                        // <span>{City}, BR</span>
+                                    </Tooltip> */}
+                                </Marker>);
+                        })}
+                    </MarkerClusterGroup>
     }
 
     renderDoadoresAzul(){
@@ -461,7 +646,7 @@ class CoffeeMap extends Component {
                         showCoverageOnHover={false}
                         maxClusterRadius={35}
                         iconCreateFunction={markerclusterOptionsAnjos}
-        
+                        
                         removeOutsideVisibleBounds={false}
                     >                  
                     {/* .filter(x => { return x.Coordinates; })       */}
@@ -492,7 +677,14 @@ class CoffeeMap extends Component {
                             //         return (<div></div>);
                             //         break;
                             // }
-                            
+
+                            let dadosPopup = {...dataItem};
+                            dadosPopup.precisandoMsg = precisandoMsg;
+                            dadosPopup.googleDirection = googleDirection;
+                            dadosPopup.dateMarked = dateMarked;
+                            dadosPopup.contato = contato;
+                            dadosPopup.Avaliacao = nota;
+
                             return (
                                 <Marker
                                     eventHandlers={{
@@ -507,7 +699,7 @@ class CoffeeMap extends Component {
                                     center={[mapCoords[0], mapCoords[1]]}
                                     position={[mapCoords[0], mapCoords[1]]}
                                 >
-                                   {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster,nota,RedeSocial)}
+                                   {this.configPopup(dadosPopup)}
                                     
                                     {/* <Popup>
                                         <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino 
@@ -571,6 +763,13 @@ class CoffeeMap extends Component {
                             //         break;
                             // }
                             
+                            let dadosPopup = {...dataItem};
+                            dadosPopup.precisandoMsg = precisandoMsg;
+                            dadosPopup.googleDirection = googleDirection;
+                            dadosPopup.dateMarked = dateMarked;
+                            dadosPopup.contato = contato;
+                            dadosPopup.Avaliacao = nota;
+
                             return (
                                 <Marker
                                     eventHandlers={{
@@ -585,7 +784,7 @@ class CoffeeMap extends Component {
                                     center={[mapCoords[0], mapCoords[1]]}
                                     position={[mapCoords[0], mapCoords[1]]}
                                 >
-                                   {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster,nota)}
+                                   {this.configPopup(dadosPopup)}
                                     
                                     {/* <Popup>
                                         <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino 
@@ -620,7 +819,7 @@ class CoffeeMap extends Component {
             showCoverageOnHover={false}
             maxClusterRadius={35}
             iconCreateFunction={markerclusterOptionsEntrega}
-        
+            
             removeOutsideVisibleBounds={false}
         >                        
             {this.props.dataMapsProp.filter(x => {return x.Roaster==="EntregaAlimentoPronto" }).map((dataItem, k) => {
@@ -650,6 +849,13 @@ class CoffeeMap extends Component {
                 //         return (<div></div>);
                 //         break;
                 // }
+
+                let dadosPopup = {...dataItem};
+                dadosPopup.precisandoMsg = precisandoMsg;
+                dadosPopup.googleDirection = googleDirection;
+                dadosPopup.dateMarked = dateMarked;
+                dadosPopup.contato = contato;
+                dadosPopup.Avaliacao = nota;
                 
                 return (
                     <Marker
@@ -665,7 +871,7 @@ class CoffeeMap extends Component {
                         center={[mapCoords[0], mapCoords[1]]}
                         position={[mapCoords[0], mapCoords[1]]}
                     >
-                        {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster,nota,RedeSocial)}
+                        {this.configPopup(dadosPopup)}
                                     
                         {/* <Popup>
                             <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino</a>
@@ -726,6 +932,13 @@ class CoffeeMap extends Component {
                 //         return (<div></div>);
                 //         break;
                 // }
+
+                let dadosPopup = {...dataItem};
+                dadosPopup.precisandoMsg = precisandoMsg;
+                dadosPopup.googleDirection = googleDirection;
+                dadosPopup.dateMarked = dateMarked;
+                dadosPopup.contato = contato;
+                dadosPopup.Avaliacao = nota;
                 
                 return (
                     <Marker
@@ -741,7 +954,7 @@ class CoffeeMap extends Component {
                         center={[mapCoords[0], mapCoords[1]]}
                         position={[mapCoords[0], mapCoords[1]]}
                     >
-                        {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster, nota)}
+                        {this.configPopup(dadosPopup)}
                                     
                         {/* <Popup>
                             <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino</a>
@@ -804,6 +1017,13 @@ class CoffeeMap extends Component {
                 //         return (<div></div>);
                 //         break;
                 // }
+
+                let dadosPopup = {...dataItem};
+                dadosPopup.precisandoMsg = precisandoMsg;
+                dadosPopup.googleDirection = googleDirection;
+                dadosPopup.dateMarked = dateMarked;
+                dadosPopup.contato = contato;
+                dadosPopup.Avaliacao = nota;
                 
                 return (
                     <Marker
@@ -957,7 +1177,24 @@ class CoffeeMap extends Component {
                     this.renderDoadoresVerde(),
                     this.renderDoadoresVermelho()]
                 )
+                break;	
+            case "RedeSocial":	
+                return ([	
+                    this.renderRedeSocial()]	
+                )	
+                break;	
+            case "Verificados":	
+                return ([	
+                    this.renderVerificados()]	
+                )	
+                break;	
+            case "Nenhum":	
+                return (<div></div>);	
                 break;
+            default:
+                return (<div></div>);	
+                break;
+
         }
     }
 
