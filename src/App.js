@@ -897,7 +897,7 @@ class App extends Component {
 
                 <br></br>
               Mapeados: {this.state.rowCount} 
-              <a href='https://mapafome.com.br/MapaFome.apk'><img style={{height:'55px'}} alt='Disponível no Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/pt_badge_web_generic.png'/></a>
+              <a href='https://play.google.com/store/apps/details?id=br.com.mapafome'><img style={{height:'55px'}} alt='Disponível no Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/pt_badge_web_generic.png'/></a>
               <a target='_blank' rel="noreferrer" href="https://instagram.com/mapafome"><img style={{height:'55px'}}src={insta}/></a>
             
               <br></br>No mapa clique na bolinha para saber como ajudar.<br></br> Você pode se incluir ou incluir outra pessoa, <br></br>selecione a situação e confirme o local (mais informações <a target='_blank' rel="noreferrer" href="https://g1.globo.com/pe/pernambuco/noticia/2022/02/10/site-criado-por-estudante-da-ufpe-aproxima-pessoas-que-estao-passando-fome-e-doadores-de-comida.ghtml">na matéria da Globo</a>):
