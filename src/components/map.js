@@ -421,7 +421,7 @@ class CoffeeMap extends Component {
 
     configPopup(dadosPopup){	
         let {googleDirection, precisandoMsg, dateMarked, contato, 	
-            AlimentoEntregue, mapCoords, Roaster, Avaliacao, redesocial} = dadosPopup;	
+            AlimentoEntregue, mapCoords, Roaster, Avaliacao, RedeSocial} = dadosPopup;	
         
         if(Avaliacao===undefined) Avaliacao = {nota:"Nenhuma",totalClicks:0};
         return <Popup>
@@ -431,8 +431,8 @@ class CoffeeMap extends Component {
             <div style={{width:'80%'}}> {precisandoMsg} </div>
             <br/>
             {dateMarked} {contato} 
-            {redesocial ? 
-                <span><br></br><a href={"https://"+redesocial} target='_blank' rel='noreferrer'> RedeSocial</a></span>
+            {RedeSocial ? 
+                <span><br></br><a href={"https://"+RedeSocial} target='_blank' rel='noreferrer'> RedeSocial</a></span>
             : <span></span>
             }
             <br/> 
