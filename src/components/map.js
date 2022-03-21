@@ -1039,7 +1039,7 @@ class CoffeeMap extends Component {
                         center={[mapCoords[0], mapCoords[1]]}
                         position={[mapCoords[0], mapCoords[1]]}
                     >
-                        {this.configPopup(googleDirection,precisandoMsg,dateMarked,contato,AlimentoEntregue,mapCoords,Roaster,nota)}
+                        {this.configPopup(dadosPopup)}
                                     
                         {/* <Popup>
                             <a href={googleDirection} target='_blank' rel="noreferrer">Ir para o destino</a>
