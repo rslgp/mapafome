@@ -456,7 +456,7 @@ class CoffeeMap extends Component {
                                     
         </Popup>
     }
-    
+
     renderRedeSocial(){
         return <MarkerClusterGroup
                     // grupo de onde pode ajudar
@@ -471,7 +471,8 @@ class CoffeeMap extends Component {
                         }).map((dataItem, k) => {
                             let { City, mapCoords, Roaster, URL, DateISO, Telefone, DiaSemana, Mes, Horario, AlimentoEntregue, Avaliacao, RedeSocial} = dataItem;
                             
-                            if(mapCoords === undefined) return; if(URL===undefined) URL = ""; if(RedeSocial===undefined) RedeSocial="";
+                            if(mapCoords === undefined) return; if(URL===undefined) URL = ""; 
+                            if(RedeSocial===undefined) return (<div></div>);
                             
                             let {googleDirection, dateMarked, Telefone: contato, AvaliacaoData: nota} = this.setupVariables(mapCoords,DateISO,Telefone, Avaliacao);
                             
