@@ -683,7 +683,6 @@ class App extends Component {
               : 
               
     <div className='relativePosition'>
-      ajude a<a target='_blank' rel="noreferrer" href="https://instagram.com/p/Caow9oOOQSy/"> divulgar </a> o Mapa Fome pelo Brasil <br/>
       filtro atual:  
               <select ref= {this.dropDownMenuFiltro} id="filtro" onChange={this.setFiltro}>
                 <option value="Todos">Todos</option>
