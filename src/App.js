@@ -683,6 +683,7 @@ class App extends Component {
               : 
               
     <div className='relativePosition'>
+      ajude a<a target='_blank' rel="noreferrer" href="https://www.instagram.com/p/Caow9oOOQSy/"> divulgar </a> o Mapa Fome pelo Brasil <br/>
       filtro atual:  
               <select ref= {this.dropDownMenuFiltro} id="filtro" onChange={this.setFiltro}>
                 <option value="Todos">Todos</option>
@@ -906,7 +907,7 @@ class App extends Component {
               
                 {/* <img src={qr} alt=""/> */}
                 {/* <CleanOld></CleanOld> */}
-                <img className="ods" alt="" src="https://brasil.un.org/profiles/undg_country/themes/custom/undg/images/SDGs/pt-br/SDG-2.svg"></img> No Mapa da Fome você pode encontrar a quem ajudar e fazer novas marcações, caso uma opção represente você ou outra pessoa, selecione, coloque número para contato se quiser, e confirme com localização atual ou endereço e número
+                <img className="ods" alt="" src="https://brasil.un.org/profiles/undg_country/themes/custom/undg/images/SDGs/pt-br/SDG-2.svg"></img> No Mapa Fome você pode encontrar a quem ajudar e fazer novas marcações, caso uma opção represente você ou outra pessoa, selecione, coloque número para contato se quiser, e confirme com localização atual ou endereço e número
                 <br></br><span className="yellowHub">  em amarelo são pessoas <img width="30px" height="30px" src={coffeeBean}></img></span>em vulnerabilidade social e insegurança alimentar que estão com fome em casa ou na rua, --precisam de alimento
                 <br></br><span className="blueHub">  em azul são pessoas <img width="30px" height="30px" src={hub}></img></span>que recebem alimentos ou recursos para distribuir alimento ou refeições na comunidade (exemplo: sopão solidário, ongs, voluntários) --precisam de doações
                 <br></br><span className="redHub">  em vermelho são pessoas <img width="30px" height="30px" src={red}></img></span>que entregam refeição em ponto fixo na rua em certo dia na semana. --ponto de entrega de alimento pronto
@@ -923,11 +924,9 @@ class App extends Component {
 <br></br>
 contato: <a target='_blank' rel="noreferrer" href="https://mail.google.com/mail/u/0/?fs=1&to=rslgp@cin.ufpe.br&tf=cm" >rslgp@cin.ufpe.br</a> <a target='_blank' rel="noreferrer"  href='https://wa.me/5583996157234'>(83) 9.9615-7234</a>           
 <Sugestao/>
-        
         <a target='_blank' rel="noreferrer" href="./privacy.html">Privacy Policy</a>
         <span> - </span>
         <a target='_blank' rel="noreferrer" href="./terms.html">Terms</a>
-        
         </Paper>
           </Grid>
 
