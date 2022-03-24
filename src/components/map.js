@@ -478,7 +478,7 @@ class CoffeeMap extends Component {
                             
                             //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
-                            if(envVariables.telefoneFilter && contato==="") return (<div></div>);
+                            if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
                             //filtrar datas antigas
                             // if(
                             //     dateMarked.includes("semana") 
@@ -568,7 +568,7 @@ class CoffeeMap extends Component {
                             
                             //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             if(dataItem.verificado !== 1) return (<div></div>);
-                            if(envVariables.telefoneFilter && contato==="") return (<div></div>);
+                            if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
                             //filtrar datas antigas
                             // if(
                             //     dateMarked.includes("semana") 
@@ -660,7 +660,7 @@ class CoffeeMap extends Component {
                             
                             //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
-                            if(envVariables.telefoneFilter && contato==="") return (<div></div>);
+                            if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
                             //filtrar datas antigas
                             // if(
                             //     dateMarked.includes("semana") 
@@ -745,7 +745,7 @@ class CoffeeMap extends Component {
                             
                             //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
-                            if(envVariables.telefoneFilter && contato==="") return (<div></div>);
+                            if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
                             //filtrar datas antigas
                             // if(
                             //     dateMarked.includes("semana") 
@@ -832,7 +832,7 @@ class CoffeeMap extends Component {
                 
                 //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
-                if(envVariables.telefoneFilter && contato==="") return (<div></div>);
+                if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
                 //filtrar datas antigas
                 // if(
                 //     dateMarked.includes("semana") 
@@ -915,7 +915,7 @@ class CoffeeMap extends Component {
         
                 //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
-                if(envVariables.telefoneFilter && contato==="") return (<div></div>);
+                if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
                 //filtrar datas antigas
                 // if(
                 //     dateMarked.includes("semana") 
@@ -1000,7 +1000,7 @@ class CoffeeMap extends Component {
         
                 //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
-                if(envVariables.telefoneFilter && contato==="") return (<div></div>);
+                if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
                 //filtrar datas antigas
                 // if(
                 //     dateMarked.includes("semana") 
