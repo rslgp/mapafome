@@ -165,7 +165,10 @@ li {
   /* margin: 0 0 8px; */
   /* margin-bottom:22px; */
 }
-
+figure {
+  background: rgb(201, 201, 201);
+  height: 1px;
+}
 img.telegram {
   box-sizing: border-box;
   background: url(https://telegram.org/img/WidgetButton_LogoSmall.png) no-repeat 0 0;
@@ -191,7 +194,7 @@ a.tgme_widget_share_btn {
 
 .SubmitButton{
   margin-right: 10px;
-  margin-bottom:22px;
+  /* margin-bottom:22px; */
   height: 36px;
 }
 

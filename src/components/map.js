@@ -30,8 +30,8 @@ const SearchField = ({ apiKey }) => {
     const provider = new OpenStreetMapProvider(
     {
         params: {
-            'accept-language': 'br', // render results in br
-            countrycodes: 'br', // limit search results to the br
+            'accept-language': 'br', // render results in Dutch
+            countrycodes: 'br', // limit search results to the Netherlands
             addressdetails: 1, // include additional address detail parts
             country:'br',
           },
@@ -837,7 +837,7 @@ class CoffeeMap extends Component {
                 let {googleDirection, dateMarked, Telefone: contato, redesocial, AvaliacaoData: nota} = this.setupVariables(mapCoords,DateISO,Telefone, Avaliacao);
                 
                 //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
-                            
+                if(envVariables.telefoneFilter) console.log(contato);       
                 if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
                 //filtrar datas antigas
                 // if(
