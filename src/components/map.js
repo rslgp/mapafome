@@ -30,8 +30,8 @@ const SearchField = ({ apiKey }) => {
     const provider = new OpenStreetMapProvider(
     {
         params: {
-            'accept-language': 'br', // render results in Dutch
-            countrycodes: 'br', // limit search results to the Netherlands
+            'accept-language': 'br', // render results in br
+            countrycodes: 'br', // limit search results to the br
             addressdetails: 1, // include additional address detail parts
             country:'br',
           },
