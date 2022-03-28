@@ -891,7 +891,7 @@ class App extends Component {
 
           <Grid item xs={12} sm={12}>
             <Paper id="MoreInfo" style={{height:'100%'}} >
-            Contribua também Sinalizando projetos que arrecadam e entregam alimentos na sua cidade, <a target='_blank' rel="noreferrer" href="https://www.google.com.br/search?q=belo+horizonte+~voluntarios+OR+%22grupo%22+AND+~doacoes+AND+%22alimentos%22+%2290000..99999%22+OR+%228000..9999%22">entrando em contato com eles</a> para eles sinalizarem
+            Contribua também Sinalizando projetos que arrecadam e entregam alimentos na sua cidade, <a target='_blank' rel="noreferrer" href="https://www.google.com.br/search?q=suaCidade+~voluntarios+OR+%22grupo%22+AND+~doacoes+AND+%22alimentos%22+%2290000..99999%22+OR+%228000..9999%22">entrando em contato com eles</a> para eles sinalizarem
              <br/> 
             <a className="wpbtn" title="share to whatsapp" href="whatsapp://send?text=Para marcar no mapa e alimentar quem tem fome, achei esse site: www.mapafome.com.br"> <img className="wp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""/>
                 Compartilhar no Whatsapp</a>
