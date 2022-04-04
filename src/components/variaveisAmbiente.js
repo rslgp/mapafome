@@ -66,6 +66,7 @@ const envVariables = {
         if(dadosRow.diaSemana!=="") {dadosJSON.DiaSemana = dadosRow.diaSemana; dadosJSON.Horario = dadosRow.horario}
         if(dadosRow.redesocial!=="") {dadosRow.redesocial=dadosRow.redesocial.replace("@","");dadosJSON.RedeSocial = dadosRow.redesocial;}
         if(dadosRow.mes!=="") dadosJSON.Mes = dadosRow.mes;
+        if(dadosRow.endereco!=="") dadosJSON.City = dadosRow.endereco;
         const row = {
             Dados: JSON.stringify(dadosJSON)
         };
