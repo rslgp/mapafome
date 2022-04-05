@@ -391,14 +391,14 @@ a.tgme_widget_share_btn {
     display: none;
   }
   #CoffeeMap {
-    height: 42vh;
+    /*height: 42vh;*/
   }
   #CoffeeTable {
     height: 58vh;
   }
 
   .leaflet-container {
-    height: 42vh !important;
+    height: 75vh !important;
     overflow: hidden !important;
   }
 }
