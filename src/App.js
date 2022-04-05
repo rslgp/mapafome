@@ -683,6 +683,8 @@ class App extends Component {
               : 
               
     <div className='relativePosition'>
+               {/* <a target='_blank' rel="noreferrer" href="https://api.whatsapp.com/send/?phone=5583996157234&text=quero+me+voluntariar+no+mapa+fome&app_absent=0">quero me voluntariar no Mapa Fome</a>
+      <br/> */}
       filtro atual:  
               <select ref= {this.dropDownMenuFiltro} id="filtro" onChange={this.setFiltro}>
                 <option value="Todos">Todos</option>
@@ -891,8 +893,8 @@ class App extends Component {
 
           <Grid item xs={12} sm={12}>
             <Paper id="MoreInfo" style={{height:'100%'}} >
-            Contribua também Sinalizando projetos que arrecadam e entregam alimentos na sua cidade, <a target='_blank' rel="noreferrer" href="https://www.google.com.br/search?q=suaCidade+~voluntarios+OR+%22grupo%22+AND+~doacoes+AND+%22alimentos%22+%2290000..99999%22+OR+%228000..9999%22">entrando em contato com eles</a> para eles sinalizarem
-             <br/> 
+            {/* Contribua também Sinalizando projetos que arrecadam e entregam alimentos na sua cidade, <a target='_blank' rel="noreferrer" href="https://www.google.com.br/search?q=suaCidade+~voluntarios+OR+%22grupo%22+AND+~doacoes+AND+%22alimentos%22+%2290000..99999%22+OR+%228000..9999%22">entrando em contato com eles</a> para eles sinalizarem
+             <br/>  */}
             <a className="wpbtn" title="share to whatsapp" href="whatsapp://send?text=Para marcar no mapa e alimentar quem tem fome, achei esse site: www.mapafome.com.br"> <img className="wp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt=""/>
                 Compartilhar no Whatsapp</a>
                 <a style={{float:'right'}} target='_blank' rel="noreferrer" href="https://t.me/share?url=www.mapafome.com.br&amp;text=Para%20marcar%20no%20mapa%20e%20alimentar%20quem%20tem%20fome%2C%20achei%20esse%20site%3A" className="tgme_widget_share_btn"><img className="telegram" src="https://telegram.org/img/WidgetButton_LogoSmall.png" alt=""></img></a>
