@@ -198,8 +198,9 @@ class App extends Component {
 
           const sheet = doc.sheetsByIndex[0];
           //row = { Name: "new name", Value: "new value" };
-          
-          const rows = await sheet.getRows();
+          if(envVariables.rows===undefined) envVariables.rows = await sheet.getRows();
+          const rows = envVariables.rows;
+          console.log(envVariables.rows);
           coords = JSON.stringify(coords);
           let rowEncontrada = rows.filter((x) => { 
             //x.Coordinates
@@ -235,7 +236,8 @@ class App extends Component {
           const sheet = doc.sheetsByIndex[0];
           //row = { Name: "new name", Value: "new value" };
           
-          const rows = await sheet.getRows();
+          if(envVariables.rows===undefined) envVariables.rows = await sheet.getRows();
+          const rows = envVariables.rows;
           coords = JSON.stringify(coords);
           let rowEncontrada = rows.filter((x) => { 
             //x.Coordinates
@@ -520,7 +522,8 @@ class App extends Component {
         return;
       }
       const sheet = doc.sheetsByIndex[regiao];
-      const rows = await sheet.getRows();
+      if(envVariables.rows===undefined) envVariables.rows = await sheet.getRows();
+      const rows = envVariables.rows;
       // Total row count
       self.setState({ rowCount: rows.length });
       
@@ -624,7 +627,8 @@ class App extends Component {
       
           const sheet = doc.sheetsByIndex[0];
           
-          const rows = await sheet.getRows();
+          if(envVariables.rows===undefined) envVariables.rows = await sheet.getRows();
+          const rows = envVariables.rows;
 
           let rowEncontrada = rows.filter( (x) => 
           {
@@ -683,7 +687,7 @@ class App extends Component {
               : 
               
     <div className='relativePosition'>
-               {/* <a target='_blank' rel="noreferrer" href="https://api.whatsapp.com/send/?phone=5583996157234&text=quero+me+voluntariar+no+mapa+fome&app_absent=0">quero me voluntariar no Mapa Fome</a>
+      {/* <a target='_blank' rel="noreferrer" href="https://api.whatsapp.com/send/?phone=5583996157234&text=quero+me+voluntariar+no+mapa+fome&app_absent=0">quero me voluntariar no Mapa Fome</a>
       <br/> */}
       filtro atual:  
               <select ref= {this.dropDownMenuFiltro} id="filtro" onChange={this.setFiltro}>

@@ -73,7 +73,8 @@ const envVariables = {
 
         return row;
 
-    }
+    },
+    "rows":undefined
 }
 
 export default envVariables;
