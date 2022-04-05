@@ -657,7 +657,7 @@ class App extends Component {
         <MyLocationButton location={this.state.center}/> */}
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8}>
-            <Paper style={{height:'75vh'}} id="CoffeeMap" className="fadeIn">
+            <Paper id="CoffeeMap" className="fadeIn">
               {this.state.isLoading
                 ? <div className="flexLoading"><div className="loading">Carregando...</div></div>
                 : <CoffeeMap 
