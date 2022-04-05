@@ -518,7 +518,8 @@ class CoffeeMap extends Component {
                                 <Marker
                                     eventHandlers={{
                                         click: (e) => { 
-                                            // alert(`Precisando de ${Roaster}`); 
+                                            // alert(`Precisando de ${Roaster}`);
+                                            this.props.contabilizarClicado([mapCoords[0], mapCoords[1]]);
                                             console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); 
                                             // window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) 
                                         }
@@ -609,6 +610,7 @@ class CoffeeMap extends Component {
                                     eventHandlers={{
                                         click: (e) => { 
                                             // alert(`Precisando de ${Roaster}`); 
+                                            this.props.contabilizarClicado([mapCoords[0], mapCoords[1]]);
                                             console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); 
                                             // window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) 
                                         }
@@ -697,6 +699,7 @@ class CoffeeMap extends Component {
                                     eventHandlers={{
                                         click: (e) => { 
                                             // alert(`Precisando de ${Roaster}`); 
+                                            this.props.contabilizarClicado([mapCoords[0], mapCoords[1]]);
                                             console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); 
                                             // window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) 
                                         }
@@ -782,6 +785,7 @@ class CoffeeMap extends Component {
                                     eventHandlers={{
                                         click: (e) => { 
                                             // alert(`Precisando de ${Roaster}`); 
+                                            this.props.contabilizarClicado([mapCoords[0], mapCoords[1]]);
                                             console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); 
                                             // window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) 
                                         }
@@ -868,7 +872,8 @@ class CoffeeMap extends Component {
                     <Marker
                         eventHandlers={{
                             click: (e) => { 
-                                // alert(`Precisando de ${Roaster}`); 
+                                // alert(`Precisando de ${Roaster}`);
+                                this.props.contabilizarClicado([mapCoords[0], mapCoords[1]]); 
                                 console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); 
                                 // window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) 
                             }
@@ -952,6 +957,7 @@ class CoffeeMap extends Component {
                         eventHandlers={{
                             click: (e) => { 
                                 // alert(`Precisando de ${Roaster}`); 
+                                this.props.contabilizarClicado([mapCoords[0], mapCoords[1]]);
                                 console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); 
                                 // window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) 
                             }
@@ -1037,6 +1043,7 @@ class CoffeeMap extends Component {
                         eventHandlers={{
                             click: (e) => { 
                                 // alert(`Precisando de ${Roaster}`); 
+                                this.props.contabilizarClicado([mapCoords[0], mapCoords[1]]);
                                 console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); 
                                 // window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) 
                             }
@@ -1114,6 +1121,7 @@ class CoffeeMap extends Component {
                         eventHandlers={{
                             click: (e) => { 
                                 // alert(`Precisando de ${Roaster}`); 
+                                this.props.contabilizarClicado([mapCoords[0], mapCoords[1]]);
                                 console.log(`indo para [${[mapCoords[0]+','+mapCoords[1]]}]`); 
                                 // window.open(`https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`) 
                             }
