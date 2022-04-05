@@ -186,6 +186,41 @@ class App extends Component {
     }
   }
 
+  contabilizarClicado(coords){
+    (async function main(self) {
+      try{
+        await doc.useServiceAccountAuth({
+          client_email: process.env.REACT_APP_GOOGLE_SERVICE_ACCOUNT_EMAIL,
+          private_key: process.env.REACT_APP_GOOGLE_PRIVATE_KEY,
+          });
+
+          await doc.loadInfo(); // Loads document properties and worksheets
+
+          const sheet = doc.sheetsByIndex[0];
+          //row = { Name: "new name", Value: "new value" };
+          if(envVariables.rows===undefined) envVariables.rows = await sheet.getRows();
+          const rows = envVariables.rows;
+          coords = JSON.stringify(coords);
+          let rowEncontrada = rows.filter((x) => { 
+            //x.Coordinates
+            //console.log(JSON.parse(x.Dados).Coordinates);
+            return JSON.parse(x.Dados).Coordinates === coords; });
+          
+          //console.log(rowEncontrada[0].City);
+          let dadosNovos = JSON.parse(rowEncontrada[0].Dados);
+          if(dadosNovos.clicado) dadosNovos.clicado++;
+          else dadosNovos.clicado=1;
+          rowEncontrada[0].Dados = JSON.stringify(dadosNovos);
+          await rowEncontrada[0].save();
+          
+          //window.location.reload();
+      }catch(e){
+        //console.log(e);
+
+      }
+      
+    })(coords);
+  }
   entregarAlimento(coords){
     (async function main(self) {
       try{
@@ -200,7 +235,6 @@ class App extends Component {
           //row = { Name: "new name", Value: "new value" };
           if(envVariables.rows===undefined) envVariables.rows = await sheet.getRows();
           const rows = envVariables.rows;
-          console.log(envVariables.rows);
           coords = JSON.stringify(coords);
           let rowEncontrada = rows.filter((x) => { 
             //x.Coordinates
@@ -673,6 +707,7 @@ class App extends Component {
                 entregarAlimento={this.entregarAlimento}
                 avaliar={this.avaliar}
                 filtro={this.state.filtro}
+                contabilizarClicado={this.contabilizarClicado}
                 />
               }
             </Paper>
