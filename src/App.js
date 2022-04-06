@@ -759,7 +759,7 @@ class App extends Component {
             if(dadosNovos.Avaliacao){
                 AvaliacaoData.totalClicks = (dadosNovos.Avaliacao["5"]+dadosNovos.Avaliacao["4"]+dadosNovos.Avaliacao["3"]+dadosNovos.Avaliacao["2"]+dadosNovos.Avaliacao["1"]);
                 if( AvaliacaoData.totalClicks === 0 ){
-                  dadosNovos.Avaliacao="Nenhuma";
+                  //dadosNovos.Avaliacao="Nenhuma";
                 }else{
                   dadosNovos.Avaliacao = (dadosNovos.Avaliacao["5"]*5 +
                     dadosNovos.Avaliacao["4"]*4 +
@@ -769,12 +769,10 @@ class App extends Component {
                     /            
                     (AvaliacaoData.totalClicks);
     
-                    dadosNovos.Avaliacao = Math.round(dadosNovos.Avaliacao * 100)/100;
+                    AvaliacaoData.nota = Math.round(dadosNovos.Avaliacao * 100)/100;
     
                 }
             }
-    
-            AvaliacaoData.nota = dadosNovos.Avaliacao;
 
             if(AvaliacaoData.nota>0) SortedPoints.push({...dadosNovos,"nota":AvaliacaoData.nota});
             for (var i = SortedPoints.length - 1; i > 0 && SortedPoints[i].nota > SortedPoints[i-1].nota; i--) {
