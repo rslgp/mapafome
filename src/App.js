@@ -709,7 +709,6 @@ class App extends Component {
           );
           var SortedPoints = [];
           var tmp;
-          var result = {};
           rowEncontrada.forEach( (x) => 
           {
             let dadosNovos = JSON.parse(x.Dados);
@@ -722,7 +721,6 @@ class App extends Component {
           });
           console.log("mais clicados");
           console.log(SortedPoints);
-          result.maisclicados = SortedPoints;
 
           rowEncontrada = rows.filter( (x) => 
           {
@@ -743,7 +741,6 @@ class App extends Component {
           });
           console.log("mais entregues");
           console.log(SortedPoints);
-          result.maisentregues = SortedPoints;
 
 
           rowEncontrada = rows.filter( (x) => 
@@ -787,9 +784,7 @@ class App extends Component {
           });
           console.log("maiores notas");
           console.log(SortedPoints);          
-          result.maioresnotas = SortedPoints;
 
-          return result;
   
         }catch(e){
           
@@ -797,6 +792,117 @@ class App extends Component {
         
       })();
     }
+
+//     window.planilhacsv = function (){
+//       (async function main() {
+//         try{
+//           await doc.useServiceAccountAuth({
+//             client_email: process.env.REACT_APP_GOOGLE_SERVICE_ACCOUNT_EMAIL,
+//             private_key: process.env.REACT_APP_GOOGLE_PRIVATE_KEY,
+//           });
+      
+//           await doc.loadInfo(); // Loads document properties and worksheets
+      
+//           const sheet = doc.sheetsByIndex[0];
+          
+//           if(envVariables.rows===undefined) envVariables.rows = await sheet.getRows();
+//           const rows = envVariables.rows;
+  
+//           let rowEncontrada = rows.filter( (x) => 
+//           {
+//             return JSON.parse(x.Dados).Telefone;
+//           }
+//           );
+//           var planilhacsv="Situação,Telefone,coords,RedeSocial\n";
+//           var tmp;
+//           var result = {};
+//           rowEncontrada.forEach( (x) => 
+//           {
+//             let y = JSON.parse(x.Dados);
+//             planilhacsv+=[y.Roaster,aes.decrypt(y.Telefone),y.Coordinates,y.RedeSocial].toString()+"\n";
+//           });
+//           console.log(planilhacsv);
+
+//           /**
+//            * 
+//            * {
+//     "11": "São Paulo",
+//     "12": "São Paulo",
+//     "13": "São Paulo",
+//     "14": "São Paulo",
+//     "15": "São Paulo",
+//     "16": "São Paulo",
+//     "17": "São Paulo",
+//     "18": "São Paulo",
+//     "19": "São Paulo",
+//     "21": "Rio de Janeiro",
+//     "22": "Rio de Janeiro",
+//     "24": "Rio de Janeiro",
+//     "27": "Espírito Santo",
+//     "28": "Espírito Santo",
+//     "31": "Minas Gerais",
+//     "32": "Minas Gerais",
+//     "33": "Minas Gerais",
+//     "34": "Minas Gerais",
+//     "35": "Minas Gerais",
+//     "37": "Minas Gerais",
+//     "38": "Minas Gerais",
+//     "41": "Paraná",
+//     "42": "Paraná",
+//     "43": "Paraná",
+//     "44": "Paraná",
+//     "45": "Paraná",
+//     "46": "Paraná",
+//     "47": "Santa Catarina",
+//     "48": "Santa Catarina",
+//     "49": "Santa Catarina",
+//     "51": "Rio Grande do Sul",
+//     "53": "Rio Grande do Sul",
+//     "54": "Rio Grande do Sul",
+//     "55": "Rio Grande do Sul",
+//     "61": "Distrito Federal",
+//     "62": "Goiás",
+//     "63": "Tocantins",
+//     "64": "Goiás",
+//     "65": "Mato Grosso",
+//     "66": "Mato Grosso",
+//     "67": "Mato Grosso do Sul",
+//     "68": "Acre",
+//     "69": "Rondônia",
+//     "71": "Bahia",
+//     "73": "Bahia",
+//     "74": "Bahia",
+//     "75": "Bahia",
+//     "77": "Bahia",
+//     "79": "Sergipe",
+//     "81": "Pernambuco",
+//     "82": "Alagoas",
+//     "83": "Paraíba",
+//     "84": "Rio Grande do Norte",
+//     "85": "Ceará",
+//     "86": "Piauí",
+//     "87": "Pernambuco",
+//     "88": "Ceará",
+//     "89": "Piauí",
+//     "91": "Pará",
+//     "92": "Amazonas",
+//     "93": "Pará",
+//     "94": "Pará",
+//     "95": "Roraima",
+//     "96": "Amapá",
+//     "97": "Amazonas",
+//     "98": "Maranhão",
+//     "99": "Maranhão"
+// }
+//            */
+
+  
+//         }catch(e){
+          
+//         }
+        
+//       })();
+//     }
   }
 
   
