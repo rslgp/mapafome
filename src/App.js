@@ -685,6 +685,116 @@ class App extends Component {
         
       })(endereco, coords);
     }
+   
+   
+
+    window.stats = function (){
+      (async function main() {
+        try{
+          await doc.useServiceAccountAuth({
+            client_email: process.env.REACT_APP_GOOGLE_SERVICE_ACCOUNT_EMAIL,
+            private_key: process.env.REACT_APP_GOOGLE_PRIVATE_KEY,
+          });
+      
+          await doc.loadInfo(); // Loads document properties and worksheets
+      
+          const sheet = doc.sheetsByIndex[0];
+          
+          if(envVariables.rows===undefined) envVariables.rows = await sheet.getRows();
+          const rows = envVariables.rows;
+  
+          let rowEncontrada = rows.filter( (x) => 
+          {
+            return JSON.parse(x.Dados).clicado;
+          }
+          );
+          var SortedPoints = [];
+          var tmp;
+          rowEncontrada.forEach( (x) => 
+          {
+            let dadosNovos = JSON.parse(x.Dados);
+            SortedPoints.push(dadosNovos);
+            for (var i = SortedPoints.length - 1; i > 0 && SortedPoints[i].clicado > SortedPoints[i-1].clicado; i--) {
+                tmp = SortedPoints[i];
+                SortedPoints[i] = SortedPoints[i-1];
+                SortedPoints[i-1] = tmp;
+            }
+          });
+          console.log("mais clicados");
+          console.log(SortedPoints);
+
+          rowEncontrada = rows.filter( (x) => 
+          {
+            return JSON.parse(x.Dados).clicado;
+          }
+          );
+          var SortedPoints = [];
+          var tmp;
+          rowEncontrada.forEach( (x) => 
+          {
+            let dadosNovos = JSON.parse(x.Dados);
+            SortedPoints.push(dadosNovos);
+            for (var i = SortedPoints.length - 1; i > 0 && SortedPoints[i].AlimentoEntregue > SortedPoints[i-1].AlimentoEntregue; i--) {
+                tmp = SortedPoints[i];
+                SortedPoints[i] = SortedPoints[i-1];
+                SortedPoints[i-1] = tmp;
+            }
+          });
+          console.log("mais entregues");
+          console.log(SortedPoints);
+
+
+          rowEncontrada = rows.filter( (x) => 
+          {
+            return JSON.parse(x.Dados).Avaliacao;
+          }
+          );
+          var SortedPoints = [];
+          var tmp;
+          rowEncontrada.forEach( (x) => 
+          {
+            let dadosNovos = JSON.parse(x.Dados);
+
+            let AvaliacaoData = {nota:0, totalClicks:0};
+            if(dadosNovos.Avaliacao){
+                AvaliacaoData.totalClicks = (dadosNovos.Avaliacao["5"]+dadosNovos.Avaliacao["4"]+dadosNovos.Avaliacao["3"]+dadosNovos.Avaliacao["2"]+dadosNovos.Avaliacao["1"]);
+                if( AvaliacaoData.totalClicks === 0 ){
+                  dadosNovos.Avaliacao="Nenhuma";
+                }else{
+                  dadosNovos.Avaliacao = (dadosNovos.Avaliacao["5"]*5 +
+                    dadosNovos.Avaliacao["4"]*4 +
+                    dadosNovos.Avaliacao["3"]*3 +
+                    dadosNovos.Avaliacao["2"]*2 +
+                    dadosNovos.Avaliacao["1"]*1)
+                    /            
+                    (AvaliacaoData.totalClicks);
+    
+                    dadosNovos.Avaliacao = Math.round(dadosNovos.Avaliacao * 100)/100;
+    
+                }
+            }
+    
+            AvaliacaoData.nota = dadosNovos.Avaliacao;
+
+            if(AvaliacaoData.nota>0) SortedPoints.push({...dadosNovos,"nota":AvaliacaoData.nota});
+            for (var i = SortedPoints.length - 1; i > 0 && SortedPoints[i].nota > SortedPoints[i-1].nota; i--) {
+                tmp = SortedPoints[i];
+                SortedPoints[i] = SortedPoints[i-1];
+                SortedPoints[i-1] = tmp;
+            }
+          });
+          console.log("maiores notas");
+          console.log(SortedPoints);
+
+          
+  
+        }catch(e){
+          
+        }
+        
+      })();
+    }
+   
   }
 
   render() {
