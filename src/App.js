@@ -275,8 +275,8 @@ class App extends Component {
           coords = JSON.stringify(coords);
           let rowEncontrada = rows.filter((x) => { 
             //x.Coordinates
-            //console.log(JSON.parse(x.Dados).Coordinates);
-            return JSON.parse(x.Dados).Coordinates === coords; });
+            console.log(JSON.parse(x.Dados).Coordinates);
+            return JSON.parse(x.Dados).Coordinates===(coords); });
           console.log(rowEncontrada);
           
           //console.log(rowEncontrada[0].City);
@@ -292,8 +292,6 @@ class App extends Component {
           }
           dadosNovos.Avaliacao[avaliacao]++;
           rowEncontrada[0].Dados = JSON.stringify(dadosNovos);
-          await rowEncontrada[0].save();
-
           
           let cookieName='pontosAvaliados';
           let pontos = cookies.get(cookieName) || "";
@@ -301,6 +299,9 @@ class App extends Component {
           let coordsString = coords[0]+""+coords[1];
           //let pontosEntregues = JSON.parse(pontosEntreguesData);
           if(pontos.includes(coordsString)) return;
+
+          await rowEncontrada[0].save();
+          
           pontos+=coordsString;
 
           const cookieExpireDate = new Date();
@@ -310,7 +311,7 @@ class App extends Component {
           
           window.location.reload();
       }catch(e){
-        //console.log(e);
+        console.log(e);
 
       }
       
@@ -685,8 +686,6 @@ class App extends Component {
         
       })(endereco, coords);
     }
-   
-   
 
     window.stats = function (){
       (async function main() {
@@ -710,6 +709,7 @@ class App extends Component {
           );
           var SortedPoints = [];
           var tmp;
+          var result = {};
           rowEncontrada.forEach( (x) => 
           {
             let dadosNovos = JSON.parse(x.Dados);
@@ -722,6 +722,7 @@ class App extends Component {
           });
           console.log("mais clicados");
           console.log(SortedPoints);
+          result.maisclicados = SortedPoints;
 
           rowEncontrada = rows.filter( (x) => 
           {
@@ -742,6 +743,7 @@ class App extends Component {
           });
           console.log("mais entregues");
           console.log(SortedPoints);
+          result.maisentregues = SortedPoints;
 
 
           rowEncontrada = rows.filter( (x) => 
@@ -770,11 +772,13 @@ class App extends Component {
                     (AvaliacaoData.totalClicks);
     
                     AvaliacaoData.nota = Math.round(dadosNovos.Avaliacao * 100)/100;
-    
+                    AvaliacaoData.nota=AvaliacaoData.nota*100000+AvaliacaoData.totalClicks;
                 }
             }
+    
+            //AvaliacaoData.nota = dadosNovos.Avaliacao;
 
-            if(AvaliacaoData.nota>0) SortedPoints.push({...dadosNovos,"nota":AvaliacaoData.nota});
+            if(AvaliacaoData.nota>0) SortedPoints.push({...JSON.parse(x.Dados),"nota":AvaliacaoData.nota});
             for (var i = SortedPoints.length - 1; i > 0 && SortedPoints[i].nota > SortedPoints[i-1].nota; i--) {
                 tmp = SortedPoints[i];
                 SortedPoints[i] = SortedPoints[i-1];
@@ -782,9 +786,10 @@ class App extends Component {
             }
           });
           console.log("maiores notas");
-          console.log(SortedPoints);
+          console.log(SortedPoints);          
+          result.maioresnotas = SortedPoints;
 
-          
+          return result;
   
         }catch(e){
           
@@ -792,8 +797,9 @@ class App extends Component {
         
       })();
     }
-   
   }
+
+  
 
   render() {
     return (

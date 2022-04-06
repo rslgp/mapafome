@@ -441,17 +441,21 @@ class CoffeeMap extends Component {
                 <span><br></br><a href={"https://"+RedeSocial} target='_blank' rel='noreferrer'> RedeSocial</a></span>
             : <span></span>
             }
-            <br/> 
+            <br/>
             (<svg width="12" height="12" viewBox="0 0 24 24" focusable="false"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"></path></svg>
             {Avaliacao.nota})
+            ({Avaliacao.totalClicks} notas) 
+            Avalie: 
+            <br/>
             <Rating
                 name="simple-controlled"
                 value={Avaliacao.nota}
                 onChange={(event, newValue) => {
                     this.props.avaliar([mapCoords[0], mapCoords[1]], newValue);
                 }}
+                size="large"
+                sx={{"font-size":"2.125rem"}}
             />
-            ({Avaliacao.totalClicks})
             
             <br/>{"(Qtde entregue:"+AlimentoEntregue+")"}
             { (Roaster === "Doador" || Roaster === "EntregaAlimentoPronto") ? (dadosPopup.verificado===1 ? <img src="https://static.xx.fbcdn.net/assets/?revision=1174640696642832&amp;name=ig-verifiedbadge-shared&amp;density=1"></img> : <button onClick={()=>this.props.verificarPonto([mapCoords[0], mapCoords[1]], Roaster)}>cnpj</button>) : <span></span>}
@@ -922,7 +926,7 @@ class CoffeeMap extends Component {
                 
                 if(mapCoords === undefined) return; if(URL===undefined) URL = "";
                 
-                let {googleDirection, dateMarked, Telefone: contato, AvaliacaoData: nota} = this.setupVariables(mapCoords,DateISO,Telefone);
+                let {googleDirection, dateMarked, Telefone: contato, AvaliacaoData: nota} = this.setupVariables(mapCoords,DateISO,Telefone, Avaliacao);
         
                 //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             

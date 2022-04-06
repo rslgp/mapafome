@@ -52,6 +52,10 @@ body, h1, h2, h3, h4, p {
 
 
 /* CUSTOM */
+.MuiRating-root > label{
+  padding-right: 4px;
+  padding-left: 4px;
+}
 
 @import url("https://unpkg.com/leaflet-geosearch@2.6.0/assets/css/leaflet.css");
 .leaflet-control-zoom{
