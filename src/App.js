@@ -277,7 +277,6 @@ class App extends Component {
             //x.Coordinates
             console.log(JSON.parse(x.Dados).Coordinates);
             return JSON.parse(x.Dados).Coordinates===(coords); });
-          console.log(rowEncontrada);
           
           //console.log(rowEncontrada[0].City);
           let dadosNovos = JSON.parse(rowEncontrada[0].Dados);
@@ -290,6 +289,7 @@ class App extends Component {
               "5":0
             }
           }
+          if(avaliacao===null)avaliacao=5;
           dadosNovos.Avaliacao[avaliacao]++;
           rowEncontrada[0].Dados = JSON.stringify(dadosNovos);
           
