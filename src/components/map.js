@@ -390,12 +390,14 @@ class CoffeeMap extends Component {
                     break;
                 case 8:
                     Telefone="contato:"+Telefone.replace(/(\d{4})(\d{4})/g, "$1-$2");
+                    Telefone=<span onClick={()=>this.props.clicouTelefone([mapCoords[0], mapCoords[1]])}>{Telefone}</span>
                     break;
                 case 9:
                     Telefone="contato:"+Telefone.replace(/(\d{5})(\d{4})/g, "$1-$2");
+                    Telefone=<span onClick={()=>this.props.clicouTelefone([mapCoords[0], mapCoords[1]])}>{Telefone}</span>
                     break;
                 default:
-                    Telefone=<span>{contato}<a href={urlTelefone} target='_blank' rel='noreferrer'>{legivelTelefone}</a></span>;
+                    Telefone=<span onClick={()=>this.props.clicouTelefone([mapCoords[0], mapCoords[1]])}>{contato}<a href={urlTelefone} target='_blank' rel='noreferrer'>{legivelTelefone}</a></span>;
                     break;
             }
         }
@@ -845,7 +847,7 @@ class CoffeeMap extends Component {
                 let {googleDirection, dateMarked, Telefone: contato, redesocial, AvaliacaoData: nota} = this.setupVariables(mapCoords,DateISO,Telefone, Avaliacao);
                 
                 //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
-                if(envVariables.telefoneFilter) console.log(contato);       
+                //if(envVariables.telefoneFilter) console.log(contato);       
                 if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
                 //filtrar datas antigas
                 // if(
