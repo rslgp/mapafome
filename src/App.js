@@ -758,9 +758,30 @@ class App extends Component {
           console.log("mais clicados");
           console.log(SortedPoints);
 
+          
           rowEncontrada = rows.filter( (x) => 
           {
-            return JSON.parse(x.Dados).clicado;
+            return JSON.parse(x.Dados).clickTel;
+          }
+          );
+          var SortedPoints = [];
+          var tmp;
+          rowEncontrada.forEach( (x) => 
+          {
+            let dadosNovos = JSON.parse(x.Dados);
+            SortedPoints.push(dadosNovos);
+            for (var i = SortedPoints.length - 1; i > 0 && SortedPoints[i].clickTel > SortedPoints[i-1].clickTel; i--) {
+                tmp = SortedPoints[i];
+                SortedPoints[i] = SortedPoints[i-1];
+                SortedPoints[i-1] = tmp;
+            }
+          });
+          console.log("mais clicados em telefone");
+          console.log(SortedPoints);
+
+          rowEncontrada = rows.filter( (x) => 
+          {
+            return JSON.parse(x.Dados).AlimentoEntregue;
           }
           );
           var SortedPoints = [];

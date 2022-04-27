@@ -1014,7 +1014,7 @@ class CoffeeMap extends Component {
                 
                 if(mapCoords === undefined) return; if(URL===undefined) URL = "";
                 
-                let {googleDirection, dateMarked, Telefone: contato, AvaliacaoData: nota} = this.setupVariables(mapCoords,DateISO,Telefone);
+                let {googleDirection, dateMarked, Telefone: contato, AvaliacaoData: nota} = this.setupVariables(mapCoords,DateISO,Telefone, Avaliacao);
         
                 //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
