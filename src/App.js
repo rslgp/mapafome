@@ -722,7 +722,30 @@ class App extends Component {
         
       })(endereco, coords);
     }
+    //retornar os pontos proximos a 5km
+    window.distance = function(){
+      const rows = envVariables.rows;
+      let proximos = [];
+      rows.forEach( (x) => {
+        let dado = JSON.parse(x.Dados);
+        if(dado.Coordinates){
+          let coords = JSON.parse(dado.Coordinates);
+          let distancia = envVariables.distanceInKmBetweenEarthCoordinates(
+            envVariables.currentLocation[0], 
+            envVariables.currentLocation[1], 
+            coords[0], 
+            coords[1]);
+            dado.distancia = distancia;
+          if(distancia < 5) proximos.push(dado);
+        }
+      });
 
+      proximos.sort(function(a,b){
+        return a.distancia - b.distancia;
+      });
+      console.log(proximos);
+    }
+   
     window.stats = function (){
       (async function main() {
         try{
@@ -748,6 +771,7 @@ class App extends Component {
           rowEncontrada.forEach( (x) => 
           {
             let dadosNovos = JSON.parse(x.Dados);
+            if(dadosNovos.Telefone) dadosNovos.Telefone = "https://wa.me/55"+aes.decrypt(dadosNovos.Telefone);
             SortedPoints.push(dadosNovos);
             for (var i = SortedPoints.length - 1; i > 0 && SortedPoints[i].clicado > SortedPoints[i-1].clicado; i--) {
                 tmp = SortedPoints[i];
@@ -769,6 +793,7 @@ class App extends Component {
           rowEncontrada.forEach( (x) => 
           {
             let dadosNovos = JSON.parse(x.Dados);
+            dadosNovos.Telefone = "https://wa.me/55"+aes.decrypt(dadosNovos.Telefone);
             SortedPoints.push(dadosNovos);
             for (var i = SortedPoints.length - 1; i > 0 && SortedPoints[i].clickTel > SortedPoints[i-1].clickTel; i--) {
                 tmp = SortedPoints[i];
