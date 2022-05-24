@@ -722,6 +722,7 @@ class App extends Component {
         
       })(endereco, coords);
     }
+
     //retornar os pontos proximos a 5km
     window.distance = function(){
       const rows = envVariables.rows;
@@ -739,13 +740,13 @@ class App extends Component {
           if(distancia < 5) proximos.push(dado);
         }
       });
-
+      
       proximos.sort(function(a,b){
         return a.distancia - b.distancia;
       });
       console.log(proximos);
+
     }
-   
     window.stats = function (){
       (async function main() {
         try{
@@ -1182,15 +1183,15 @@ class App extends Component {
         {/* FIM RADIO BUTTON */}
             <div className='relativePosition'>
                 
-                <input className="TextField tfMarginUp" type="text" placeholder='Insira DDD telefone se quiser' value={this.state.telefone} onChange={this.handleChangeTelefone} />
-                <input className='nLocal' type="text" placeholder='nº' value={this.state.numero} onChange={this.handleChangeNumero} />
+                <input className="TextField tfMarginUp" type="text" placeholder='Insira DDD telefone se quiser' /*value={this.state.telefone}*/ onBlur={this.handleChangeTelefone} />
+                <input className='nLocal' type="text" placeholder='nº' /*value={this.state.numero}*/ onBlur={this.handleChangeNumero} />
                 
                 <br/>
                 <select style={{"display":"none"}} ref= {this.dropDownMenuRedeSocial}>
                   <option value="instagram.com/">Insta</option>
                   <option value="facebook.com/">Face</option>
                 </select>
-                <input ref= {this.redesocialRef} style={{"display":"none"}} className="TextField" type="text" placeholder='@' value={this.state.site} onChange={this.handleChangeRedeSocial} />
+                <input ref= {this.redesocialRef} style={{"display":"none"}} className="TextField" type="text" placeholder='@' /*value={this.state.site}*/ onBlur={this.handleChangeRedeSocial} />
                 
                 <br></br>
                 <div className='buttonsSidebySide'>
