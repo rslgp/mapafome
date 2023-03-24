@@ -1243,7 +1243,7 @@ class App extends Component {
                 <a style={{float:'right'}} target='_blank' rel="noreferrer" href="https://t.me/share?url=www.mapafome.com.br&amp;text=Para%20marcar%20no%20mapa%20e%20alimentar%20quem%20tem%20fome%2C%20achei%20esse%20site%3A" className="tgme_widget_share_btn"><img className="telegram" src="https://telegram.org/img/WidgetButton_LogoSmall.png" alt=""></img></a>
 
                 <br></br>
-              Mapeados: {this.state.rowCount} (bug corrigido 24/03/2023, limite de mapeado foi expandido para 1 milhão)<br>
+              Mapeados: {this.state.rowCount} (bug corrigido 24/03/2023, limite de mapeado foi expandido para 1 milhão)<br></br>
               <a href='https://play.google.com/store/apps/details?id=br.com.mapafome'><img style={{height:'55px'}} alt='Disponível no Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/pt_badge_web_generic.png'/></a>
               <a target='_blank' rel="noreferrer" href="https://instagram.com/mapafome"><img style={{height:'55px'}}src={insta}/></a>
             
