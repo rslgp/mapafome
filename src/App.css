@@ -375,9 +375,21 @@ a.tgme_widget_share_btn {
 
 /* Mobile responsive breakpoints */
 
-@media (max-width: 600px) {
+/* Media query for screens with a maximum height of 630px */
+@media screen and (max-height: 630px) and (max-width: 600px) {
+  #CoffeeMap {
+    height: 60vh;
+  }
+  .leaflet-container {
+    height: 60vh !important;
+    overflow: hidden !important;
+  }
+	body{
+		font-size: 1.25em;
+	}
+
   #header .emoji {
-    height: 2em;
+    height: 1.4em;
   }
   #header h6 {
     font-size: 0.9em;
@@ -394,17 +406,50 @@ a.tgme_widget_share_btn {
   #header #RoasterButtonMobile {
     display: none;
   }
-  #CoffeeMap {
-    height: 75vh;
-  }
   #CoffeeTable {
     height: 58vh;
   }
 
-  .leaflet-container {
-    height: 75vh !important;
-    overflow: hidden !important;
-  }
+  
+}
+
+
+/* Media query for screens with a height greater than 630px */
+@media screen and (min-height: 631px) and (max-width: 600px) {
+
+	#CoffeeMap {
+	height: 65vh;
+	}
+
+	.leaflet-container {
+	height: 65vh !important;
+	overflow: hidden !important;
+	}
+	body{
+		font-size: 1.25em;
+	}
+
+	#header .emoji {
+	height: 1.4em;
+	}
+	#header h6 {
+	font-size: 1.25em;
+	}
+	.MuiPaper-rounded {
+	border-radius: 4px !important;
+	}
+	.MuiButton-containedSizeSmall {
+	font-size: 0.7125rem !important;
+	}
+	#header .TableCount {
+	display: none;
+	}
+	#header #RoasterButtonMobile {
+	display: none;
+	}
+	#CoffeeTable {
+	height: 58vh;
+	}
 }
 
 /* fadeIn Animation */
