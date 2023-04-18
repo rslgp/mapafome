@@ -1305,7 +1305,7 @@ class App extends Component {
   </tr>
   <tr style={{"background-color":"#c8dff5"}}>
     <td>3-7 dias</td>
-    <td>Os músculos passam a serem consumidos como energia, você vai se sentir muito fraco e seus músculos vai diminuir. Isso não é bom para o seu corpo, danifica o organismo</td>
+    <td>Os músculos passam a serem consumidos como energia, você vai se sentir muito fraco e seus músculos vão diminuir. Isso não é bom para o seu corpo, danifica o organismo</td>
 	<td>alta</td>
   </tr>
   <tr>
