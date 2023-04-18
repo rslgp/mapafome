@@ -1252,7 +1252,7 @@ class App extends Component {
               <br></br>
               <br></br>
 			  em agradecimento a formação humana, moral e ética que recebi dos meus professores de Filosofia e Sociologia do ensino médio
-			  <br/><span style={{"font-size":"1.4em","color":"blue"}}>•</span>por terem passado o premiado documentário com base em fatos reais curta de 13 minutos do brasileiro Jorge Furtado <a target='_blank' rel="noreferrer" href="https://youtu.be/Xxuei6Br6Fg">Ilha das Flores</a>
+			  <br/><span style={{"font-size":"1.4em","color":"blue"}}>•</span>por terem passado o premiado documentário com base em fatos reais curta de 13 minutos do brasileiro Jorge Furtado <a target='_blank' rel="noreferrer" href="https://www.youtube.com/watch?v=JcP9v5mZT9w">Ilha das Flores</a>
 			  <br/><span style={{"font-size":"1.4em","color":"blue"}}>•</span>após 10 anos de ter assistido, aprendido e internalizado e entendido nosso papel como sociedade e comunidade, tive a oportunidade de agir usando conhecimento e tecnologias acumulado ao longo do tempo 
 			  <br/><span style={{"font-size":"1.4em","color":"blue"}}>•</span>e a base para criação de projetos (pesquisa de campo e Project Manager) obtida na disciplina de Projetão CIn UFPE 
 			  <br/><span style={{"font-size":"1.4em","color":"red"}}>•</span>resultou em obter as ferramentas necessárias para agir em favor das pessoas que passam fome
@@ -1263,68 +1263,69 @@ class App extends Component {
 			  <br/><span style={{"font-size":"1.4em","color":"red"}}>•</span>sem comida, qualquer ser humano morre
 			  
 			  <table style={{"width":"100%", "text-align":"center"}}>
-  <tr style={{"background-color":"#c8dff5"}}>
-    <th style={{"width":"25%"}}>Horas de Fome</th>
-    <th style={{"width":"50%"}}>Consequências ruins</th>
-    <th style={{"width":"25%"}}>Coloca sua vida em risco ou pior</th>
-  </tr>
-  <tr>
-    <td>0-3 horas</td>
-    <td>Mudança mínima</td>
-    <td>0</td>
-  </tr>
-  <tr style={{"background-color":"#c8dff5"}}>
-    <td>4-8 horas</td>
-    <td>Você vai sentir mais fome e sua barriga vai doer um pouco, e pode ter dor de cabeça</td>
-    <td>0</td>
-  </tr>
-  <tr>
-    <td>9-12 horas</td>
-    <td>Você vai começar a se sentir cansado e rabugento, raivoso, irritado, estressado e vai ter dor de cabeça</td>
-    <td>baixa</td>
-  </tr>
-  <tr style={{"background-color":"#c8dff5"}}>
-    <td>13-16 horas</td>
-    <td>vai ser mais difícil prestar atenção ou se concentrar</td>
-    <td>moderada</td>
-  </tr>
-  <tr>
-    <td>17-24 horas</td>
-    <td>Seu corpo vai não ter açúcar suficiente, o que vai fazer você se sentir tonto ou TREMENDO</td>
-	<td>moderada</td>
-  </tr>
-  <tr style={{"background-color":"#c8dff5"}}>
-    <td>25-48 horas</td>
-    <td>Você vai se sentir fraco e entra em situação de alto estresse e em modo de sobrevivência seu coração vai bater mais rápido pois falta energia que vem da comida, então tenta trabalhar dobrado na tentativa de manter o resultado (entrega de oxigênio e nutrientes para orgão vitais)</td>
-	<td>alta</td>
-  </tr>
-  <tr>
-    <td>49-72 horas</td>
-    <td>Seu corpo vai começar a usar energia armazenada (gordura,...), o que vai fazer você se sentir cansado e seu sistema imunológico vai não funcionar tão bem, fica doente mais facilmente</td>
-	<td>alta</td>
-  </tr>
-  <tr style={{"background-color":"#c8dff5"}}>
-    <td>3-7 dias</td>
-    <td>Os músculos passam a serem consumidos como energia, você vai se sentir muito fraco e seus músculos vão diminuir. Isso não é bom para o seu corpo, danifica o organismo</td>
-	<td>alta</td>
-  </tr>
-  <tr>
-    <td>8-14 dias</td>
-    <td>Seus órgãos, que são partes importantes do seu corpo, vai ficar feridos e você vai ficar doente muito mais facilmente</td>
-	<td>muito alta</td>
-  </tr>
-  <tr style={{"background-color":"#c8dff5"}}>
-    <td>15-21 dias</td>
-    <td>Você vai ficar muito doente e sua vida vai estar em perigo</td>
-	<td>extremamente alto</td>
-  </tr>
-  <tr>
-    <td>22+ dias</td>
-    <td>Você está em perigo extremo porque seu corpo não está recebendo comida suficiente, e seus órgãos vai parar de funcionar corretamente ou parar a qualquer momento</td>
-	<td>extremamente alto</td>
-  </tr>
-</table>
-
+				  <tr style={{"background-color":"#c8dff5"}}>
+					<th style={{"width":"25%"}}>Horas de Fome</th>
+					<th style={{"width":"50%"}}>Consequências ruins</th>
+					<th style={{"width":"25%"}}>Coloca sua vida em risco ou pior</th>
+				  </tr>
+				  <tr>
+					<td>0-3 horas</td>
+					<td>Mudança mínima</td>
+					<td>0</td>
+				  </tr>
+				  <tr style={{"background-color":"#c8dff5"}}>
+					<td>4-8 horas</td>
+					<td>Você vai sentir mais fome e sua barriga vai doer um pouco, e pode ter dor de cabeça</td>
+					<td>0</td>
+				  </tr>
+				  <tr>
+					<td>9-12 horas</td>
+					<td>Você vai começar a se sentir cansado e rabugento, raivoso, irritado, estressado e vai ter dor de cabeça</td>
+					<td>baixa</td>
+				  </tr>
+				  <tr style={{"background-color":"#c8dff5"}}>
+					<td>13-16 horas</td>
+					<td>vai ser mais difícil prestar atenção ou se concentrar</td>
+					<td>moderada</td>
+				  </tr>
+				  <tr>
+					<td>17-24 horas</td>
+					<td>Seu corpo vai não ter açúcar suficiente, o que vai fazer você se sentir tonto ou TREMENDO</td>
+					<td>moderada</td>
+				  </tr>
+				  <tr style={{"background-color":"#c8dff5"}}>
+					<td>25-48 horas</td>
+					<td>Você vai se sentir fraco e entra em situação de alto estresse e em modo de sobrevivência seu coração vai bater mais rápido pois falta energia que vem da comida, então tenta trabalhar dobrado na tentativa de manter o resultado (entrega de oxigênio e nutrientes para orgão vitais)</td>
+					<td>alta</td>
+				  </tr>
+				  <tr>
+					<td>49-72 horas</td>
+					<td>Seu corpo vai começar a usar energia armazenada (gordura,...), o que vai fazer você se sentir cansado e seu sistema imunológico vai não funcionar tão bem, fica doente mais facilmente</td>
+					<td>alta</td>
+				  </tr>
+				  <tr style={{"background-color":"#c8dff5"}}>
+					<td>3-7 dias</td>
+					<td>Os músculos passam a serem consumidos como energia, você vai se sentir muito fraco e seus músculos vão diminuir. Isso não é bom para o seu corpo, danifica o organismo. Diminuição da motivação ou produtividade</td>
+					<td>alta</td>
+				  </tr>
+				  <tr>
+					<td>8-14 dias</td>
+					<td>Seus órgãos, que são partes importantes do seu corpo, vão ficar feridos e você vai ficar doente muito mais facilmente</td>
+					<td>muito alta</td>
+				  </tr>
+				  <tr style={{"background-color":"#c8dff5"}}>
+					<td>15-21 dias</td>
+					<td>Você vai ficar muito doente e sua vida vai estar em perigo</td>
+					<td>extremamente alto</td>
+				  </tr>
+				  <tr>
+					<td>22+ dias</td>
+					<td>Você está em perigo extremo porque seu corpo não está recebendo comida suficiente, e seus órgãos vão parar de funcionar corretamente ou parar a qualquer momento</td>
+					<td>extremamente alto</td>
+				  </tr>
+				</table>
+        <br/>Conclusão: Faço um apelo a você tomar medidas e ações solidárias e qualquer forma de iniciativa recorrentes, em intervalos de 1 dia a 14 dias (mínimo diário ou menos, máximo 2 semanas ou menos), alivie a dor e sofrimento de outro ser humano
+				<br/>
               
                 {/* <img src={qr} alt=""/> */}
                 {/* <CleanOld></CleanOld> */}
