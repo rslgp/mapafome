@@ -1243,13 +1243,88 @@ class App extends Component {
                 <a style={{float:'right'}} target='_blank' rel="noreferrer" href="https://t.me/share?url=www.mapafome.com.br&amp;text=Para%20marcar%20no%20mapa%20e%20alimentar%20quem%20tem%20fome%2C%20achei%20esse%20site%3A" className="tgme_widget_share_btn"><img className="telegram" src="https://telegram.org/img/WidgetButton_LogoSmall.png" alt=""></img></a>
 
                 <br></br>
-              Mapeados: {this.state.rowCount} (bug corrigido 24/03/2023, limite de mapeado foi expandido para 1 milhão)<br></br>
+              Mapeados: {this.state.rowCount}<br></br>
               <a href='https://play.google.com/store/apps/details?id=br.com.mapafome'><img style={{height:'55px'}} alt='Disponível no Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/pt_badge_web_generic.png'/></a>
               <a target='_blank' rel="noreferrer" href="https://instagram.com/mapafome"><img style={{height:'55px'}}src={insta}/></a>
             
-              <br></br>No mapa clique na bolinha para saber como ajudar.<br></br> Você pode se incluir ou incluir outra pessoa, <br></br>selecione a situação e confirme o local (mais informações <a target='_blank' rel="noreferrer" href="https://g1.globo.com/pe/pernambuco/noticia/2022/02/10/site-criado-por-estudante-da-ufpe-aproxima-pessoas-que-estao-passando-fome-e-doadores-de-comida.ghtml">na matéria da Globo</a>):
+              <br></br>No mapa clique na bolinha para saber como ajudar.<br></br> Você pode se incluir ou incluir outra pessoa, <br></br>selecione a situação e confirme o local (mais informações <a target='_blank' rel="noreferrer" href="https://g1.globo.com/pe/pernambuco/noticia/2022/02/10/site-criado-por-estudante-da-ufpe-aproxima-pessoas-que-estao-passando-fome-e-doadores-de-comida.ghtml">na matéria da Globo</a>)(<a href="https://globoplay.globo.com/v/10350537/">e jornal hoje da Globo em rede nacional</a>):
               
               <br></br>
+              <br></br>
+			  em agradecimento a formação humana, moral e ética que recebi dos meus professores de Filosofia e Sociologia do ensino médio
+			  <br/><span style={{"font-size":"1.4em","color":"blue"}}>•</span>por terem passado o premiado documentário com base em fatos reais curta de 13 minutos do brasileiro Jorge Furtado <a target='_blank' rel="noreferrer" href="https://youtu.be/Xxuei6Br6Fg">Ilha das Flores</a>
+			  <br/><span style={{"font-size":"1.4em","color":"blue"}}>•</span>após 10 anos de ter assistido, aprendido e internalizado e entendido nosso papel como sociedade e comunidade, tive a oportunidade de agir usando conhecimento e tecnologias acumulado ao longo do tempo 
+			  <br/><span style={{"font-size":"1.4em","color":"blue"}}>•</span>e a base para criação de projetos (pesquisa de campo e Project Manager) obtida na disciplina de Projetão CIn UFPE 
+			  <br/><span style={{"font-size":"1.4em","color":"red"}}>•</span>resultou em obter as ferramentas necessárias para agir em favor das pessoas que passam fome
+			  <br/><span style={{"font-size":"1.4em","color":"red"}}>•</span>e dar visibilidade, e contribuir junto com as pessoas de bom coração a elas que rotinamente agem alimentando quem não tem dinheiro para comprar comida
+			  <br/><span style={{"font-size":"1.4em","color":"green"}}>•</span>e contribuir com os comerciantes de alimentos a reduzirem o desperdício de alimento
+			  <br/><span style={{"font-size":"1.4em","color":"red"}}>•</span>e motivar e ofertar ferramentas necessárias para cada ser humano fazer sua parte e poder colaborar de forma recorrente, saber e encontrar a quem ofertar alimento
+			  <br/><span style={{"font-size":"1.4em","color":"orange"}}>•</span>ou se não com o alimento, com o compartilhamento de informação ao informar da existência do MAPA FOME que é gratuito, a quem precisa e a quem pode ajudar, pois irão saber a quem buscar
+			  <br/><span style={{"font-size":"1.4em","color":"red"}}>•</span>sem comida, qualquer ser humano morre
+			  
+			  <table style={{"width":"100%", "text-align":"center"}}>
+  <tr style={{"background-color":"#c8dff5"}}>
+    <th style={{"width":"25%"}}>Horas de Fome</th>
+    <th style={{"width":"50%"}}>Consequências ruins</th>
+    <th style={{"width":"25%"}}>Coloca sua vida em risco ou pior</th>
+  </tr>
+  <tr>
+    <td>0-3 horas</td>
+    <td>Mudança mínima</td>
+    <td>0</td>
+  </tr>
+  <tr style={{"background-color":"#c8dff5"}}>
+    <td>4-8 horas</td>
+    <td>Você vai sentir mais fome e sua barriga vai doer um pouco, e pode ter dor de cabeça</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>9-12 horas</td>
+    <td>Você vai começar a se sentir cansado e rabugento, raivoso, irritado, estressado e vai ter dor de cabeça</td>
+    <td>baixa</td>
+  </tr>
+  <tr style={{"background-color":"#c8dff5"}}>
+    <td>13-16 horas</td>
+    <td>vai ser mais difícil prestar atenção ou se concentrar</td>
+    <td>moderada</td>
+  </tr>
+  <tr>
+    <td>17-24 horas</td>
+    <td>Seu corpo vai não ter açúcar suficiente, o que vai fazer você se sentir tonto ou TREMENDO</td>
+	<td>moderada</td>
+  </tr>
+  <tr style={{"background-color":"#c8dff5"}}>
+    <td>25-48 horas</td>
+    <td>Você vai se sentir fraco e entra em situação de alto estresse e em modo de sobrevivência seu coração vai bater mais rápido pois falta energia que vem da comida, então tenta trabalhar dobrado na tentativa de manter o resultado (entrega de oxigênio e nutrientes para orgão vitais)</td>
+	<td>alta</td>
+  </tr>
+  <tr>
+    <td>49-72 horas</td>
+    <td>Seu corpo vai começar a usar energia armazenada (gordura,...), o que vai fazer você se sentir cansado e seu sistema imunológico vai não funcionar tão bem, fica doente mais facilmente</td>
+	<td>alta</td>
+  </tr>
+  <tr style={{"background-color":"#c8dff5"}}>
+    <td>3-7 dias</td>
+    <td>Os músculos passam a serem consumidos como energia, você vai se sentir muito fraco e seus músculos vai diminuir. Isso não é bom para o seu corpo, danifica o organismo</td>
+	<td>alta</td>
+  </tr>
+  <tr>
+    <td>8-14 dias</td>
+    <td>Seus órgãos, que são partes importantes do seu corpo, vai ficar feridos e você vai ficar doente muito mais facilmente</td>
+	<td>muito alta</td>
+  </tr>
+  <tr style={{"background-color":"#c8dff5"}}>
+    <td>15-21 dias</td>
+    <td>Você vai ficar muito doente e sua vida vai estar em perigo</td>
+	<td>extremamente alto</td>
+  </tr>
+  <tr>
+    <td>22+ dias</td>
+    <td>Você está em perigo extremo porque seu corpo não está recebendo comida suficiente, e seus órgãos vai parar de funcionar corretamente ou parar a qualquer momento</td>
+	<td>extremamente alto</td>
+  </tr>
+</table>
+
               
                 {/* <img src={qr} alt=""/> */}
                 {/* <CleanOld></CleanOld> */}
