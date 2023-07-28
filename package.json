@@ -30,7 +30,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "export NODE_OPTIONS=--openssl-legacy-provider && npm run build && echo mapafome.com.br > ./build/CNAME && gh-pages -d build",
+    "WARN export NODE_OPTIONS=--openssl-legacy-provider &&": "FIX run npm update and than npm audit fix --force"
+    "deploy": "npm run build && echo mapafome.com.br > ./build/CNAME && gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
