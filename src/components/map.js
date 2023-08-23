@@ -33,7 +33,7 @@ const SearchField = ({ apiKey }) => {
             'accept-language': 'br', // render results in br
             countrycodes: 'br', // limit search results to the br
             addressdetails: 1, // include additional address detail parts
-            country:'br',
+            //country:'br', //teve update no nominatim api Structured query cannot be used together with q
           },
         providerOptions:{
             searchBounds: [
