@@ -172,11 +172,11 @@ class NameForm extends Component {
         this.state.isLoading ?
         <div><CircularProgress /></div>
         :
-        <form onSubmit={this.handleSubmit}>
+        <form className='form-endereco' onSubmit={this.handleSubmit}>
           <label>
             <input className="TextField" type="text" placeholder='Insira rua,nº,bairro,cidade,estado' value={this.state.value} onChange={this.handleChange} />
           </label>
-          <input className="SubmitButton" type="submit" value="Enviar Endereço" />
+          <input className="SubmitButton" id='enviar-endereco' type="submit" value="Enviar Endereço" />
         </form>
       );
     }

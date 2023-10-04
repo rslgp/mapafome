@@ -183,8 +183,8 @@ class NameForm extends Component {
           this.state.isLoading ?
           <div><CircularProgress /></div>
           : 
-            <button className="SubmitButton buttonsSidebySide" onClick={this.handleSubmit}>
-              marcar Localização Atual
+            <button className="SubmitButton marcar-local" onClick={this.handleSubmit}>
+              Atual
             </button>
         
       );
