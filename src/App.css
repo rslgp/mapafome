@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 body {
   background-color: #eef1f5;
 }
@@ -52,6 +53,41 @@ body, h1, h2, h3, h4, p {
 
 
 /* CUSTOM */
+
+.filtro-tel {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.parte {
+  display: flex;
+  align-items: center;
+}
+.parte.filtro {
+  gap: 10px;
+}
+
+.list-cat {
+  width: max-content;
+}
+
+.alignElementCenter {
+  display: flex;
+  margin: auto;
+}
+/* CSS for the border container and label */
+.borderContainer {
+  border: 2px solid #ccc; /* Customize the border style, color, and width */
+  padding: 10px; /* Add padding to create space between the border and content */
+  display: inline-block; /* Display as inline-block to fit content width */
+}
+
+.borderLabel {
+  font-weight: bold; /* Make the label bold if needed */
+  margin-bottom: 5px; /* Add spacing between the label and content */
+}
+
+
 .MuiRating-root > label{
   padding-right: 4px;
   padding-left: 4px;
@@ -78,7 +114,8 @@ body, h1, h2, h3, h4, p {
 .floatRight{
   float: right;
 }
-.buttonsSidebySide{  
+.buttonsSidebySide{ 
+  text-align: center;
   margin: 0 auto;
   display: inline;
 }
@@ -87,6 +124,7 @@ body, h1, h2, h3, h4, p {
 }
 .relativePosition{
   position: relative;
+  padding: 0 2%;
 }
 .toolPanel{
   background-color: transparent !important;
@@ -100,13 +138,22 @@ button, .SubmitButton {
   font-weight: bold;
   cursor: pointer;
   border-radius: 8px;
+  transition-duration: .4s;
+}
+.SubmitButton:hover {
+  background-color: #2d7ac2;
+}
+.SubmitButton:active {
+  background-color: #215b92;
+  transition-duration: .2s;
 }
 select{
   border-radius: 4px;
 }
 .uxLi{  
   display: block;
-  padding: 11px 0px;
+  padding: 7px 0px;
+  cursor: pointer;
 }
 .greenHub{
   background-color: #baffb8;
@@ -165,10 +212,6 @@ ul {
   padding: 0;
 }
 
-li {
-  /* margin: 0 0 8px; */
-  /* margin-bottom:22px; */
-}
 figure {
   background: rgb(201, 201, 201);
   height: 1px;
@@ -198,9 +241,20 @@ a.tgme_widget_share_btn {
 
 .SubmitButton{
   margin-right: 10px;
-  margin-bottom:22px;
+  /*margin-bottom:22px;*/
   height: 36px;
 }
+.SubmitButton.marcar-local {
+  width: 40%;
+}
+
+.form-endereco {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 32px auto 22px;
+}
+
 
 .wp
     {
@@ -217,7 +271,6 @@ a.tgme_widget_share_btn {
 /* Table Styling */
 
 #CoffeeTable {
-  cursor: pointer;
   display: flex;
 }
 
@@ -376,7 +429,13 @@ a.tgme_widget_share_btn {
 /* Mobile responsive breakpoints */
 
 /* Media query for screens with a maximum height of 630px */
-@media screen and (max-height: 630px) and (max-width: 600px) {
+@media screen and (max-width: 600px) {
+/* @media screen and (max-width: 1200px) {*/
+  
+  body{
+    font-size: 1.25em;
+  }
+
   #CoffeeMap {
     height: 60vh;
   }
@@ -384,9 +443,22 @@ a.tgme_widget_share_btn {
     height: 60vh !important;
     overflow: hidden !important;
   }
-	body{
-		font-size: 1.25em;
-	}
+
+  .relativePosition{
+    padding: 5%;
+    padding-bottom: 0;
+  }
+    
+  .filtro-tel {
+    gap: 10px;
+  }
+  .parte.filtro {
+    gap: 8px;
+  }
+
+  .list-cat {
+    width: fit-content;
+  }
 
   #header .emoji {
     height: 1.4em;
@@ -450,6 +522,7 @@ a.tgme_widget_share_btn {
 	#CoffeeTable {
 	height: 58vh;
 	}
+
 }
 
 /* fadeIn Animation */
