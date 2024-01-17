@@ -43,13 +43,14 @@ const EXPIRE_DAY = 7;
 const aes = new AesEncryption();
 
 // Google Analytics
+/*
 function initializeReactGA() {
   ReactGA.initialize('UA-172868315-1');
   ReactGA.pageview(window.location.pathname + window.location.search);
 }
 
 initializeReactGA();
-
+*/
 aes.setSecretKey(process.env.REACT_APP_CRYPTSEED+"F");
 
 const { GoogleSpreadsheet } = require('google-spreadsheet');
