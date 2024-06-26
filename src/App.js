@@ -42,7 +42,6 @@ import ImagemInstagram from './components/home/ImagemInstagram';
  
 const cookies = new Cookies();
 const EXPIRE_DAY = 7;
-
 const aes = new AesEncryption();
 
 // Google Analytics
@@ -78,7 +77,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      isLoading: false,
+      isLoading: true,
       dataMaps: [],
       dataHeader: [{ label: "Índice" }, { label: "Lugar" }],
       rowCount: '',
@@ -93,6 +92,7 @@ class App extends Component {
       lastMarkedCoords:[],
       numero:'',
       telefoneFilterLocal:false,
+      ultimoAnoLocal:false,
       site:'',
       redesocial:'',
 
@@ -120,6 +120,7 @@ class App extends Component {
     this.removerPonto = this.removerPonto.bind(this);
     this.handleClickMap = this.handleClickMap.bind(this);
     this.telefoneFilterChange = this.telefoneFilterChange.bind(this);
+    this.ultimoAnoFilterChange = this.ultimoAnoFilterChange.bind(this);
     this.handleChangeRedeSocial = this.handleChangeRedeSocial.bind(this);
   }
 
@@ -127,6 +128,13 @@ class App extends Component {
     envVariables.telefoneFilter = !envVariables.telefoneFilter;
     this.setState({
       telefoneFilterLocal: envVariables.telefoneFilter
+    });
+  }
+  
+  ultimoAnoFilterChange(event){
+    envVariables.ultimoAnoFilter = !envVariables.ultimoAnoFilter;
+    this.setState({
+      ultimoAnoFilterLocal: envVariables.ultimoAnoFilter
     });
   }
 
@@ -1006,7 +1014,8 @@ class App extends Component {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8}>
             <Paper id="CoffeeMap" className="fadeIn">
-              {this.state.isLoading
+              {//this.state.isLoading
+              false
                 ? <div className="flexLoading"><div className="loading">Carregando...</div></div>
                 : <CoffeeMap 
                 dataMapsProp={this.state.dataMaps} 
@@ -1027,7 +1036,8 @@ class App extends Component {
           <Grid item xs={12} sm={4} sx={{ paddingLeft:'0px !important'}}>
           {/* https://smartdevpreneur.com/setting-material-ui-grid-item-height/ */}
             <Paper id="CoffeeTable" style={{height:'100%'}} className="toolPanel2">
-              {this.state.isLoading
+              {//this.state.isLoading
+              false
                 ? <div className="flexLoading"><div className="loading"><CircularProgress /></div></div>
                 // : <CoffeeTable dataMapsProp={this.state.dataMaps} dataHeaderProp={this.state.dataHeader} />
               : 
@@ -1035,6 +1045,7 @@ class App extends Component {
     <div className='relativePosition'>
       {/* <a target='_blank' rel="noreferrer" href="https://api.whatsapp.com/send/?phone=5583996157234&text=quero+me+voluntariar+no+mapa+fome&app_absent=0">quero me voluntariar no Mapa Fome</a>
       <br/> */}
+      {this.state.isLoading?<div>Carregando... <CircularProgress/></div>:<div/>}
               <article className='filtro-tel'>
                 <article className='parte filtro'>
                   <span>filtro atual:</span>
@@ -1050,6 +1061,7 @@ class App extends Component {
                   </select>
                 
                 </article>
+
                 <article className='parte'>
                   <Checkbox
                     checked={this.state.telefoneFilterLocal}
@@ -1058,6 +1070,16 @@ class App extends Component {
                   /> 
                   <span>Telefone</span>
                 </article>
+
+                <article className='parte'>
+                  <Checkbox
+                    checked={this.state.ultimoAnoFilterLocal}
+                    onChange={this.ultimoAnoFilterChange}
+                    inputProps={{ 'aria-label': 'controlled' }}
+                  /> 
+                  <span>Ultimo ano</span>
+                </article>
+
               </article>
               
                 {/* RADIO BUTTON */}
@@ -1226,7 +1248,9 @@ class App extends Component {
                     mes={this.state.mes}
                     /> 
 
-                    {this.state.isLoading?
+                    {//this.state.isLoading
+                    false
+                    ?
                     <CircularProgress/>
                     :<button className="SubmitButton marcar-local" onClick={this.handleClickMap}>
                       Tocada</button>}

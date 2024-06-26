@@ -374,7 +374,14 @@ class CoffeeMap extends Component {
         );
     }
 
-    
+    isToApplyFilter(args){
+        const { contato, dateMarked } = args;
+        if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return true;
+        if(envVariables.ultimoAnoFilter && dateMarked.includes("ano")) return true;
+
+        return false;
+    }
+
     setupVariables(mapCoords,DateISO,Telefone,Avaliacao){
         let googleDirection = `https://www.google.com/maps/search/${[mapCoords[0]+','+mapCoords[1]]}`;
                             
@@ -490,7 +497,8 @@ class CoffeeMap extends Component {
                             
                             //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
-                            if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
+                            if(this.isToApplyFilter({contato,dateMarked})){ return (<div></div>) };
+                            // if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
                             //filtrar datas antigas
                             // if(
                             //     dateMarked.includes("semana") 
@@ -581,7 +589,9 @@ class CoffeeMap extends Component {
                             
                             //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             if(dataItem.verificado !== 1) return (<div></div>);
-                            if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
+                            
+                            if(this.isToApplyFilter({contato,dateMarked})){ return (<div></div>) };
+                            // if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
                             //filtrar datas antigas
                             // if(
                             //     dateMarked.includes("semana") 
@@ -674,7 +684,8 @@ class CoffeeMap extends Component {
                             
                             //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
-                            if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
+                            if(this.isToApplyFilter({contato,dateMarked})){ return (<div></div>) };
+                            // if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
                             //filtrar datas antigas
                             // if(
                             //     dateMarked.includes("semana") 
@@ -760,7 +771,8 @@ class CoffeeMap extends Component {
                             
                             //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
-                            if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
+                            if(this.isToApplyFilter({contato,dateMarked})){ return (<div></div>) };
+                            // if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
                             //filtrar datas antigas
                             // if(
                             //     dateMarked.includes("semana") 
@@ -846,9 +858,10 @@ class CoffeeMap extends Component {
 
                 let {googleDirection, dateMarked, Telefone: contato, redesocial, AvaliacaoData: nota} = this.setupVariables(mapCoords,DateISO,Telefone, Avaliacao);
                 
+                if(this.isToApplyFilter({contato,dateMarked})){ return (<div></div>) };
                 //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                 //if(envVariables.telefoneFilter) console.log(contato);       
-                if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
+                // if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
                 //filtrar datas antigas
                 // if(
                 //     dateMarked.includes("semana") 
@@ -930,9 +943,10 @@ class CoffeeMap extends Component {
                 
                 let {googleDirection, dateMarked, Telefone: contato, AvaliacaoData: nota} = this.setupVariables(mapCoords,DateISO,Telefone, Avaliacao);
         
+                if(this.isToApplyFilter({contato,dateMarked})){ return (<div></div>) };
                 //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
-                if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
+                // if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
                 //filtrar datas antigas
                 // if(
                 //     dateMarked.includes("semana") 
@@ -1016,9 +1030,11 @@ class CoffeeMap extends Component {
                 
                 let {googleDirection, dateMarked, Telefone: contato, AvaliacaoData: nota} = this.setupVariables(mapCoords,DateISO,Telefone, Avaliacao);
         
+                if(this.isToApplyFilter({contato,dateMarked})){ return (<div></div>) };
+                
                 //if(envVariables.distanceInKmBetweenEarthCoordinates(envVariables.currentLocation[0], envVariables.currentLocation[1], mapCoords[0], mapCoords[1]) > 30) return(<div></div>)
                             
-                if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
+                // if(envVariables.telefoneFilter && (contato===undefined || contato==="")) return (<div></div>);
                 //filtrar datas antigas
                 // if(
                 //     dateMarked.includes("semana") 
