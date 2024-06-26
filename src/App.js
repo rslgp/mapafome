@@ -1077,7 +1077,7 @@ class App extends Component {
                     onChange={this.ultimoAnoFilterChange}
                     inputProps={{ 'aria-label': 'controlled' }}
                   /> 
-                  <span>Ultimo ano</span>
+                  <span>Esse ano</span>
                 </article>
 
               </article>
