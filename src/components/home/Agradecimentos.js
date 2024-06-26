@@ -3,7 +3,7 @@ const Agradecimentos = () => {
         <>
             <br/>
              em agradecimento a formação humana, moral e ética que recebi dos meus professores de Filosofia e Sociologia do ensino médio
-            <br/><span style={{"font-size":"1.4em","color":"blue"}}>•</span>por terem passado o premiado documentário com base em fatos reais curta de 13 minutos do brasileiro Jorge Furtado <a target='_blank' rel="noreferrer" href="https://www.youtube.com/watch?v=JcP9v5mZT9w">Ilha das Flores</a>
+            <br/><span style={{"font-size":"1.4em","color":"blue"}}>•</span>por terem passado o premiado documentário com base em fatos reais curta de 13 minutos do brasileiro Jorge Furtado <a target='_blank' rel="noreferrer" href="https://www.youtube.com/watch?v=h30BO_6kFNM">Ilha das Flores</a> (<a href="https://vimeo.com/238439307">mirror</a>)
             <br/><span style={{"font-size":"1.4em","color":"blue"}}>•</span>após 10 anos de ter assistido, aprendido e internalizado e entendido nosso papel como sociedade e comunidade, tive a oportunidade de agir usando conhecimento e tecnologias acumulado ao longo do tempo 
             <br/><span style={{"font-size":"1.4em","color":"blue"}}>•</span>e a base para criação de projetos (pesquisa de campo e Project Manager) obtida na disciplina de Projetão CIn UFPE 
             <br/><span style={{"font-size":"1.4em","color":"red"}}>•</span>resultou em obter as ferramentas necessárias para agir em favor das pessoas que passam fome
