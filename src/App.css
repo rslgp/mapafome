@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 body {
   background-color: #eef1f5;
 }
@@ -46,53 +47,115 @@ a:visited {
   padding: 0px;
 }
 
-body, h1, h2, h3, h4, p {
+body,
+h1,
+h2,
+h3,
+h4,
+p {
   font-family: 'Roboto', sans-serif;
 }
 
 
 /* CUSTOM */
-.MuiRating-root > label{
+
+.filtro-tel {
+  display: flex;
+  flex-direction: column;
+  /* Arrange children vertically */
+  justify-content: center;
+  /* gap: 20px; */
+}
+
+.parte {
+  display: flex;
+  align-items: center;
+}
+
+.parte.filtro {
+  gap: 10px;
+}
+
+.list-cat {
+  width: max-content;
+}
+
+.alignElementCenter {
+  display: flex;
+  margin: auto;
+}
+
+/* CSS for the border container and label */
+.borderContainer {
+  border: 2px solid #ccc;
+  /* Customize the border style, color, and width */
+  padding: 10px;
+  /* Add padding to create space between the border and content */
+  display: inline-block;
+  /* Display as inline-block to fit content width */
+}
+
+.borderLabel {
+  font-weight: bold;
+  /* Make the label bold if needed */
+  margin-bottom: 5px;
+  /* Add spacing between the label and content */
+}
+
+
+.MuiRating-root>label {
   padding-right: 4px;
   padding-left: 4px;
 }
 
 @import url("https://unpkg.com/leaflet-geosearch@2.6.0/assets/css/leaflet.css");
-.leaflet-control-zoom{
+
+.leaflet-control-zoom {
   opacity: 0.5;
 }
-.leaflet-bottom.leaflet-left{
+
+.leaflet-bottom.leaflet-left {
   opacity: 0.7;
 }
-.leaflet-popup-content{
+
+.leaflet-popup-content {
   width: 80%;
 }
-.ods{
+
+.ods {
   width: 100px;
   height: 100px;
 }
-.directionIcon{
+
+.directionIcon {
   width: 18px;
   height: 18px;
 }
-.floatRight{
+
+.floatRight {
   float: right;
 }
-.buttonsSidebySide{  
+
+.buttonsSidebySide {
   margin: 0 auto;
   display: inline;
 }
-.nLocal{
+
+.nLocal {
   width: 54px;
 }
-.relativePosition{
+
+.relativePosition {
   position: relative;
 }
-.toolPanel{
+
+.toolPanel {
   background-color: transparent !important;
   box-shadow: none !important;
 }
-button, .SubmitButton {
+
+button,
+.SubmitButton {
   background-color: #3897f0;
   border: 1px solid #3897f0;
   padding: 5px 12px;
@@ -101,59 +164,72 @@ button, .SubmitButton {
   cursor: pointer;
   border-radius: 8px;
 }
-select{
+
+select {
   border-radius: 4px;
 }
-.uxLi{  
+
+.uxLi {
   display: block;
   padding: 11px 0px;
 }
-.greenHub{
+
+.greenHub {
   background-color: #baffb8;
   border-radius: 8px;
 }
-.blueHub{
+
+.blueHub {
   background-color: #cfd7fa;
   border-radius: 8px;
 }
-.yellowHub{
+
+.yellowHub {
   background-color: #ffdf9d;
   border-radius: 8px;
 }
-.redHub{
+
+.redHub {
   background-color: #fca099;
   border-radius: 8px;
 }
 
 
-.leaflet-touch .leaflet-control-layers-toggle {  
+.leaflet-touch .leaflet-control-layers-toggle {
   width: 28px !important;
   height: 28px !important;
 }
-.leaflet-control-layers{
+
+.leaflet-control-layers {
   background: #9191b8 !important;
 }
-.leaflet-control-layers-toggle{
+
+.leaflet-control-layers-toggle {
   background-image: url(https://fonts.gstatic.com/s/i/googlematerialicons/layers/v9/white-18dp/1x/gm_layers_white_18dp.png) !important
 }
-textarea{
+
+textarea {
   width: 95%;
   height: 100px;
 }
+
 .beta {
   font-size: 11px;
 }
+
 input[type="text"] {
   padding: 8px 12px;
   border: 1px solid #dbdbdb;
   box-sizing: border-box;
-  border-radius: 8px;  
+  border-radius: 8px;
   height: 44px;
 }
 
 input[type="radio"] {
-  -ms-transform: scale(1.5); /* IE 9 */
-  -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+  -ms-transform: scale(1.5);
+  /* IE 9 */
+  -webkit-transform: scale(1.5);
+  /* Chrome, Safari, Opera */
   transform: scale(1.5);
   margin: 8px;
 }
@@ -169,10 +245,12 @@ li {
   /* margin: 0 0 8px; */
   /* margin-bottom:22px; */
 }
+
 figure {
   background: rgb(201, 201, 201);
   height: 1px;
 }
+
 img.telegram {
   box-sizing: border-box;
   background: url(https://telegram.org/img/WidgetButton_LogoSmall.png) no-repeat 0 0;
@@ -182,6 +260,7 @@ img.telegram {
   display: inline-block;
   vertical-align: middle;
 }
+
 a.tgme_widget_share_btn {
   box-sizing: border-box;
   height: 26px;
@@ -196,23 +275,22 @@ a.tgme_widget_share_btn {
   text-decoration: none;
 }
 
-.SubmitButton{
+.SubmitButton {
   margin-right: 10px;
-  margin-bottom:22px;
+  margin-bottom: 22px;
   height: 36px;
 }
 
-.wp
-    {
-        width: 25px;
-        margin-top: 5px;
+.wp {
+  width: 25px;
+  margin-top: 5px;
 
-    }
-.wpbtn
-    {
-        border: none;
-        background-color:white;
-    }
+}
+
+.wpbtn {
+  border: none;
+  background-color: white;
+}
 
 /* Table Styling */
 
@@ -355,7 +433,9 @@ a.tgme_widget_share_btn {
   background-color: #dbcdbd !important;
 }
 
-.marker-cluster-small:hover, .marker-cluster-medium:hover, .marker-cluster-large:hover {
+.marker-cluster-small:hover,
+.marker-cluster-medium:hover,
+.marker-cluster-large:hover {
   box-shadow: inset 0 0 0 25px #003238 !important;
 }
 
@@ -380,76 +460,91 @@ a.tgme_widget_share_btn {
   #CoffeeMap {
     height: 60vh;
   }
+
   .leaflet-container {
     height: 60vh !important;
     overflow: hidden !important;
   }
-	body{
-		font-size: 1.25em;
-	}
+
+  body {
+    font-size: 1.25em;
+  }
 
   #header .emoji {
     height: 1.4em;
   }
+
   #header h6 {
     font-size: 0.9em;
   }
+
   .MuiPaper-rounded {
     border-radius: 4px !important;
   }
+
   .MuiButton-containedSizeSmall {
     font-size: 0.7125rem !important;
   }
+
   #header .TableCount {
     display: none;
   }
+
   #header #RoasterButtonMobile {
     display: none;
   }
+
   #CoffeeTable {
     height: 58vh;
   }
 
-  
+
 }
 
 
 /* Media query for screens with a height greater than 630px */
 @media screen and (min-height: 631px) and (max-width: 600px) {
 
-	#CoffeeMap {
-	height: 65vh;
-	}
+  #CoffeeMap {
+    height: 65vh;
+  }
 
-	.leaflet-container {
-	height: 65vh !important;
-	overflow: hidden !important;
-	}
-	body{
-		font-size: 1.25em;
-	}
+  .leaflet-container {
+    height: 65vh !important;
+    overflow: hidden !important;
+  }
 
-	#header .emoji {
-	height: 1.4em;
-	}
-	#header h6 {
-	font-size: 1.25em;
-	}
-	.MuiPaper-rounded {
-	border-radius: 4px !important;
-	}
-	.MuiButton-containedSizeSmall {
-	font-size: 0.7125rem !important;
-	}
-	#header .TableCount {
-	display: none;
-	}
-	#header #RoasterButtonMobile {
-	display: none;
-	}
-	#CoffeeTable {
-	height: 58vh;
-	}
+  body {
+    font-size: 1.25em;
+  }
+
+  #header .emoji {
+    height: 1.4em;
+  }
+
+  #header h6 {
+    font-size: 1.25em;
+  }
+
+  .MuiPaper-rounded {
+    border-radius: 4px !important;
+  }
+
+  .MuiButton-containedSizeSmall {
+    font-size: 0.7125rem !important;
+  }
+
+  #header .TableCount {
+    display: none;
+  }
+
+  #header #RoasterButtonMobile {
+    display: none;
+  }
+
+  #CoffeeTable {
+    height: 58vh;
+  }
 }
 
 /* fadeIn Animation */
@@ -458,6 +553,7 @@ a.tgme_widget_share_btn {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -467,6 +563,7 @@ a.tgme_widget_share_btn {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -476,6 +573,7 @@ a.tgme_widget_share_btn {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -485,6 +583,7 @@ a.tgme_widget_share_btn {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -494,6 +593,7 @@ a.tgme_widget_share_btn {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
