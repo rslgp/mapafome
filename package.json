@@ -28,7 +28,7 @@
     "universal-cookie": "^4.0.4"
   },
   "scripts": {
-    "start": "set NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
+    "start": "SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
     "build": "react-scripts build",
     "WARN export NODE_OPTIONS=--openssl-legacy-provider &&": "FIX run npm update and than npm audit fix --force",
     "deploy": "npm run build && echo mapafome.com.br > ./build/CNAME && gh-pages -d build",

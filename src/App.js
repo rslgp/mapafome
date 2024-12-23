@@ -1056,11 +1056,11 @@ class App extends Component {
 
                       <article className='parte'>
                         <Checkbox
-                          checked={this.state.telefoneFilterLocal}
-                          onChange={this.telefoneFilterChange}
+                          checked={this.state.ultimoAnoFilterLocal}
+                          onChange={this.ultimoAnoFilterChange}
                           inputProps={{ 'aria-label': 'controlled' }}
                         />
-                        <span>Telefone</span>
+                        <span>Esse ano</span>
                       </article>
 
                       <article className='parte'>
